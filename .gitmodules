@@ -1,0 +1,11 @@
+[submodule "Vendor/Masonry"]
+	path = Vendor/Masonry
+	url = https://github.com/SnapKit/Masonry.git
+[submodule "Vendor/NSObjectSignals"]
+	path = Vendor/NSObjectSignals
+	url = https://github.com/CmST0us/NSObjectSignals.git
+	branch = dev/awsl
+[submodule "Vendor/VideoCodecKit"]
+	path = Vendor/VideoCodecKit
+	url = https://gitlab.com/eric3u/VideoCodecKit.git
+	branch = dev/awsl
