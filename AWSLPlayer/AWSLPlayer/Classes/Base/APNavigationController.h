@@ -1,5 +1,5 @@
 //
-//  APViewController.h
+//  APNavigationController.h
 //  AWSLPlayer
 //
 //  Created by CmST0us on 2019/7/14.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APViewController : QMUICommonViewController
+@interface APNavigationController : QMUINavigationController
 
 @end
 

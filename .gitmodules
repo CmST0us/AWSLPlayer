@@ -9,3 +9,6 @@
 	path = Vendor/VideoCodecKit
 	url = https://gitlab.com/eric3u/VideoCodecKit.git
 	branch = dev/awsl
+[submodule "Vendor/QMUI_iOS"]
+	path = Vendor/QMUI_iOS
+	url = https://github.com/Tencent/QMUI_iOS.git
