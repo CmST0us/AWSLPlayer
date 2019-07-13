@@ -12,6 +12,8 @@
 		4F25B43222DA5D3100F09FAC /* APNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B43122DA5D3100F09FAC /* APNavigationController.m */; };
 		4F25B43422DA5DDF00F09FAC /* QMUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F25B43322DA5DDF00F09FAC /* QMUIKit.framework */; };
 		4F25B43522DA5DDF00F09FAC /* QMUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F25B43322DA5DDF00F09FAC /* QMUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F25B44B22DA663900F09FAC /* Jetfire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F25B44A22DA663900F09FAC /* Jetfire.framework */; };
+		4F25B44C22DA663900F09FAC /* Jetfire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F25B44A22DA663900F09FAC /* Jetfire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
 		4F5C333722DA4F1700D3FCA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C333522DA4F1700D3FCA1 /* Main.storyboard */; };
@@ -37,6 +39,7 @@
 				4F25B43522DA5DDF00F09FAC /* QMUIKit.framework in Embed Frameworks */,
 				4F5C334722DA520C00D3FCA1 /* VideoCodecKit.framework in Embed Frameworks */,
 				4F5C334E22DA52D300D3FCA1 /* Masonry.framework in Embed Frameworks */,
+				4F25B44C22DA663900F09FAC /* Jetfire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +54,7 @@
 		4F25B43022DA5D3100F09FAC /* APNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNavigationController.h; sourceTree = "<group>"; };
 		4F25B43122DA5D3100F09FAC /* APNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APNavigationController.m; sourceTree = "<group>"; };
 		4F25B43322DA5DDF00F09FAC /* QMUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QMUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F25B44A22DA663900F09FAC /* Jetfire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Jetfire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -75,6 +79,7 @@
 				4F25B43422DA5DDF00F09FAC /* QMUIKit.framework in Frameworks */,
 				4F5C334622DA520C00D3FCA1 /* VideoCodecKit.framework in Frameworks */,
 				4F5C334D22DA52D300D3FCA1 /* Masonry.framework in Frameworks */,
+				4F25B44B22DA663900F09FAC /* Jetfire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +156,7 @@
 		4F5C332322DA4F1700D3FCA1 = {
 			isa = PBXGroup;
 			children = (
+				4F25B44A22DA663900F09FAC /* Jetfire.framework */,
 				4F25B43322DA5DDF00F09FAC /* QMUIKit.framework */,
 				4F5C334C22DA52D300D3FCA1 /* Masonry.framework */,
 				4F5C334922DA520E00D3FCA1 /* NSObjectSignals.framework */,

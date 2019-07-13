@@ -16,4 +16,7 @@
    <FileRef
       location = "group:Vendor/NSObjectSignals/NSObjectSignals/NSObjectSignals.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Vendor/jetfire/Jetfire.xcodeproj">
+   </FileRef>
 </Workspace>

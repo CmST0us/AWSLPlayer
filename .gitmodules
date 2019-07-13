@@ -12,3 +12,6 @@
 [submodule "Vendor/QMUI_iOS"]
 	path = Vendor/QMUI_iOS
 	url = https://github.com/Tencent/QMUI_iOS.git
+[submodule "Vendor/jetfire"]
+	path = Vendor/jetfire
+	url = https://github.com/acmacalister/jetfire.git
