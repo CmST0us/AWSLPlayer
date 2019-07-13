@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Vendor/Masonry/Masonry.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/VideoCodecKit/VideoCodecKit/VideoCodecKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/NSObjectSignals/NSObjectSignals/NSObjectSignals.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AWSLPlayer/AWSLPlayer.xcodeproj">
+   </FileRef>
+</Workspace>
