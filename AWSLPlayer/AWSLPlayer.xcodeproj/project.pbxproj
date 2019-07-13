@@ -67,6 +67,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F25B41D22DA56F700F09FAC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4F5C333822DA4F1800D3FCA1 /* Assets.xcassets */,
+				4F5C333A22DA4F1800D3FCA1 /* LaunchScreen.storyboard */,
+				4F5C333522DA4F1700D3FCA1 /* Main.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4F25B41E22DA571100F09FAC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B42322DA586200F09FAC /* Base */,
+				4F25B42222DA583A00F09FAC /* Setting */,
+				4F25B42122DA573E00F09FAC /* Player */,
+				4F25B42022DA573100F09FAC /* Debug */,
+				4F25B41F22DA571B00F09FAC /* Services */,
+				4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */,
+				4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4F25B41F22DA571B00F09FAC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4F25B42022DA573100F09FAC /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		4F25B42122DA573E00F09FAC /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				4F5C333222DA4F1700D3FCA1 /* ViewController.h */,
+				4F5C333322DA4F1700D3FCA1 /* ViewController.m */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		4F25B42222DA583A00F09FAC /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		4F25B42322DA586200F09FAC /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		4F5C332322DA4F1700D3FCA1 = {
 			isa = PBXGroup;
 			children = (
@@ -89,13 +150,8 @@
 		4F5C332E22DA4F1700D3FCA1 /* AWSLPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */,
-				4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */,
-				4F5C333222DA4F1700D3FCA1 /* ViewController.h */,
-				4F5C333322DA4F1700D3FCA1 /* ViewController.m */,
-				4F5C333522DA4F1700D3FCA1 /* Main.storyboard */,
-				4F5C333822DA4F1800D3FCA1 /* Assets.xcassets */,
-				4F5C333A22DA4F1800D3FCA1 /* LaunchScreen.storyboard */,
+				4F25B41E22DA571100F09FAC /* Classes */,
+				4F25B41D22DA56F700F09FAC /* Resources */,
 				4F5C333D22DA4F1800D3FCA1 /* Info.plist */,
 				4F5C333E22DA4F1800D3FCA1 /* main.m */,
 			);
