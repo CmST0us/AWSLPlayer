@@ -14,6 +14,15 @@
 		4F25B43522DA5DDF00F09FAC /* QMUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F25B43322DA5DDF00F09FAC /* QMUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F25B44B22DA663900F09FAC /* Jetfire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F25B44A22DA663900F09FAC /* Jetfire.framework */; };
 		4F25B44C22DA663900F09FAC /* Jetfire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F25B44A22DA663900F09FAC /* Jetfire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F25B45122DB02BD00F09FAC /* APBiliBiliLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B45022DB02BD00F09FAC /* APBiliBiliLive.m */; };
+		4F25B45522DB048000F09FAC /* APURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B45422DB048000F09FAC /* APURLSession.m */; };
+		4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B45722DB04C500F09FAC /* NSError+APURLSession.m */; };
+		4F25B45B22DB061800F09FAC /* APURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B45A22DB061800F09FAC /* APURLSessionManager.m */; };
+		4F25B45D22DB083200F09FAC /* APMacroHelper.h in Resources */ = {isa = PBXBuildFile; fileRef = 4F25B45C22DB083200F09FAC /* APMacroHelper.h */; };
+		4F25B46422DB10E700F09FAC /* APBiliBiliURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B46322DB10E700F09FAC /* APBiliBiliURLSession.m */; };
+		4F25B46722DB134300F09FAC /* NSURLRequest+APURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B46622DB134300F09FAC /* NSURLRequest+APURLRequest.m */; };
+		4F25B46F22DB1BF700F09FAC /* AWSLPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B46E22DB1BF700F09FAC /* AWSLPlayerTests.m */; };
+		4F25B47822DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47722DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m */; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
 		4F5C333722DA4F1700D3FCA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C333522DA4F1700D3FCA1 /* Main.storyboard */; };
@@ -27,6 +36,16 @@
 		4F5C334D22DA52D300D3FCA1 /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334C22DA52D300D3FCA1 /* Masonry.framework */; };
 		4F5C334E22DA52D300D3FCA1 /* Masonry.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334C22DA52D300D3FCA1 /* Masonry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4F25B47122DB1BF700F09FAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F5C332422DA4F1700D3FCA1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F5C332B22DA4F1700D3FCA1;
+			remoteInfo = AWSLPlayer;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		4F5C334822DA520C00D3FCA1 /* Embed Frameworks */ = {
@@ -55,6 +74,23 @@
 		4F25B43122DA5D3100F09FAC /* APNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APNavigationController.m; sourceTree = "<group>"; };
 		4F25B43322DA5DDF00F09FAC /* QMUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QMUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F25B44A22DA663900F09FAC /* Jetfire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Jetfire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F25B44F22DB02BD00F09FAC /* APBiliBiliLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APBiliBiliLive.h; sourceTree = "<group>"; };
+		4F25B45022DB02BD00F09FAC /* APBiliBiliLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APBiliBiliLive.m; sourceTree = "<group>"; };
+		4F25B45322DB048000F09FAC /* APURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APURLSession.h; sourceTree = "<group>"; };
+		4F25B45422DB048000F09FAC /* APURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APURLSession.m; sourceTree = "<group>"; };
+		4F25B45622DB04C500F09FAC /* NSError+APURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+APURLSession.h"; sourceTree = "<group>"; };
+		4F25B45722DB04C500F09FAC /* NSError+APURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+APURLSession.m"; sourceTree = "<group>"; };
+		4F25B45922DB061800F09FAC /* APURLSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APURLSessionManager.h; sourceTree = "<group>"; };
+		4F25B45A22DB061800F09FAC /* APURLSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APURLSessionManager.m; sourceTree = "<group>"; };
+		4F25B45C22DB083200F09FAC /* APMacroHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMacroHelper.h; sourceTree = "<group>"; };
+		4F25B46222DB10E700F09FAC /* APBiliBiliURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APBiliBiliURLSession.h; sourceTree = "<group>"; };
+		4F25B46322DB10E700F09FAC /* APBiliBiliURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APBiliBiliURLSession.m; sourceTree = "<group>"; };
+		4F25B46522DB134300F09FAC /* NSURLRequest+APURLRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+APURLRequest.h"; sourceTree = "<group>"; };
+		4F25B46622DB134300F09FAC /* NSURLRequest+APURLRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+APURLRequest.m"; sourceTree = "<group>"; };
+		4F25B46C22DB1BF700F09FAC /* AWSLPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSLPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F25B46E22DB1BF700F09FAC /* AWSLPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSLPlayerTests.m; sourceTree = "<group>"; };
+		4F25B47022DB1BF700F09FAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F25B47722DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSLPlayerBiliBiliLiveTest.m; sourceTree = "<group>"; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -71,6 +107,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4F25B46922DB1BF700F09FAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5C332922DA4F1700D3FCA1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -106,6 +149,7 @@
 				4F25B41F22DA571B00F09FAC /* Services */,
 				4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */,
 				4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */,
+				4F25B45C22DB083200F09FAC /* APMacroHelper.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -113,6 +157,8 @@
 		4F25B41F22DA571B00F09FAC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4F25B45222DB044E00F09FAC /* Network */,
+				4F25B44D22DB01F100F09FAC /* LIve */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -153,6 +199,58 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		4F25B44D22DB01F100F09FAC /* LIve */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B44E22DB020500F09FAC /* BiliBili */,
+			);
+			path = LIve;
+			sourceTree = "<group>";
+		};
+		4F25B44E22DB020500F09FAC /* BiliBili */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B44F22DB02BD00F09FAC /* APBiliBiliLive.h */,
+				4F25B45022DB02BD00F09FAC /* APBiliBiliLive.m */,
+			);
+			path = BiliBili;
+			sourceTree = "<group>";
+		};
+		4F25B45222DB044E00F09FAC /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B46122DB10C600F09FAC /* BiliBili */,
+				4F25B45622DB04C500F09FAC /* NSError+APURLSession.h */,
+				4F25B45722DB04C500F09FAC /* NSError+APURLSession.m */,
+				4F25B45322DB048000F09FAC /* APURLSession.h */,
+				4F25B45422DB048000F09FAC /* APURLSession.m */,
+				4F25B45922DB061800F09FAC /* APURLSessionManager.h */,
+				4F25B45A22DB061800F09FAC /* APURLSessionManager.m */,
+				4F25B46522DB134300F09FAC /* NSURLRequest+APURLRequest.h */,
+				4F25B46622DB134300F09FAC /* NSURLRequest+APURLRequest.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		4F25B46122DB10C600F09FAC /* BiliBili */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B46222DB10E700F09FAC /* APBiliBiliURLSession.h */,
+				4F25B46322DB10E700F09FAC /* APBiliBiliURLSession.m */,
+			);
+			path = BiliBili;
+			sourceTree = "<group>";
+		};
+		4F25B46D22DB1BF700F09FAC /* AWSLPlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B46E22DB1BF700F09FAC /* AWSLPlayerTests.m */,
+				4F25B47722DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m */,
+				4F25B47022DB1BF700F09FAC /* Info.plist */,
+			);
+			path = AWSLPlayerTests;
+			sourceTree = "<group>";
+		};
 		4F5C332322DA4F1700D3FCA1 = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +260,7 @@
 				4F5C334922DA520E00D3FCA1 /* NSObjectSignals.framework */,
 				4F5C334522DA520C00D3FCA1 /* VideoCodecKit.framework */,
 				4F5C332E22DA4F1700D3FCA1 /* AWSLPlayer */,
+				4F25B46D22DB1BF700F09FAC /* AWSLPlayerTests */,
 				4F5C332D22DA4F1700D3FCA1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -170,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */,
+				4F25B46C22DB1BF700F09FAC /* AWSLPlayerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -188,6 +288,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4F25B46B22DB1BF700F09FAC /* AWSLPlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F25B47322DB1BF700F09FAC /* Build configuration list for PBXNativeTarget "AWSLPlayerTests" */;
+			buildPhases = (
+				4F25B46822DB1BF700F09FAC /* Sources */,
+				4F25B46922DB1BF700F09FAC /* Frameworks */,
+				4F25B46A22DB1BF700F09FAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F25B47222DB1BF700F09FAC /* PBXTargetDependency */,
+			);
+			name = AWSLPlayerTests;
+			productName = AWSLPlayerTests;
+			productReference = 4F25B46C22DB1BF700F09FAC /* AWSLPlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4F5C332B22DA4F1700D3FCA1 /* AWSLPlayer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F5C334222DA4F1800D3FCA1 /* Build configuration list for PBXNativeTarget "AWSLPlayer" */;
@@ -215,6 +333,10 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = eric3u;
 				TargetAttributes = {
+					4F25B46B22DB1BF700F09FAC = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 4F5C332B22DA4F1700D3FCA1;
+					};
 					4F5C332B22DA4F1700D3FCA1 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -234,15 +356,24 @@
 			projectRoot = "";
 			targets = (
 				4F5C332B22DA4F1700D3FCA1 /* AWSLPlayer */,
+				4F25B46B22DB1BF700F09FAC /* AWSLPlayerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F25B46A22DB1BF700F09FAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5C332A22DA4F1700D3FCA1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F25B45D22DB083200F09FAC /* APMacroHelper.h in Resources */,
 				4F5C333C22DA4F1800D3FCA1 /* LaunchScreen.storyboard in Resources */,
 				4F5C333922DA4F1800D3FCA1 /* Assets.xcassets in Resources */,
 				4F5C333722DA4F1700D3FCA1 /* Main.storyboard in Resources */,
@@ -252,20 +383,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F25B46822DB1BF700F09FAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F25B46F22DB1BF700F09FAC /* AWSLPlayerTests.m in Sources */,
+				4F25B47822DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5C332822DA4F1700D3FCA1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */,
+				4F25B45522DB048000F09FAC /* APURLSession.m in Sources */,
+				4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */,
 				4F25B42C22DA5CE800F09FAC /* APViewController.m in Sources */,
+				4F25B45122DB02BD00F09FAC /* APBiliBiliLive.m in Sources */,
+				4F25B46422DB10E700F09FAC /* APBiliBiliURLSession.m in Sources */,
 				4F5C333F22DA4F1800D3FCA1 /* main.m in Sources */,
+				4F25B46722DB134300F09FAC /* NSURLRequest+APURLRequest.m in Sources */,
 				4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */,
 				4F25B43222DA5D3100F09FAC /* APNavigationController.m in Sources */,
 				4F25B42F22DA5D0500F09FAC /* APView.m in Sources */,
+				4F25B45B22DB061800F09FAC /* APURLSessionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4F25B47222DB1BF700F09FAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F5C332B22DA4F1700D3FCA1 /* AWSLPlayer */;
+			targetProxy = 4F25B47122DB1BF700F09FAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4F5C333522DA4F1700D3FCA1 /* Main.storyboard */ = {
@@ -287,6 +441,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F25B47422DB1BF700F09FAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2VQ94C2355;
+				INFOPLIST_FILE = AWSLPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.eric3u.AWSLPlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWSLPlayer.app/AWSLPlayer";
+			};
+			name = Debug;
+		};
+		4F25B47522DB1BF700F09FAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2VQ94C2355;
+				INFOPLIST_FILE = AWSLPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.eric3u.AWSLPlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWSLPlayer.app/AWSLPlayer";
+			};
+			name = Release;
+		};
 		4F5C334022DA4F1800D3FCA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -438,6 +630,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F25B47322DB1BF700F09FAC /* Build configuration list for PBXNativeTarget "AWSLPlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F25B47422DB1BF700F09FAC /* Debug */,
+				4F25B47522DB1BF700F09FAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4F5C332722DA4F1700D3FCA1 /* Build configuration list for PBXProject "AWSLPlayer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
