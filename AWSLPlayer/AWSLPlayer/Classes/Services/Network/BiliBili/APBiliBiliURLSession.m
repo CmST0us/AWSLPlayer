@@ -11,7 +11,7 @@
 #import "NSURLRequest+APURLRequest.h"
 
 const NSString *APBiliBiliLiveRoomIDRequestURL = @"https://api.live.bilibili.com/room/v1/Room/room_init?id=";
-const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilibili.com/api/playurl?cid=%lu&otype=json&quality=0&platform=web";
+const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilibili.com/room/v1/Room/playUrl?cid=%lu&otype=json&quality=0&platform=%@";
 
 @interface APBiliBiliURLSession ()
 @property (nonatomic, strong) APURLSession *session;
@@ -21,7 +21,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
 - (instancetype)init {
     self = [super init];
     if (self) {
-        
+        _streamType = APBiliBiliLiveStreamTypeM3U8;
     }
     return self;
 }
@@ -31,6 +31,16 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
         _session = [[APURLSession alloc] init];
     }
     return _session;
+}
+
+- (NSString *)currentStreamTypeParam {
+    switch (self.streamType) {
+        case APBiliBiliLiveStreamTypeM3U8:
+            return @"h5";
+        case APBiliBiliLiveStreamTypeFLV:
+            return @"web";
+    }
+    return @"h5";
 }
 
 - (void)requestRealRoomID:(NSUInteger)requestedRoomID completion:(void(^)(NSInteger realRoomID, NSError * _Nullable error))block {
@@ -65,7 +75,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
 }
 
 - (void)requestPlayURLWithReadRoomID:(NSUInteger)realRoomID completion:(void(^)(NSArray<NSString *> *_Nullable urlStrings, NSError * _Nullable error))block {
-    NSString *requestURLString = [NSString stringWithFormat:[APBiliBiliLivePlayURLRequestURLFormat copy], realRoomID];
+    NSString *requestURLString = [NSString stringWithFormat:[APBiliBiliLivePlayURLRequestURLFormat copy], realRoomID, [self currentStreamTypeParam]];
     NSURL *requestURL = [NSURL URLWithString:requestURLString];
     if (requestURL == nil) {
         block(NULL, [NSError errorWithAPURLSessionError:APURLSessionErrorBadURL userInfo:nil]);
@@ -73,6 +83,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
     }
     NSURLRequest *req = [NSURLRequest URLRequestWithURL:requestURL Method:@"GET"];
     [[self.session getRequest:req completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        // 检查返回内容
         if (error != nil || data == nil || [data length] == 0) {
             block(NULL, error);
         } else {
@@ -81,17 +92,24 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
             if (jsonError != nil || jsonObject == nil) {
                 block(NULL, jsonError);
             } else {
-                NSArray *durl = [jsonObject valueForKey:@"durl"];
-                NSMutableArray *playUrls = [NSMutableArray array];
-                [durl enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if ([obj isKindOfClass:[NSDictionary class]]) {
-                        NSString *url = [obj valueForKey:@"url"];
-                        if (url != nil && [url isKindOfClass:[NSString class]]) {
-                            [playUrls addObject:url];
+                // 检查返回结果
+                NSNumber *retNumber = [jsonObject valueForKey:@"code"];
+                if ([retNumber intValue] != 0) {
+                    block(NULL, [NSError errorWithAPURLSessionError:APURLSessionErrorAPIReturnNotSuccess userInfo:jsonObject]);
+                } else {
+                    NSDictionary *data = [jsonObject valueForKey:@"data"];
+                    NSArray *durl = [data valueForKey:@"durl"];
+                    NSMutableArray *playUrls = [NSMutableArray array];
+                    [durl enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if ([obj isKindOfClass:[NSDictionary class]]) {
+                            NSString *url = [obj valueForKey:@"url"];
+                            if (url != nil && [url isKindOfClass:[NSString class]]) {
+                                [playUrls addObject:url];
+                            }
                         }
-                    }
-                }];
-                block(playUrls, nil);
+                    }];
+                    block(playUrls, nil);
+                }
             }
         }
     }] resume];

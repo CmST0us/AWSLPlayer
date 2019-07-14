@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : APViewController
 
 @end
 

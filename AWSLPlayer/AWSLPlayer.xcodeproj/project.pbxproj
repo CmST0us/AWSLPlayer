@@ -23,6 +23,7 @@
 		4F25B46722DB134300F09FAC /* NSURLRequest+APURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B46622DB134300F09FAC /* NSURLRequest+APURLRequest.m */; };
 		4F25B46F22DB1BF700F09FAC /* AWSLPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B46E22DB1BF700F09FAC /* AWSLPlayerTests.m */; };
 		4F25B47822DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47722DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m */; };
+		4F25B47C22DB306500F09FAC /* APAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47B22DB306500F09FAC /* APAVPlayerView.m */; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
 		4F5C333722DA4F1700D3FCA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C333522DA4F1700D3FCA1 /* Main.storyboard */; };
@@ -91,6 +92,8 @@
 		4F25B46E22DB1BF700F09FAC /* AWSLPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSLPlayerTests.m; sourceTree = "<group>"; };
 		4F25B47022DB1BF700F09FAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F25B47722DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSLPlayerBiliBiliLiveTest.m; sourceTree = "<group>"; };
+		4F25B47A22DB306500F09FAC /* APAVPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APAVPlayerView.h; sourceTree = "<group>"; };
+		4F25B47B22DB306500F09FAC /* APAVPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APAVPlayerView.m; sourceTree = "<group>"; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -166,6 +169,7 @@
 		4F25B42022DA573100F09FAC /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				4F25B47922DB303F00F09FAC /* Player */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -249,6 +253,15 @@
 				4F25B47022DB1BF700F09FAC /* Info.plist */,
 			);
 			path = AWSLPlayerTests;
+			sourceTree = "<group>";
+		};
+		4F25B47922DB303F00F09FAC /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B47A22DB306500F09FAC /* APAVPlayerView.h */,
+				4F25B47B22DB306500F09FAC /* APAVPlayerView.m */,
+			);
+			path = Player;
 			sourceTree = "<group>";
 		};
 		4F5C332322DA4F1700D3FCA1 = {
@@ -397,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */,
+				4F25B47C22DB306500F09FAC /* APAVPlayerView.m in Sources */,
 				4F25B45522DB048000F09FAC /* APURLSession.m in Sources */,
 				4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */,
 				4F25B42C22DA5CE800F09FAC /* APViewController.m in Sources */,

@@ -13,6 +13,8 @@ typedef NS_ENUM(NSUInteger, APURLSessionError) {
     APURLSessionErrorTimeout,
     APURLSessionErrorBadURL,
     APURLSessionErrorBadJSONObject,
+    
+    APURLSessionErrorAPIReturnNotSuccess
 };
 
 extern const NSString *APURLSessionErrorDomain;

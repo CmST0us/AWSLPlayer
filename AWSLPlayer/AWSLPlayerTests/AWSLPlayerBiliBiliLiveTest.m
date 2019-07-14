@@ -18,7 +18,7 @@
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.bilibiliLive = [[APBiliBiliLive alloc] initWithRoomID:7084810];
+    self.bilibiliLive = [[APBiliBiliLive alloc] initWithRoomID:197];
 }
 
 - (void)testRequestRealRoomID {
