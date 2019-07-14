@@ -8,7 +8,7 @@
 feature:
 - [x] BiliBili 拉流逻辑
 - [ ] hls播放组件
-- [ ] Youtube 拉流逻辑
+- [x] Youtube 拉流逻辑
 - [ ] NicoNico 拉流逻辑
 - [ ] 其他平台拉流逻辑
 - [ ] 录屏
@@ -16,7 +16,7 @@ feature:
 
 ## 各大直播平台流拉取逻辑
 
-### BiliBili *WIP*
+### BiliBili 
 
 1. 首先获取真实房间号
 GET `https://api.live.bilibili.com/room/v1/Room/room_init?id=${roomId}`
@@ -92,7 +92,7 @@ GET `http://live2.nicovideo.jp/watch/lv${videoId}`
 如果`body.command`为currentstream
 即可获取流地址`body.currentStream.uri`
 
-### Youtube *WIP*
+### Youtube 
 1. 打开直播页面，加载Javascript引擎
 var config = JSON.parse(ytplayer.config.args.player_response)
 得到的结果中config.streamingData.hlsManifestUrl即播放地址
