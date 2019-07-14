@@ -6,7 +6,7 @@
 当前版本`0.1`
 
 feature:
-- [ ] BiliBili 拉流逻辑
+- [x] BiliBili 拉流逻辑
 - [ ] hls播放组件
 - [ ] Youtube 拉流逻辑
 - [ ] NicoNico 拉流逻辑
