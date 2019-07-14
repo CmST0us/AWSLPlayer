@@ -24,6 +24,8 @@
 		4F25B46F22DB1BF700F09FAC /* AWSLPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B46E22DB1BF700F09FAC /* AWSLPlayerTests.m */; };
 		4F25B47822DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47722DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m */; };
 		4F25B47C22DB306500F09FAC /* APAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47B22DB306500F09FAC /* APAVPlayerView.m */; };
+		4F25B48022DB804100F09FAC /* APYoutubeURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47F22DB804100F09FAC /* APYoutubeURLSession.m */; };
+		4F25B48422DB8C6800F09FAC /* APYoutubeLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
 		4F5C333722DA4F1700D3FCA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C333522DA4F1700D3FCA1 /* Main.storyboard */; };
@@ -94,6 +96,10 @@
 		4F25B47722DB231200F09FAC /* AWSLPlayerBiliBiliLiveTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSLPlayerBiliBiliLiveTest.m; sourceTree = "<group>"; };
 		4F25B47A22DB306500F09FAC /* APAVPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APAVPlayerView.h; sourceTree = "<group>"; };
 		4F25B47B22DB306500F09FAC /* APAVPlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APAVPlayerView.m; sourceTree = "<group>"; };
+		4F25B47E22DB804100F09FAC /* APYoutubeURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APYoutubeURLSession.h; sourceTree = "<group>"; };
+		4F25B47F22DB804100F09FAC /* APYoutubeURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APYoutubeURLSession.m; sourceTree = "<group>"; };
+		4F25B48222DB8C6800F09FAC /* APYoutubeLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APYoutubeLive.h; sourceTree = "<group>"; };
+		4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APYoutubeLive.m; sourceTree = "<group>"; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -206,6 +212,7 @@
 		4F25B44D22DB01F100F09FAC /* LIve */ = {
 			isa = PBXGroup;
 			children = (
+				4F25B48122DB8C5A00F09FAC /* Youtube */,
 				4F25B44E22DB020500F09FAC /* BiliBili */,
 			);
 			path = LIve;
@@ -223,6 +230,7 @@
 		4F25B45222DB044E00F09FAC /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				4F25B47D22DB7E4700F09FAC /* Youtube */,
 				4F25B46122DB10C600F09FAC /* BiliBili */,
 				4F25B45622DB04C500F09FAC /* NSError+APURLSession.h */,
 				4F25B45722DB04C500F09FAC /* NSError+APURLSession.m */,
@@ -262,6 +270,24 @@
 				4F25B47B22DB306500F09FAC /* APAVPlayerView.m */,
 			);
 			path = Player;
+			sourceTree = "<group>";
+		};
+		4F25B47D22DB7E4700F09FAC /* Youtube */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B47E22DB804100F09FAC /* APYoutubeURLSession.h */,
+				4F25B47F22DB804100F09FAC /* APYoutubeURLSession.m */,
+			);
+			path = Youtube;
+			sourceTree = "<group>";
+		};
+		4F25B48122DB8C5A00F09FAC /* Youtube */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B48222DB8C6800F09FAC /* APYoutubeLive.h */,
+				4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */,
+			);
+			path = Youtube;
 			sourceTree = "<group>";
 		};
 		4F5C332322DA4F1700D3FCA1 = {
@@ -414,12 +440,14 @@
 				4F25B45522DB048000F09FAC /* APURLSession.m in Sources */,
 				4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */,
 				4F25B42C22DA5CE800F09FAC /* APViewController.m in Sources */,
+				4F25B48022DB804100F09FAC /* APYoutubeURLSession.m in Sources */,
 				4F25B45122DB02BD00F09FAC /* APBiliBiliLive.m in Sources */,
 				4F25B46422DB10E700F09FAC /* APBiliBiliURLSession.m in Sources */,
 				4F5C333F22DA4F1800D3FCA1 /* main.m in Sources */,
 				4F25B46722DB134300F09FAC /* NSURLRequest+APURLRequest.m in Sources */,
 				4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */,
 				4F25B43222DA5D3100F09FAC /* APNavigationController.m in Sources */,
+				4F25B48422DB8C6800F09FAC /* APYoutubeLive.m in Sources */,
 				4F25B42F22DA5D0500F09FAC /* APView.m in Sources */,
 				4F25B45B22DB061800F09FAC /* APURLSessionManager.m in Sources */,
 			);

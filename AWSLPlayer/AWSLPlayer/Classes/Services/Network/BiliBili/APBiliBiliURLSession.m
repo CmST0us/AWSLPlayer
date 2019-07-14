@@ -53,6 +53,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
     NSURLRequest *req = [NSURLRequest URLRequestWithURL:requestURL Method:@"GET"];
     
     [[self.session getRequest:req completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        // 检查返回内容
         if (error != nil || data == nil) {
             block(0, error);
         } else {
@@ -61,13 +62,19 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
             if (jsonError != nil || jsonObject == nil) {
                 block(0, jsonError);
             } else {
-                NSDictionary *dataObject = [jsonObject valueForKey:@"data"];
-                NSNumber *realRoomIDValue = [dataObject valueForKey:@"room_id"];
-                if (realRoomIDValue != nil) {
-                    NSUInteger realRoomID = [realRoomIDValue unsignedIntegerValue];
-                    block(realRoomID, nil);
+                //检查api结果
+                NSNumber *retNumber = [jsonObject valueForKey:@"code"];
+                if ([retNumber intValue] != 0) {
+                    block(0, [NSError errorWithAPURLSessionError:APURLSessionErrorAPIReturnNotSuccess userInfo:jsonObject]);
                 } else {
-                    block(0, [NSError errorWithAPURLSessionError:APURLSessionErrorBadJSONObject userInfo:nil]);
+                    NSDictionary *dataObject = [jsonObject valueForKey:@"data"];
+                    NSNumber *realRoomIDValue = [dataObject valueForKey:@"room_id"];
+                    if (realRoomIDValue != nil) {
+                        NSUInteger realRoomID = [realRoomIDValue unsignedIntegerValue];
+                        block(realRoomID, nil);
+                    } else {
+                        block(0, [NSError errorWithAPURLSessionError:APURLSessionErrorBadJSONObject userInfo:nil]);
+                    }
                 }
             }
         }
@@ -92,7 +99,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
             if (jsonError != nil || jsonObject == nil) {
                 block(NULL, jsonError);
             } else {
-                // 检查返回结果
+                // 检查api结果
                 NSNumber *retNumber = [jsonObject valueForKey:@"code"];
                 if ([retNumber intValue] != 0) {
                     block(NULL, [NSError errorWithAPURLSessionError:APURLSessionErrorAPIReturnNotSuccess userInfo:jsonObject]);

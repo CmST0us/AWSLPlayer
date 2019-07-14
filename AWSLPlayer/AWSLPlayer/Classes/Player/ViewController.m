@@ -6,11 +6,12 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
+#import <Masonry/Masonry.h>
 #import "ViewController.h"
 #import "APAVPlayerView.h"
 #import "APBiliBiliLive.h"
 #import "APMacroHelper.h"
-#import <Masonry/Masonry.h>
+#import "APYoutubeLive.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) APAVPlayerView *player;
@@ -23,7 +24,8 @@
 @property (nonatomic, strong) APBiliBiliLive *bilibiliLive3;
 
 @property (nonatomic, strong) APAVPlayerView *player4;
-@property (nonatomic, strong) APBiliBiliLive *bilibiliLive4;
+@property (nonatomic, strong) APYoutubeLive *youtubeLive;
+
 @end
 
 @implementation ViewController
@@ -70,8 +72,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.bilibiliLive = [[APBiliBiliLive alloc] initWithRoomID:10112];
     weakSelf(self);
+    
+    self.bilibiliLive = [[APBiliBiliLive alloc] initWithRoomID:9300435];
+
     [self.bilibiliLive requestRealRoomIDWithCompletion:^(NSInteger realRoomID, NSError * _Nullable error) {
         if (error == nil) {
             [weakSelf.bilibiliLive requestPlayURLWithCompletion:^(NSArray<NSString *> * _Nullable playUrls, NSError * _Nullable error) {
@@ -107,17 +111,16 @@
         }
     }];
     
-    self.bilibiliLive4 = [[APBiliBiliLive alloc] initWithRoomID:888];
-    [self.bilibiliLive4 requestRealRoomIDWithCompletion:^(NSInteger realRoomID, NSError * _Nullable error) {
-        if (error == nil) {
-            [weakSelf.bilibiliLive4 requestPlayURLWithCompletion:^(NSArray<NSString *> * _Nullable playUrls, NSError * _Nullable error) {
-                if (error == nil && playUrls.count > 0) {
-                    weakSelf.player4.playURL = [NSURL URLWithString:playUrls[0]];
-                    NSLog(@"Ready to play");
-                }
-            }];
+    
+    NSURL *liveRoomURL = [NSURL URLWithString:@"https://www.youtube.com/watch?v=vrwSrCr9J4s&app=desktop"];
+    self.youtubeLive = [[APYoutubeLive alloc] initWithLiveRoomURL:liveRoomURL];
+    [self.youtubeLive requestPlayURLWithCompletion:^(NSString * _Nullable playURL, NSError * _Nullable error) {
+        if (error == nil && playURL.length > 0) {
+            weakSelf.player4.playURL = [NSURL URLWithString:playURL];
+            NSLog(@"Ready to play");
         }
     }];
+    
 }
 
 @end
