@@ -10,7 +10,7 @@ feature:
 - [ ] hls播放组件
 - [x] Youtube 拉流逻辑
 - [ ] NicoNico 拉流逻辑
-- [ ] 其他平台拉流逻辑
+- [x] LineLive拉流逻辑
 - [ ] 录屏
 - [ ] 弹幕
 
