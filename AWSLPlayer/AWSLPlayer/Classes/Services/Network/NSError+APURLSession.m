@@ -12,7 +12,7 @@ const NSString *APURLSessionErrorDomain = @"APURLSessionErrorDomain";
 
 @implementation NSError (APURLSession)
 + (NSError *)errorWithAPURLSessionError:(APURLSessionError)error userInfo:(NSDictionary *)userInfo {
-    NSError *e = [NSError errorWithDomain:APURLSessionErrorDomain code:error userInfo:userInfo];
+    NSError *e = [NSError errorWithDomain:[APURLSessionErrorDomain copy] code:error userInfo:userInfo];
     return e;
 }
 

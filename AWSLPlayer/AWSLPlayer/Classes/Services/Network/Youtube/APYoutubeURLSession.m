@@ -64,7 +64,6 @@ const NSString *APYoutubeLiveRoomRequestURL = @"https://www.youtube.com/watch?v=
     weakSelf(self);
     [webView evaluateJavaScript:getPlayURLJavascript completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
         if (error == nil) {
-            NSLog(@"obj: %@", obj);
             weakSelf.handler(obj, nil);
         } else {
             weakSelf.handler(nil, error);

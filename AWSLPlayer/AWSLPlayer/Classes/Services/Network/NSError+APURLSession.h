@@ -10,11 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, APURLSessionError) {
-    APURLSessionErrorTimeout,
-    APURLSessionErrorBadURL,
-    APURLSessionErrorBadJSONObject,
+    APURLSessionErrorTimeout = -10000,
+    APURLSessionErrorBadURL = -10001,
+    APURLSessionErrorBadJSONObject = -10002,
     
-    APURLSessionErrorAPIReturnNotSuccess
+    APURLSessionErrorAPIReturnNotSuccess = -10003,
+    APURLSessionErrorServerNotHaveThisObject = -10004
 };
 
 extern const NSString *APURLSessionErrorDomain;

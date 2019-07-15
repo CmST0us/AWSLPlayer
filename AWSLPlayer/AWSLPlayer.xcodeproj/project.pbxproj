@@ -26,6 +26,8 @@
 		4F25B47C22DB306500F09FAC /* APAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47B22DB306500F09FAC /* APAVPlayerView.m */; };
 		4F25B48022DB804100F09FAC /* APYoutubeURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47F22DB804100F09FAC /* APYoutubeURLSession.m */; };
 		4F25B48422DB8C6800F09FAC /* APYoutubeLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */; };
+		4F25B48822DCD68D00F09FAC /* APLineLiveURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48722DCD68D00F09FAC /* APLineLiveURLSession.m */; };
+		4F25B48D22DCDDFA00F09FAC /* APLineLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48C22DCDDFA00F09FAC /* APLineLive.m */; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
 		4F5C333722DA4F1700D3FCA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C333522DA4F1700D3FCA1 /* Main.storyboard */; };
@@ -100,6 +102,11 @@
 		4F25B47F22DB804100F09FAC /* APYoutubeURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APYoutubeURLSession.m; sourceTree = "<group>"; };
 		4F25B48222DB8C6800F09FAC /* APYoutubeLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APYoutubeLive.h; sourceTree = "<group>"; };
 		4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APYoutubeLive.m; sourceTree = "<group>"; };
+		4F25B48622DCD68D00F09FAC /* APLineLiveURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APLineLiveURLSession.h; sourceTree = "<group>"; };
+		4F25B48722DCD68D00F09FAC /* APLineLiveURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APLineLiveURLSession.m; sourceTree = "<group>"; };
+		4F25B48922DCD86700F09FAC /* APRequestPlatformLivePlayURLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APRequestPlatformLivePlayURLProtocol.h; sourceTree = "<group>"; };
+		4F25B48B22DCDDFA00F09FAC /* APLineLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APLineLive.h; sourceTree = "<group>"; };
+		4F25B48C22DCDDFA00F09FAC /* APLineLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APLineLive.m; sourceTree = "<group>"; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -212,6 +219,8 @@
 		4F25B44D22DB01F100F09FAC /* LIve */ = {
 			isa = PBXGroup;
 			children = (
+				4F25B48922DCD86700F09FAC /* APRequestPlatformLivePlayURLProtocol.h */,
+				4F25B48A22DCDDE800F09FAC /* Line */,
 				4F25B48122DB8C5A00F09FAC /* Youtube */,
 				4F25B44E22DB020500F09FAC /* BiliBili */,
 			);
@@ -230,6 +239,7 @@
 		4F25B45222DB044E00F09FAC /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				4F25B48522DCD67600F09FAC /* LineLIve */,
 				4F25B47D22DB7E4700F09FAC /* Youtube */,
 				4F25B46122DB10C600F09FAC /* BiliBili */,
 				4F25B45622DB04C500F09FAC /* NSError+APURLSession.h */,
@@ -288,6 +298,24 @@
 				4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */,
 			);
 			path = Youtube;
+			sourceTree = "<group>";
+		};
+		4F25B48522DCD67600F09FAC /* LineLIve */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B48622DCD68D00F09FAC /* APLineLiveURLSession.h */,
+				4F25B48722DCD68D00F09FAC /* APLineLiveURLSession.m */,
+			);
+			path = LineLIve;
+			sourceTree = "<group>";
+		};
+		4F25B48A22DCDDE800F09FAC /* Line */ = {
+			isa = PBXGroup;
+			children = (
+				4F25B48B22DCDDFA00F09FAC /* APLineLive.h */,
+				4F25B48C22DCDDFA00F09FAC /* APLineLive.m */,
+			);
+			path = Line;
 			sourceTree = "<group>";
 		};
 		4F5C332322DA4F1700D3FCA1 = {
@@ -435,7 +463,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F25B48D22DCDDFA00F09FAC /* APLineLive.m in Sources */,
 				4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */,
+				4F25B48822DCD68D00F09FAC /* APLineLiveURLSession.m in Sources */,
 				4F25B47C22DB306500F09FAC /* APAVPlayerView.m in Sources */,
 				4F25B45522DB048000F09FAC /* APURLSession.m in Sources */,
 				4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */,

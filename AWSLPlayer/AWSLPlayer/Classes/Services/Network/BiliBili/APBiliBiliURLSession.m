@@ -101,7 +101,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
             } else {
                 // 检查api结果
                 NSNumber *retNumber = [jsonObject valueForKey:@"code"];
-                if ([retNumber intValue] != 0) {
+                if (retNumber == nil || [retNumber intValue] != 0) {
                     block(NULL, [NSError errorWithAPURLSessionError:APURLSessionErrorAPIReturnNotSuccess userInfo:jsonObject]);
                 } else {
                     NSDictionary *data = [jsonObject valueForKey:@"data"];
