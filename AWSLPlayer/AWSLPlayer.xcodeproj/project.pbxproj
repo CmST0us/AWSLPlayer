@@ -174,7 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				4F25B45222DB044E00F09FAC /* Network */,
-				4F25B44D22DB01F100F09FAC /* LIve */,
+				4F25B44D22DB01F100F09FAC /* Live */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -216,7 +216,7 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		4F25B44D22DB01F100F09FAC /* LIve */ = {
+		4F25B44D22DB01F100F09FAC /* Live */ = {
 			isa = PBXGroup;
 			children = (
 				4F25B48922DCD86700F09FAC /* APRequestPlatformLivePlayURLProtocol.h */,
@@ -224,7 +224,7 @@
 				4F25B48122DB8C5A00F09FAC /* Youtube */,
 				4F25B44E22DB020500F09FAC /* BiliBili */,
 			);
-			path = LIve;
+			path = Live;
 			sourceTree = "<group>";
 		};
 		4F25B44E22DB020500F09FAC /* BiliBili */ = {
