@@ -20,8 +20,8 @@ typedef NS_ENUM(NSUInteger, APBiliBiliLiveStreamType) {
 @property (nonatomic, readonly) APURLSession *session;
 @property (nonatomic, assign) APBiliBiliLiveStreamType streamType;
 
-- (void)requestRealRoomID:(NSUInteger)requestedRoomID completion:(void(^)(NSInteger realRoomID, NSError * _Nullable error))block;
-- (void)requestPlayURLWithReadRoomID:(NSUInteger)realRoomID completion:(void(^)(NSArray<NSString *> *_Nullable urlStrings, NSError * _Nullable error))block;
+- (void)requestRealRoomID:(NSInteger)requestedRoomID completion:(void(^)(NSInteger realRoomID, NSError * _Nullable error))block;
+- (void)requestPlayURLWithReadRoomID:(NSInteger)realRoomID completion:(void(^)(NSArray<NSString *> *_Nullable urlStrings, NSError * _Nullable error))block;
 
 @end
 

@@ -14,6 +14,9 @@ typedef void(^APRequestPlatformLivePlayURLBlock)(NSDictionary * _Nullable playUR
 
 @protocol APRequestPlatformLivePlayURLProtocol <NSObject>
 @required
+// 返回播放列表
+// K: 清晰度
+// V: 播放地址
 - (NSDictionary<NSString *, NSURL *> * _Nullable )playURLs;
 
 @end

@@ -8,7 +8,8 @@
 
 #import <XCTest/XCTest.h>
 #import "APBiliBiliURLSession.h"
-
+#import "APHibikiURLSession.h"
+#import "APMacroHelper.h"
 @interface AWSLPlayerBiliBiliNetworkRequestsTests : XCTestCase
 @property (nonatomic, strong) APBiliBiliURLSession *currentSession;
 @end
@@ -30,6 +31,30 @@
     }];
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:5]];
     XCTAssert(isSuccess);
+}
+@end
+
+#pragma Hibiki
+@interface AWSLPlayerHibikiNetworkRequestTest: XCTestCase
+@property (nonatomic, strong) APHibikiURLSession *session;
+@end
+
+@implementation AWSLPlayerHibikiNetworkRequestTest
+- (void)setUp {
+    self.session = [[APHibikiURLSession alloc] init];
+}
+
+- (void)testHibikiRetData {
+    weakSelf(self);
+    [self.session requestVideoIDWithAccessID:@"imas_cg" completion:^(NSInteger videoID, NSError * _Nullable error) {
+        if (error == nil) {
+            [weakSelf.session requestPlayURLsWithVideoID:videoID completion:^(NSString * _Nullable playURL, NSError * _Nullable error) {
+                
+            }];
+        }
+    }];
+    
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:30]];
 }
 
 @end

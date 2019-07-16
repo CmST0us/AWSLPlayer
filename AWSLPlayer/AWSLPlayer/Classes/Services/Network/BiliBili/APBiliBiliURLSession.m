@@ -43,7 +43,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
     return @"h5";
 }
 
-- (void)requestRealRoomID:(NSUInteger)requestedRoomID completion:(void(^)(NSInteger realRoomID, NSError * _Nullable error))block {
+- (void)requestRealRoomID:(NSInteger)requestedRoomID completion:(void(^)(NSInteger realRoomID, NSError * _Nullable error))block {
     NSString *requestURLString = [NSString stringWithFormat:@"%@%lu", APBiliBiliLiveRoomIDRequestURL, requestedRoomID];
     NSURL *requestURL = [NSURL URLWithString:requestURLString];
     if (requestURL == nil) {
@@ -52,7 +52,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
     }
     NSURLRequest *req = [NSURLRequest URLRequestWithURL:requestURL Method:@"GET"];
     
-    [[self.session getRequest:req completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.session request:req completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         // 检查返回内容
         if (error != nil || data == nil) {
             block(0, error);
@@ -70,7 +70,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
                     NSDictionary *dataObject = [jsonObject valueForKey:@"data"];
                     NSNumber *realRoomIDValue = [dataObject valueForKey:@"room_id"];
                     if (realRoomIDValue != nil) {
-                        NSUInteger realRoomID = [realRoomIDValue unsignedIntegerValue];
+                        NSUInteger realRoomID = [realRoomIDValue integerValue];
                         block(realRoomID, nil);
                     } else {
                         block(0, [NSError errorWithAPURLSessionError:APURLSessionErrorBadJSONObject userInfo:nil]);
@@ -81,7 +81,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
     }] resume];
 }
 
-- (void)requestPlayURLWithReadRoomID:(NSUInteger)realRoomID completion:(void(^)(NSArray<NSString *> *_Nullable urlStrings, NSError * _Nullable error))block {
+- (void)requestPlayURLWithReadRoomID:(NSInteger)realRoomID completion:(void(^)(NSArray<NSString *> *_Nullable urlStrings, NSError * _Nullable error))block {
     NSString *requestURLString = [NSString stringWithFormat:[APBiliBiliLivePlayURLRequestURLFormat copy], realRoomID, [self currentStreamTypeParam]];
     NSURL *requestURL = [NSURL URLWithString:requestURLString];
     if (requestURL == nil) {
@@ -89,7 +89,7 @@ const NSString *APBiliBiliLivePlayURLRequestURLFormat = @"https://api.live.bilib
         return;
     }
     NSURLRequest *req = [NSURLRequest URLRequestWithURL:requestURL Method:@"GET"];
-    [[self.session getRequest:req completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.session request:req completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         // 检查返回内容
         if (error != nil || data == nil || [data length] == 0) {
             block(NULL, error);

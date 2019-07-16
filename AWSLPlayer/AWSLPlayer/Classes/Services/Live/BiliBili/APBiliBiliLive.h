@@ -7,19 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "APRequestPlatformLivePlayURLProtocol.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APBiliBiliLive : NSObject
+@interface APBiliBiliLive : NSObject<APRequestPlatformLivePlayURLProtocol>
 @property (nonatomic, assign) NSTimeInterval timeout; // Default is 10 sec;
-@property (nonatomic, readonly) NSUInteger requestedRoomID;
-@property (nonatomic, readonly) NSUInteger realRoomID;
+@property (nonatomic, readonly) NSInteger requestedRoomID;
+@property (nonatomic, readonly) NSInteger realRoomID;
 
-@property (nonatomic, readonly, nullable) NSArray *playURL;
+@property (nonatomic, readonly, nullable) NSDictionary<NSString *, NSURL *> *playURLs;
 
-- (instancetype)initWithRoomID:(NSUInteger)roomID;
-- (void)requestRealRoomIDWithCompletion:(void(^)(NSInteger realRoomID, NSError * _Nullable error))block;
-- (void)requestPlayURLWithCompletion:(void (^)(NSArray<NSString *> * _Nullable playUrls, NSError * _Nullable error))block;
+- (instancetype)initWithRoomID:(NSInteger)roomID;
+- (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block;
     
 @end
 

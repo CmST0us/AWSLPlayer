@@ -16,7 +16,7 @@ typedef void (^APURLSessionGETCompletionBlock)(NSData * _Nullable data, NSURLRes
 @interface APURLSession : NSObject
 @property (nonatomic, readonly) NSURLSession *session;
 - (NSURLSessionDataTask *)get:(NSURL *)url completion:(APURLSessionGETCompletionBlock)block;
-- (NSURLSessionDataTask *)getRequest:(NSURLRequest *)request completion:(APURLSessionGETCompletionBlock)block;
+- (NSURLSessionDataTask *)request:(NSURLRequest *)request completion:(APURLSessionGETCompletionBlock)block;
 
 @end
 

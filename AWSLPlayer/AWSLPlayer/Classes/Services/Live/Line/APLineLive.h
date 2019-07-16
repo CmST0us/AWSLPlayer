@@ -14,8 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSUInteger requestedChannelID;
 @property (nonatomic, readonly) NSUInteger requestedBroadcastID;
 
-// [TODO]: 标准化到播放地址接口
-@property (nonatomic, readonly) NSDictionary<NSString *, NSURL *> *playURLs; // K: 清晰度, V: 播放地址
+@property (nonatomic, readonly) NSDictionary<NSString *, NSURL *> *playURLs;
 
 - (instancetype)initWithChannelID:(NSUInteger)channelID
                       broadcastID:(NSUInteger)broadcastID;

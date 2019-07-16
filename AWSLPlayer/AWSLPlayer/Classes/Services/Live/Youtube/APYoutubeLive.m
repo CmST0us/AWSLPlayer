@@ -8,10 +8,11 @@
 
 #import "APMacroHelper.h"
 #import "APYoutubeLive.h"
-
+#import "NSError+APURLSession.h"
 
 @interface APYoutubeLive ()
 @property (nonatomic, strong) APYoutubeURLSession *session;
+@property (nonatomic, strong, nullable) NSDictionary<NSString *, NSURL *> *playURLs;
 @end
 
 @implementation APYoutubeLive
@@ -30,11 +31,21 @@
     return _session;
 }
 
-- (void)requestPlayURLWithCompletion:(APYoutubeURLSessionRequestPlayURLHandler)block {
+- (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block {
     weakSelf(self);
     [self.session requestPlayURLWithLiveRoomURL:self.liveRoomURL completion:^(NSString * _Nullable playURL, NSError * _Nullable error) {
         weakSelf.session = nil;
-        block(playURL, error);
+        if (error == nil && playURL != nil) {
+            NSURL *url = [NSURL URLWithString:playURL];
+            if (url != nil) {
+                weakSelf.playURLs = @{@"origin": url};
+                block(weakSelf.playURLs, nil);
+            } else {
+                block(nil, [NSError errorWithAPURLSessionError:APURLSessionErrorServerNotHaveThisObject userInfo:nil]);
+            }
+        } else {
+            block(nil, error);
+        }
     }];
 }
 @end

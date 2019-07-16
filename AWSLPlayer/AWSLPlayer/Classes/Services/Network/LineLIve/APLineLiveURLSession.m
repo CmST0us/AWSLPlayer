@@ -41,7 +41,7 @@ const NSString *APLineLivePlayURLRequestFormat = @"https://live-api.line-apps.co
     }
     
     NSURLRequest *request = [NSURLRequest URLRequestWithURL:requestURL Method:@"GET"];
-    [[self.session getRequest:request completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.session request:request completion:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         // 检查返回内容
         if (error != nil || data == nil || [data length] == 0) {
             block(NULL, error);

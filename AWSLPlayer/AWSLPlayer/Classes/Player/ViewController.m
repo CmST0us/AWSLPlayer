@@ -13,12 +13,14 @@
 #import "APMacroHelper.h"
 #import "APYoutubeLive.h"
 #import "APLineLive.h"
+#import "APHibikiLive.h"
+
 @interface ViewController ()
 @property (nonatomic, strong) APAVPlayerView *player;
 @property (nonatomic, strong) APBiliBiliLive *bilibiliLive;
 
 @property (nonatomic, strong) APAVPlayerView *player2;
-@property (nonatomic, strong) APBiliBiliLive *bilibiliLive2;
+@property (nonatomic, strong) APHibikiLive *hibiki;
 
 @property (nonatomic, strong) APAVPlayerView *player3;
 @property (nonatomic, strong) APLineLive *lineLive;
@@ -76,26 +78,22 @@
     
     self.bilibiliLive = [[APBiliBiliLive alloc] initWithRoomID:9300435];
 
-    [self.bilibiliLive requestRealRoomIDWithCompletion:^(NSInteger realRoomID, NSError * _Nullable error) {
+    [self.bilibiliLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
         if (error == nil) {
-            [weakSelf.bilibiliLive requestPlayURLWithCompletion:^(NSArray<NSString *> * _Nullable playUrls, NSError * _Nullable error) {
-                if (error == nil && playUrls.count > 0) {
-                    weakSelf.player.playURL = [NSURL URLWithString:playUrls[0]];
+            [weakSelf.bilibiliLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+                if (error == nil && playURLs.count > 0) {
+                    weakSelf.player.playURL = [playURLs allValues][0];
                     NSLog(@"Ready to play1");
                 }
             }];
         }
     }];
     
-    self.bilibiliLive2 = [[APBiliBiliLive alloc] initWithRoomID:449541];
-    [self.bilibiliLive2 requestRealRoomIDWithCompletion:^(NSInteger realRoomID, NSError * _Nullable error) {
-        if (error == nil) {
-            [weakSelf.bilibiliLive2 requestPlayURLWithCompletion:^(NSArray<NSString *> * _Nullable playUrls, NSError * _Nullable error) {
-                if (error == nil && playUrls.count > 0) {
-                    weakSelf.player2.playURL = [NSURL URLWithString:playUrls[0]];
-                    NSLog(@"Ready to play2");
-                }
-            }];
+    self.hibiki = [[APHibikiLive alloc] initWithAccessID:@"poppin-radio"];
+    [self.hibiki requestPlayURLsWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+        if (error == nil && playURLs.count > 0) {
+            weakSelf.player2.playURL = [playURLs allValues][0];
+            NSLog(@"Ready to play2");
         }
     }];
     
@@ -109,9 +107,9 @@
     
     NSURL *liveRoomURL = [NSURL URLWithString:@"https://www.youtube.com/watch?v=vrwSrCr9J4s&app=desktop"];
     self.youtubeLive = [[APYoutubeLive alloc] initWithLiveRoomURL:liveRoomURL];
-    [self.youtubeLive requestPlayURLWithCompletion:^(NSString * _Nullable playURL, NSError * _Nullable error) {
-        if (error == nil && playURL.length > 0) {
-            weakSelf.player4.playURL = [NSURL URLWithString:playURL];
+    [self.youtubeLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+        if (error == nil && playURLs.count > 0) {
+            weakSelf.player4.playURL = [playURLs allValues][0];
             NSLog(@"Ready to play4");
         }
     }];

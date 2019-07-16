@@ -13,13 +13,13 @@
 
 @interface APBiliBiliLive ()
 @property (nonatomic, strong) APBiliBiliURLSession *session;
-@property (nonatomic, assign) NSUInteger requestedRoomID;
-@property (nonatomic, assign) NSUInteger realRoomID;
-@property (nonatomic, copy, nullable) NSArray *playURL;
+@property (nonatomic, assign) NSInteger requestedRoomID;
+@property (nonatomic, assign) NSInteger realRoomID;
+@property (nonatomic, strong, nullable) NSDictionary<NSString *, NSURL *> *playURLs;
 @end
 
 @implementation APBiliBiliLive
-- (instancetype)initWithRoomID:(NSUInteger)roomID {
+- (instancetype)initWithRoomID:(NSInteger)roomID {
     self = [super init];
     if (self) {
         _realRoomID = 0;
@@ -36,19 +36,33 @@
     return _session;
 }
 
-- (void)requestRealRoomIDWithCompletion:(void(^)(NSInteger realRoomID, NSError *error))block {
+- (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block {
     weakSelf(self);
-    [self.session requestRealRoomID:self.requestedRoomID completion:^(NSInteger realRoomID, NSError * _Nonnull error) {
-        weakSelf.realRoomID = realRoomID;
-        block(realRoomID, error);
-    }];
-}
-
-- (void)requestPlayURLWithCompletion:(void (^)(NSArray<NSString *> * _Nullable playUrls, NSError * _Nullable error))block {
-    weakSelf(self);
-    [self.session requestPlayURLWithReadRoomID:self.realRoomID completion:^(NSArray<NSString *> * _Nonnull urlStrings, NSError * _Nonnull error) {
-        weakSelf.playURL = urlStrings;
-        block(urlStrings, error);
+    [self.session requestRealRoomID:self.requestedRoomID completion:^(NSInteger realRoomID, NSError * _Nullable error) {
+        if (error == nil) {
+            weakSelf.realRoomID = realRoomID;
+            [weakSelf.session requestPlayURLWithReadRoomID:realRoomID completion:^(NSArray<NSString *> * _Nullable urlStrings, NSError * _Nullable ee) {
+                if (ee == nil) {
+                    if (urlStrings == nil) {
+                        block(nil, [NSError errorWithAPURLSessionError:APURLSessionErrorServerNotHaveThisObject userInfo:nil]);
+                    } else {
+                        NSMutableDictionary *playURLs = [NSMutableDictionary dictionary];
+                        [urlStrings enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                            NSURL *url = [NSURL URLWithString:obj];
+                            if (url) {
+                                [playURLs setObject:url forKey:[NSNumber numberWithUnsignedInteger:idx].stringValue];
+                            }
+                        }];
+                        weakSelf.playURLs = playURLs;
+                        block(playURLs, nil);
+                    }
+                } else {
+                    block(nil, ee);
+                }
+            }];
+        } else {
+            block(nil, error);
+        }
     }];
 }
 

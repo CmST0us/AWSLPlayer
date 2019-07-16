@@ -33,7 +33,7 @@
     return [self.session dataTaskWithURL:url completionHandler:block];
 }
 
-- (NSURLSessionDataTask *)getRequest:(NSURLRequest *)request completion:(APURLSessionGETCompletionBlock)block {
+- (NSURLSessionDataTask *)request:(NSURLRequest *)request completion:(APURLSessionGETCompletionBlock)block {
     return [self.session dataTaskWithRequest:request completionHandler:block];
 }
 
