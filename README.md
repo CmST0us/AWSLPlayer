@@ -9,6 +9,7 @@ feature:
 - [x] BiliBili 拉流逻辑
 - [ ] hls播放组件
 - [x] Youtube 拉流逻辑
+- [x] Hibiki Radio 拉流逻辑
 - [ ] NicoNico 拉流逻辑
 - [x] LineLive拉流逻辑
 - [ ] 录屏
@@ -97,4 +98,20 @@ GET `http://live2.nicovideo.jp/watch/lv${videoId}`
 var config = JSON.parse(ytplayer.config.args.player_response)
 得到的结果中config.streamingData.hlsManifestUrl即播放地址
 
+
+### Hibiki
+1. 请求VideoID
+GET `https://vcms-api.hibiki-radio.jp/api/v1/programs/${accessID}`
+请求中需要添加HTTP头域
+```
+X-Requested-With: XMLHttpRequest
+```
+返回JSON中的episode.video.id即为videoID
+
+2. 请求播放地址
+GET `https://vcms-api.hibiki-radio.jp/api/v1/videos/play_check?video_id=${videoID}`
+
+同样需要带上头域
+
+返回JSON中的"playlist_url"为播放地址
 
