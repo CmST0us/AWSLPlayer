@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <NSObjectSignals/NSObject+SignalsSlots.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +19,7 @@ typedef void(^APRequestPlatformLivePlayURLBlock)(NSDictionary * _Nullable playUR
 // K: 清晰度
 // V: 播放地址
 - (NSDictionary<NSString *, NSURL *> * _Nullable )playURLs;
-
+NS_SIGNAL(playURLsDidChange);
 @end
 
 NS_ASSUME_NONNULL_END

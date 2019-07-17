@@ -5,7 +5,7 @@
 //  Created by CmST0us on 2019/7/14.
 //  Copyright © 2019 eric3u. All rights reserved.
 //
-
+#import <NSObjectSignals/NSObject+SignalsSlots.h>
 #import <Masonry/Masonry.h>
 #import "ViewController.h"
 #import "APAVPlayerView.h"
@@ -40,6 +40,7 @@
     [super initSubviews];
     
     self.player = [[APAVPlayerView alloc] init];
+    self.player.userInteractionEnabled = NO;
     [self.view addSubview:self.player];
     [self.player mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(self.view);
@@ -72,20 +73,31 @@
     }];
 }
 
+- (void)bindData {
+    [self.bilibiliLive listenKeypath:@"playURLs" pairWithSignal:NS_SIGNAL_SELECTOR(playURLsDidChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(bilibiliLive_PlayURLs)];
+    [self.player connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_SLOT_SELECTOR(onBiliBiliPlayerStatusChange)];
+}
+
+NS_PROPERTY_SLOT(bilibiliLive_PlayURLs) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.player.userInteractionEnabled = newValue == nil ? NO : YES;
+    });
+}
+
+- (NS_SLOT)onBiliBiliPlayerStatusChange {
+    NSLog(@"bilibili player status change");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     weakSelf(self);
     
-    self.bilibiliLive = [[APBiliBiliLive alloc] initWithRoomID:9300435];
+    self.bilibiliLive = [[APBiliBiliLive alloc] initWithRoomID:13291884];
 
     [self.bilibiliLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
-        if (error == nil) {
-            [weakSelf.bilibiliLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
-                if (error == nil && playURLs.count > 0) {
-                    weakSelf.player.playURL = [playURLs allValues][0];
-                    NSLog(@"Ready to play1");
-                }
-            }];
+        if (error == nil && playURLs.count > 0) {
+            weakSelf.player.playURL = [playURLs allValues][0];
+            NSLog(@"Ready to play1");
         }
     }];
     
@@ -114,6 +126,7 @@
         }
     }];
     
+    [self bindData];
 }
 
 @end

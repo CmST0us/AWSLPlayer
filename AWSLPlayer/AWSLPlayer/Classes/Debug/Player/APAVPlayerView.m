@@ -22,9 +22,16 @@
 
 // C
 @property (nonatomic, strong) AVPlayer *player;
+
 @end
 
 @implementation APAVPlayerView
+NS_CLOSE_SIGNAL_WARN(playerStatusChange);
+
+NS_PROPERTY_SLOT(playerStatus) {
+    NSLog(@"new status %@", newValue);
+    [self emitSignal:NS_SIGNAL_SELECTOR(playerStatusChange) withParams:@[newValue, oldValue]];
+}
 
 - (void)didInitialize {
     [super didInitialize];
@@ -70,6 +77,7 @@
 - (AVPlayer *)player {
     if (_player == nil) {
         _player = [[AVPlayer alloc] initWithPlayerItem:self.assetItem];
+        [_player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
     }
     return _player;
 }
