@@ -41,6 +41,9 @@
 		4F989C9622DE1A8E0092EE90 /* APBiliBiliLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B45022DB02BD00F09FAC /* APBiliBiliLive.m */; };
 		4F989C9A22DE23A00092EE90 /* APHibikiURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989C9922DE23A00092EE90 /* APHibikiURLSession.m */; };
 		4F989C9E22DE2E580092EE90 /* APHibikiLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989C9D22DE2E580092EE90 /* APHibikiLive.m */; };
+		4F989CA422E0D4780092EE90 /* APMediaPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CA322E0D4780092EE90 /* APMediaPlayerControlView.m */; };
+		4F989CA722E0D4A60092EE90 /* APMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CA622E0D4A60092EE90 /* APMediaPlayer.m */; };
+		4F989CAA22E0D4D40092EE90 /* APMediaPlayerDisplayLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CA922E0D4D40092EE90 /* APMediaPlayerDisplayLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +127,12 @@
 		4F989C9922DE23A00092EE90 /* APHibikiURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHibikiURLSession.m; sourceTree = "<group>"; };
 		4F989C9C22DE2E580092EE90 /* APHibikiLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHibikiLive.h; sourceTree = "<group>"; };
 		4F989C9D22DE2E580092EE90 /* APHibikiLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHibikiLive.m; sourceTree = "<group>"; };
+		4F989CA222E0D4780092EE90 /* APMediaPlayerControlView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMediaPlayerControlView.h; sourceTree = "<group>"; };
+		4F989CA322E0D4780092EE90 /* APMediaPlayerControlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APMediaPlayerControlView.m; sourceTree = "<group>"; };
+		4F989CA522E0D4A60092EE90 /* APMediaPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMediaPlayer.h; sourceTree = "<group>"; };
+		4F989CA622E0D4A60092EE90 /* APMediaPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APMediaPlayer.m; sourceTree = "<group>"; };
+		4F989CA822E0D4D40092EE90 /* APMediaPlayerDisplayLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMediaPlayerDisplayLayer.h; sourceTree = "<group>"; };
+		4F989CA922E0D4D40092EE90 /* APMediaPlayerDisplayLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APMediaPlayerDisplayLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +178,8 @@
 				4F25B41F22DA571B00F09FAC /* Services */,
 				4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */,
 				4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */,
+				4F5C333222DA4F1700D3FCA1 /* ViewController.h */,
+				4F5C333322DA4F1700D3FCA1 /* ViewController.m */,
 				4F25B45C22DB083200F09FAC /* APMacroHelper.h */,
 			);
 			path = Classes;
@@ -194,8 +205,10 @@
 		4F25B42122DA573E00F09FAC /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				4F5C333222DA4F1700D3FCA1 /* ViewController.h */,
-				4F5C333322DA4F1700D3FCA1 /* ViewController.m */,
+				4F989CA022E0D43C0092EE90 /* DisplayLayer */,
+				4F989C9F22E0D42A0092EE90 /* ControlView */,
+				4F989CA522E0D4A60092EE90 /* APMediaPlayer.h */,
+				4F989CA622E0D4A60092EE90 /* APMediaPlayer.m */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -375,6 +388,24 @@
 			path = Hibiki;
 			sourceTree = "<group>";
 		};
+		4F989C9F22E0D42A0092EE90 /* ControlView */ = {
+			isa = PBXGroup;
+			children = (
+				4F989CA222E0D4780092EE90 /* APMediaPlayerControlView.h */,
+				4F989CA322E0D4780092EE90 /* APMediaPlayerControlView.m */,
+			);
+			path = ControlView;
+			sourceTree = "<group>";
+		};
+		4F989CA022E0D43C0092EE90 /* DisplayLayer */ = {
+			isa = PBXGroup;
+			children = (
+				4F989CA822E0D4D40092EE90 /* APMediaPlayerDisplayLayer.h */,
+				4F989CA922E0D4D40092EE90 /* APMediaPlayerDisplayLayer.m */,
+			);
+			path = DisplayLayer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -485,15 +516,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F989CA722E0D4A60092EE90 /* APMediaPlayer.m in Sources */,
 				4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */,
 				4F25B48822DCD68D00F09FAC /* APLineLiveURLSession.m in Sources */,
 				4F989C9322DE1A6E0092EE90 /* APLineLive.m in Sources */,
+				4F989CA422E0D4780092EE90 /* APMediaPlayerControlView.m in Sources */,
 				4F25B47C22DB306500F09FAC /* APAVPlayerView.m in Sources */,
 				4F25B45522DB048000F09FAC /* APURLSession.m in Sources */,
 				4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */,
 				4F25B42C22DA5CE800F09FAC /* APViewController.m in Sources */,
 				4F989C9A22DE23A00092EE90 /* APHibikiURLSession.m in Sources */,
 				4F25B48022DB804100F09FAC /* APYoutubeURLSession.m in Sources */,
+				4F989CAA22E0D4D40092EE90 /* APMediaPlayerDisplayLayer.m in Sources */,
 				4F989C9422DE1A720092EE90 /* APYoutubeLive.m in Sources */,
 				4F25B46422DB10E700F09FAC /* APBiliBiliURLSession.m in Sources */,
 				4F5C333F22DA4F1800D3FCA1 /* main.m in Sources */,
