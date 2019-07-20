@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  AWSLPlayer
+
+  Created by CmST0us on 2019/7/20.
+  Copyright © 2019 eric3u. All rights reserved.
+*/
+
+CFBundleDisplayName = "DD Player";
+
