@@ -7,10 +7,20 @@
 //
 
 #import <QMUIKit/QMUIKit.h>
+#import <NSObjectSignals/NSObject+SignalsSlots.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APHomepageAddItemPopupView : QMUIPopupContainerView
+typedef NS_ENUM(NSUInteger, APHomepageAddItemType) {
+    APHomepageAddItemTypeLiveURL,
+    APHomepageAddItemTypeDDPlayer,
+    APHomepageAddItemTypeLiveURLFolder,
+};
+
+@interface APHomepageAddItemPopupView : QMUIPopupMenuView
+
+// 按下菜单某一项时触发，槽参数为@(APHomepageAddItemType)
+NS_SIGNAL(didPressAddItem)
 
 @end
 

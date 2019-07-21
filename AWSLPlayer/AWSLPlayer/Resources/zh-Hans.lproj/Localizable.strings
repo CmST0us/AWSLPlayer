@@ -7,3 +7,19 @@
 */
 
 "ap_homepage_title" = "DD 播放器";
+"ap_homepage_add_button_title_live_url" = "直播间";
+"ap_homepage_add_button_title_dd_player" = "DD 播放器";
+"ap_homepage_add_button_title_live_url_folder" = "直播间收藏夹";
+"ap_add_live_url_title" = "添加直播间";
+"ap_add_live_url_folder_title" = "添加直播间收藏夹";
+"ap_add_dd_player_title" = "添加DD播放器";
+
+"ap_youtube" = "Youtube";
+"ap_bilibili" = "Bilibili";
+"ap_linelive" = "LineLive";
+"ap_hibiki_radio" = "Hibiki Radio";
+"ap_niconico" = "Nico Nico";
+
+"ap_add_live_url_live_room_name" = "名称";
+"ap_add_live_url_live_room_url" = "地址";
+"ap_add_live_url_live_room_type" = "类型";

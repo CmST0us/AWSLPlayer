@@ -12,7 +12,7 @@ static className *staticInstanceName = nil;\
             staticInstanceName = [[self alloc] init];\
         }\
     });\
-    return manager;\
+    return staticInstanceName;\
 }\
 + (instancetype)allocWithZone:(struct _NSZone *)zone {\
     static dispatch_once_t token;\
@@ -21,7 +21,7 @@ static className *staticInstanceName = nil;\
             staticInstanceName = [super allocWithZone:zone];\
         }\
     });\
-    return manager;\
+    return staticInstanceName;\
 }\
 - (id)copy {\
     return self;\

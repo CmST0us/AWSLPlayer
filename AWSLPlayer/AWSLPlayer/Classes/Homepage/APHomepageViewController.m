@@ -8,6 +8,7 @@
 
 #import "APHomepageAddItemPopupView.h"
 #import "APHomepageViewController.h"
+#import "APAddLiveURLViewController.h"
 
 @interface APHomepageViewController ()
 @property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
@@ -16,8 +17,8 @@
 
 @implementation APHomepageViewController
 
-- (void)didInitialize {
-    [super didInitialize];
+- (void)didInitializeWithStyle:(UITableViewStyle)style {
+    [super didInitializeWithStyle:style];
     self.title = NSLocalizedString(@"ap_homepage_title", @"DD播放器");
     
     self.addItemBarButtonItem = [UIBarButtonItem qmui_itemWithSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(navigationBarAddButtonAction:)];
@@ -25,15 +26,30 @@
     
     self.popupView = [[APHomepageAddItemPopupView alloc] init];
     self.popupView.sourceBarItem = self.addItemBarButtonItem;
+    
+    [self bindSignal];
+}
+
+- (void)bindSignal {
+    [self.popupView connectSignal:NS_SIGNAL_SELECTOR(didPressAddItem) forObserver:self slot:NS_SLOT_SELECTOR(popupViewDidPressAddItem:)];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 }
 
 #pragma mark - Action
 - (void)navigationBarAddButtonAction:(id)sender {
     [self.popupView showWithAnimated:YES];
 }
+
+#pragma mark - Slot
+- (NS_SLOT)popupViewDidPressAddItem:(NSNumber *)itemType {
+    if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURL) {
+        APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+}
+
 @end
