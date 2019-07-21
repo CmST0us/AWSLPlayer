@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 extern const NSString *APDDPlayModelsKey;
+extern const NSString *APLiveURLModelsKey;
+extern const NSString *APLiveURLFolderModelsKey;
 
 @interface APUserDefaultHelper : NSObject
 + (instancetype)sharedInstance;

@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, APLiveURLType) {
+    APLiveURLTypeRaw, // 未选择
+    
     APLiveURLTypeBiliBili,
     APLiveURLTypeYoutube,
     APLiveURLTypeHibikiRadio,

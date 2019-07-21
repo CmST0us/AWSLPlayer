@@ -16,6 +16,7 @@
 @end
 
 @implementation APAddLiveURLViewDataSource
+NS_USE_SIGNAL(didChangeLiveRoom);
 
 - (void)didInitialize {
     [super didInitialize];
@@ -36,7 +37,9 @@
         APTextFieldInputTableViewCell *textInputCell = (APTextFieldInputTableViewCell *)cell;
         textInputCell.inputTitle = NSLocalizedString(@"ap_add_live_url_live_room_name", nil);
         textInputCell.inputTextField.delegate = weakSelf;
+        [textInputCell.inputTextField addTarget:weakSelf action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         weakSelf.nameCell = cell;
+        
     };
     
     QMUIStaticTableViewCellData *urlCellData = [QMUIStaticTableViewCellData staticTableViewCellDataWithIdentifier:1 image:nil text:nil detailText:nil didSelectTarget:nil didSelectAction:nil accessoryType:QMUIStaticTableViewCellAccessoryTypeNone];
@@ -49,6 +52,7 @@
         APTextFieldInputTableViewCell *textInputCell = (APTextFieldInputTableViewCell *)cell;
         textInputCell.inputTitle = NSLocalizedString(@"ap_add_live_url_live_room_url", nil);
         textInputCell.inputTextField.delegate = weakSelf;
+        [textInputCell.inputTextField addTarget:weakSelf action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         weakSelf.urlCell = cell;
     };
     
@@ -70,13 +74,13 @@
         cell.accessoryType = weakSelf.liveRoom.urlType == APLiveURLTypeLineLive ? QMUIStaticTableViewCellAccessoryTypeCheckmark : QMUIStaticTableViewCellAccessoryTypeNone;
     };
     
-    QMUIStaticTableViewCellData *urlNicoNicoTypeData = [QMUIStaticTableViewCellData staticTableViewCellDataWithIdentifier:2 image:nil text:NSLocalizedString(@"ap_niconico", nil) detailText:nil didSelectTarget:self didSelectAction:@selector(didSelectNicoNico:) accessoryType:QMUIStaticTableViewCellAccessoryTypeCheckmark];
+    QMUIStaticTableViewCellData *urlNicoNicoTypeData = [QMUIStaticTableViewCellData staticTableViewCellDataWithIdentifier:5 image:nil text:NSLocalizedString(@"ap_niconico", nil) detailText:nil didSelectTarget:self didSelectAction:@selector(didSelectNicoNico:) accessoryType:QMUIStaticTableViewCellAccessoryTypeCheckmark];
     urlNicoNicoTypeData.height = 44;
     urlNicoNicoTypeData.cellForRowBlock = ^(UITableView *tableView, __kindof QMUITableViewCell *cell, QMUIStaticTableViewCellData *cellData) {
         cell.accessoryType = weakSelf.liveRoom.urlType == APLiveURLTypeNicoNico ? QMUIStaticTableViewCellAccessoryTypeCheckmark : QMUIStaticTableViewCellAccessoryTypeNone;
     };
     
-    QMUIStaticTableViewCellData *urlHibikiRadioTypeData = [QMUIStaticTableViewCellData staticTableViewCellDataWithIdentifier:2 image:nil text:NSLocalizedString(@"ap_hibiki_radio", nil) detailText:nil didSelectTarget:self didSelectAction:@selector(didSelectHibikiRadio:) accessoryType:QMUIStaticTableViewCellAccessoryTypeCheckmark];
+    QMUIStaticTableViewCellData *urlHibikiRadioTypeData = [QMUIStaticTableViewCellData staticTableViewCellDataWithIdentifier:6 image:nil text:NSLocalizedString(@"ap_hibiki_radio", nil) detailText:nil didSelectTarget:self didSelectAction:@selector(didSelectHibikiRadio:) accessoryType:QMUIStaticTableViewCellAccessoryTypeCheckmark];
     urlHibikiRadioTypeData.height = 44;
     urlHibikiRadioTypeData.cellForRowBlock = ^(UITableView *tableView, __kindof QMUITableViewCell *cell, QMUIStaticTableViewCellData *cellData) {
         cell.accessoryType = weakSelf.liveRoom.urlType == APLiveURLTypeHibikiRadio ? QMUIStaticTableViewCellAccessoryTypeCheckmark : QMUIStaticTableViewCellAccessoryTypeNone;
@@ -98,36 +102,49 @@
 }
 
 #pragma mark - Action
+- (void)textFieldDidChange:(QMUITextField *)textField {
+    if (textField == self.nameCell.inputTextField) {
+        self.liveRoom.name = textField.text;
+        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    } else if (textField == self.urlCell.inputTextField) {
+        self.liveRoom.liveURL = [NSURL URLWithString:textField.text];
+        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    }
+}
 - (void)didSelectYoutubeType:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeYoutube;
+    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectBiliBili:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeBiliBili;
+    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectNicoNico:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeNicoNico;
+    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectLineLive:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeLineLive;
+    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectHibikiRadio:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeHibikiRadio;
+    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 #pragma mark - Delegate
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == self.nameCell.inputTextField) {
-        self.liveRoom.name = textField.text;
-    }
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 

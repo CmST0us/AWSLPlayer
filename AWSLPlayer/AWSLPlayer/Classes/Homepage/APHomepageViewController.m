@@ -9,6 +9,8 @@
 #import "APHomepageAddItemPopupView.h"
 #import "APHomepageViewController.h"
 #import "APAddLiveURLViewController.h"
+#import "APUserDefaultHelper.h"
+#import "APNavigationController.h"
 
 @interface APHomepageViewController ()
 @property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
@@ -38,6 +40,10 @@
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+}
+
 #pragma mark - Action
 - (void)navigationBarAddButtonAction:(id)sender {
     [self.popupView showWithAnimated:YES];
@@ -47,7 +53,8 @@
 - (NS_SLOT)popupViewDidPressAddItem:(NSNumber *)itemType {
     if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURL) {
         APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        [self.navigationController pushViewController:vc animated:YES];
+        APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
         return;
     }
 }

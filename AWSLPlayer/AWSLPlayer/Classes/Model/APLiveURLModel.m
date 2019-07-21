@@ -24,4 +24,12 @@
     }
     return self;
 }
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _urlType = APLiveURLTypeRaw;
+    }
+    return self;
+}
 @end

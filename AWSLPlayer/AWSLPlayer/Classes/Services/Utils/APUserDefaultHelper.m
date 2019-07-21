@@ -9,6 +9,8 @@
 #import "APUserDefaultHelper.h"
 
 const NSString *APDDPlayerModelsKey = @"APDDPlayerModelsKey";
+const NSString *APLiveURLModelsKey = @"APLiveURLModelsKey";
+const NSString *APLiveURLFolderModelsKey = @"APLiveURLFolderModelsKey";
 
 @implementation APUserDefaultHelper
 MAKE_CLASS_SINGLETON(APUserDefaultHelper, instance, sharedInstance)
