@@ -23,4 +23,13 @@ MAKE_CLASS_SINGLETON(APUserDefaultHelper, instance, sharedInstance)
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
 
+- (NSMutableArray *)mutableArrayObjectWithKey:(NSString *)key {
+    NSArray *a = [self objectForKey:key];
+    if (a == nil || ![a isKindOfClass:[NSArray class]] || a.count == 0) {
+        return [NSMutableArray array];
+    } else {
+        return [[NSMutableArray alloc] initWithArray:a];
+    }
+}
+
 @end

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class APLiveURLModel;
 @interface APLiveURLFolderModel : NSObject <NSCoding>
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong, nonnull) NSArray<APLiveURLModel *> *liveURLs;
+@property (nonatomic, strong, nullable) NSArray<APLiveURLModel *> *liveURLs;
 @end
 
 NS_ASSUME_NONNULL_END

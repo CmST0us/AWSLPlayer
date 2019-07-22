@@ -20,6 +20,8 @@ extern const NSString *APLiveURLFolderModelsKey;
 - (void)setObject:(id)object forKey:(NSString *)key;
 - (nullable id)objectForKey:(NSString *)key;
 
+- (NSMutableArray *)mutableArrayObjectWithKey:(NSString *)key;
+
 @end
 
 NS_ASSUME_NONNULL_END

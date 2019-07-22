@@ -11,6 +11,7 @@
 #import "APAddLiveURLViewController.h"
 #import "APUserDefaultHelper.h"
 #import "APNavigationController.h"
+#import "APLiveURLFolderModel.h"
 
 @interface APHomepageViewController ()
 @property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
@@ -41,9 +42,42 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+
 }
 
+- (void)createNewLiveURLFolderWithName:(NSString *)name {
+    APLiveURLFolderModel *model = [[APLiveURLFolderModel alloc] init];
+    model.name = name;
+    
+    NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:model];
+    NSMutableArray *folders = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:[APLiveURLFolderModelsKey copy]];
+    [folders addObject:archivedData];
+    [[APUserDefaultHelper sharedInstance] setObject:folders forKey:[APLiveURLFolderModelsKey copy]];
+}
+
+- (void)gotoAddLiveURLViewController {
+    APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)showAddURLFolderDialog {
+    weakSelf(self);
+    QMUIDialogTextFieldViewController *addLiveURLFolderDiglog = [[QMUIDialogTextFieldViewController alloc] init];
+    addLiveURLFolderDiglog.title = NSLocalizedString(@"ap_add_live_url_folder_title", nil);
+    addLiveURLFolderDiglog.shouldManageTextFieldsReturnEventAutomatically = YES;
+    addLiveURLFolderDiglog.enablesSubmitButtonAutomatically = YES;
+    [addLiveURLFolderDiglog addTextFieldWithTitle:NSLocalizedString(@"ap_add_live_url_folder_name", nil) configurationHandler:nil];
+    [addLiveURLFolderDiglog addCancelButtonWithText:NSLocalizedString(@"ap_cancel", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
+        [aDialogViewController hideWithAnimated:YES completion:nil];
+    }];
+    [addLiveURLFolderDiglog addSubmitButtonWithText:NSLocalizedString(@"ap_submit", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
+        QMUIDialogTextFieldViewController *textDialog = (QMUIDialogTextFieldViewController *)aDialogViewController;
+        [weakSelf createNewLiveURLFolderWithName:textDialog.textFields[0].text];
+        [aDialogViewController hideWithAnimated:YES completion:nil];
+    }];
+    [addLiveURLFolderDiglog showWithAnimated:YES completion:nil];
+}
 #pragma mark - Action
 - (void)navigationBarAddButtonAction:(id)sender {
     [self.popupView showWithAnimated:YES];
@@ -52,10 +86,9 @@
 #pragma mark - Slot
 - (NS_SLOT)popupViewDidPressAddItem:(NSNumber *)itemType {
     if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURL) {
-        APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
-        [self presentViewController:nav animated:YES completion:nil];
-        return;
+        [self gotoAddLiveURLViewController];
+    } else if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURLFolder) {
+        [self showAddURLFolderDialog];
     }
 }
 

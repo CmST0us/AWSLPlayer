@@ -6,6 +6,9 @@
   Copyright © 2019 eric3u. All rights reserved.
 */
 
+"ap_cancel" = "Cancel";
+"ap_submit" = "Submit";
+
 "ap_homepage_title" = "DD Player";
 "ap_homepage_add_button_title_live_url" = "Live Room";
 "ap_homepage_add_button_title_dd_player" = "DD Player";
@@ -24,4 +27,4 @@
 "ap_add_live_url_live_room_url" = "URL";
 "ap_add_live_url_live_room_type" = "Type";
 
-
+"ap_add_live_url_folder_name" = "Name";
