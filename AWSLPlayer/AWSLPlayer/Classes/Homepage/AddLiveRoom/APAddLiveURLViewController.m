@@ -67,16 +67,9 @@
 }
 
 - (void)navigationBarSaveButtonAction:(id)sender {
-    NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:self.dataSource.liveRoom];
-    NSArray *savedArray = [[APUserDefaultHelper sharedInstance] objectForKey:[APLiveURLModelsKey copy]];
-    NSMutableArray *mutableArray = [NSMutableArray array];
-    if (savedArray == nil) {
-        mutableArray = [[NSMutableArray alloc] initWithObjects:archivedData, nil];
-    } else {
-        [mutableArray addObjectsFromArray:savedArray];
-        [mutableArray addObject:archivedData];
-    }
-    [[APUserDefaultHelper sharedInstance] setObject:mutableArray forKey:[APLiveURLModelsKey copy]];
+    NSMutableArray *mutableArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLModelsKey];
+    [mutableArray addObject:self.dataSource.liveRoom];
+    [[APUserDefaultHelper sharedInstance] setObject:mutableArray forKey:APLiveURLModelsKey];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

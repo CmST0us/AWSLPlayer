@@ -37,11 +37,11 @@
 }
 
 - (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block {
-    weakSelf(self);
+    weakSelf(target);
     [self.session requestRealRoomID:self.requestedRoomID completion:^(NSInteger realRoomID, NSError * _Nullable error) {
         if (error == nil) {
-            weakSelf.realRoomID = realRoomID;
-            [weakSelf.session requestPlayURLWithReadRoomID:realRoomID completion:^(NSArray<NSString *> * _Nullable urlStrings, NSError * _Nullable ee) {
+            target.realRoomID = realRoomID;
+            [target.session requestPlayURLWithReadRoomID:realRoomID completion:^(NSArray<NSString *> * _Nullable urlStrings, NSError * _Nullable ee) {
                 if (ee == nil) {
                     if (urlStrings == nil) {
                         block(nil, [NSError errorWithAPURLSessionError:APURLSessionErrorServerNotHaveThisObject userInfo:nil]);
@@ -53,7 +53,7 @@
                                 [playURLs setObject:url forKey:[NSNumber numberWithUnsignedInteger:idx].stringValue];
                             }
                         }];
-                        weakSelf.playURLs = playURLs;
+                        target.playURLs = playURLs;
                         block(playURLs, nil);
                     }
                 } else {

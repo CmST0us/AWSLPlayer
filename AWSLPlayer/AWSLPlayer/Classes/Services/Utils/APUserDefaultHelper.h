@@ -10,9 +10,9 @@
 #import "APMacroHelper.h"
 NS_ASSUME_NONNULL_BEGIN
 
-extern const NSString *APDDPlayModelsKey;
-extern const NSString *APLiveURLModelsKey;
-extern const NSString *APLiveURLFolderModelsKey;
+extern NSString * const APDDPlayerModelsKey;
+extern NSString * const APLiveURLModelsKey;
+extern NSString * const APLiveURLFolderModelsKey;
 
 @interface APUserDefaultHelper : NSObject
 + (instancetype)sharedInstance;

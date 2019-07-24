@@ -32,14 +32,14 @@
 }
 
 - (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block {
-    weakSelf(self);
+    weakSelf(target);
     [self.session requestPlayURLWithLiveRoomURL:self.liveRoomURL completion:^(NSString * _Nullable playURL, NSError * _Nullable error) {
-        weakSelf.session = nil;
+        target.session = nil;
         if (error == nil && playURL != nil) {
             NSURL *url = [NSURL URLWithString:playURL];
             if (url != nil) {
-                weakSelf.playURLs = @{@"origin": url};
-                block(weakSelf.playURLs, nil);
+                target.playURLs = @{@"origin": url};
+                block(target.playURLs, nil);
             } else {
                 block(nil, [NSError errorWithAPURLSessionError:APURLSessionErrorServerNotHaveThisObject userInfo:nil]);
             }

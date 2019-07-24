@@ -13,6 +13,11 @@
 "ap_homepage_add_button_title_live_url" = "Live Room";
 "ap_homepage_add_button_title_dd_player" = "DD Player";
 "ap_homepage_add_button_title_live_url_folder" = "Live URL Folder";
+
+"ap_homepage_section_title_dd_player" = "DD Player";
+"ap_homepage_section_title_live_url_folder" = "Live Room Folder";
+"ap_homepage_section_title_live_url" = "Live Room";
+
 "ap_add_live_url_title" = "Add Live Room";
 "ap_add_live_url_folder_title" = "Add Live Room Folder";
 "ap_add_dd_player_title" = "Add DD Player";

@@ -8,17 +8,27 @@
 
 #import "APHomepageAddItemPopupView.h"
 #import "APHomepageViewController.h"
+#import "APHomepageDataSource.h"
 #import "APAddLiveURLViewController.h"
 #import "APUserDefaultHelper.h"
 #import "APNavigationController.h"
 #import "APLiveURLFolderModel.h"
 
-@interface APHomepageViewController ()
+@interface APHomepageViewController () <QMUITableViewDelegate>
 @property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
 @property (nonatomic, strong) APHomepageAddItemPopupView *popupView;
+
+@property (nonatomic, strong) APHomepageDataSource *dataSource;
 @end
 
 @implementation APHomepageViewController
+
+- (APHomepageDataSource *)dataSource {
+    if (_dataSource == nil) {
+        _dataSource = [[APHomepageDataSource alloc] init];
+    }
+    return _dataSource;
+}
 
 - (void)didInitializeWithStyle:(UITableViewStyle)style {
     [super didInitializeWithStyle:style];
@@ -30,6 +40,7 @@
     self.popupView = [[APHomepageAddItemPopupView alloc] init];
     self.popupView.sourceBarItem = self.addItemBarButtonItem;
     
+    [self.tableView registerClass:[QMUITableViewCell class] forCellReuseIdentifier:@"cell"];
     [self bindSignal];
 }
 
@@ -42,17 +53,20 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self reloadAllData];
+}
 
+- (void)reloadAllData {
+    [self.dataSource reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)createNewLiveURLFolderWithName:(NSString *)name {
     APLiveURLFolderModel *model = [[APLiveURLFolderModel alloc] init];
     model.name = name;
-    
-    NSData *archivedData = [NSKeyedArchiver archivedDataWithRootObject:model];
-    NSMutableArray *folders = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:[APLiveURLFolderModelsKey copy]];
-    [folders addObject:archivedData];
-    [[APUserDefaultHelper sharedInstance] setObject:folders forKey:[APLiveURLFolderModelsKey copy]];
+    NSMutableArray *folders = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
+    [folders addObject:model];
+    [[APUserDefaultHelper sharedInstance] setObject:folders forKey:APLiveURLFolderModelsKey];
 }
 
 - (void)gotoAddLiveURLViewController {
@@ -62,7 +76,7 @@
 }
 
 - (void)showAddURLFolderDialog {
-    weakSelf(self);
+    weakSelf(target);
     QMUIDialogTextFieldViewController *addLiveURLFolderDiglog = [[QMUIDialogTextFieldViewController alloc] init];
     addLiveURLFolderDiglog.title = NSLocalizedString(@"ap_add_live_url_folder_title", nil);
     addLiveURLFolderDiglog.shouldManageTextFieldsReturnEventAutomatically = YES;
@@ -73,11 +87,47 @@
     }];
     [addLiveURLFolderDiglog addSubmitButtonWithText:NSLocalizedString(@"ap_submit", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
         QMUIDialogTextFieldViewController *textDialog = (QMUIDialogTextFieldViewController *)aDialogViewController;
-        [weakSelf createNewLiveURLFolderWithName:textDialog.textFields[0].text];
+        [target createNewLiveURLFolderWithName:textDialog.textFields[0].text];
         [aDialogViewController hideWithAnimated:YES completion:nil];
+        [target reloadAllData];
     }];
     [addLiveURLFolderDiglog showWithAnimated:YES completion:nil];
 }
+
+#pragma mark - Delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return TableViewCellNormalHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    QMUILabel *label = [[QMUILabel alloc] init];
+    label.text = [self.dataSource titleForSection:section];
+    label.textColor = UIColorGray;
+    label.contentEdgeInsets = UIEdgeInsetsMake(4, 8, 4, 0);
+    return label;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    QMUITableViewCell *cell = (QMUITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
+        cell = [[QMUITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
+        cell.textLabel.text = self.dataSource.liveURLs[indexPath.row].name;
+    } else if (indexPath.section == APHomepageDataSourceSectionTypeFolder) {
+        cell.textLabel.text = self.dataSource.liveURLFolders[indexPath.row].name;
+    }
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.dataSource numberOfSections];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.dataSource numberOfRowInSection:section];
+}
+
 #pragma mark - Action
 - (void)navigationBarAddButtonAction:(id)sender {
     [self.popupView showWithAnimated:YES];

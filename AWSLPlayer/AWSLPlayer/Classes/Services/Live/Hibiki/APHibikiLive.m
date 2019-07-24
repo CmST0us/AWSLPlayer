@@ -39,20 +39,20 @@
 }
 
 - (void)requestPlayURLsWithCompletion:(APRequestPlatformLivePlayURLBlock)block {
-    weakSelf(self);
+    weakSelf(target);
     [self.session requestVideoIDWithAccessID:self.accessID completion:^(NSInteger videoID, NSError * _Nullable error) {
         if (error == nil) {
-            weakSelf.videoID = videoID;
-            [weakSelf.session requestPlayURLsWithVideoID:videoID completion:^(NSString * _Nullable playURL, NSError * _Nullable ee) {
+            target.videoID = videoID;
+            [target.session requestPlayURLsWithVideoID:videoID completion:^(NSString * _Nullable playURL, NSError * _Nullable ee) {
                 if (ee == nil) {
                     NSURL *url = [NSURL URLWithString:playURL];
                     if (url == nil) {
                         block(nil, [NSError errorWithAPURLSessionError:APURLSessionErrorServerNotHaveThisObject userInfo:nil]);
                     } else {
-                        weakSelf.playURLs = @{
+                        target.playURLs = @{
                                               @"origin": url
                                               };
-                        block(weakSelf.playURLs, nil);
+                        block(target.playURLs, nil);
                     }
                 } else {
                     block(nil, ee);

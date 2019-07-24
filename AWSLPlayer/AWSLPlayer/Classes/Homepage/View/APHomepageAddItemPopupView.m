@@ -23,7 +23,7 @@ NS_CLOSE_SIGNAL_WARN(didPressAddItem)
 }
 
 - (void)setupItems {
-    weakSelf(self);
+    weakSelf(target);
     QMUIOrderedDictionary *itemsTitle = [self itemsTitleAndAction];
     NSMutableArray *items = [NSMutableArray array];
     [itemsTitle.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -31,9 +31,9 @@ NS_CLOSE_SIGNAL_WARN(didPressAddItem)
         QMUIPopupMenuButtonItem *item = [QMUIPopupMenuButtonItem itemWithImage:nil title:obj handler:^(QMUIPopupMenuButtonItem * _Nonnull aItem) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [weakSelf performSelector:NSSelectorFromString(selector) withObject:aItem];
+            [target performSelector:NSSelectorFromString(selector) withObject:aItem];
 #pragma clang diagnostic pop
-            [weakSelf hideWithAnimated:YES];
+            [target hideWithAnimated:YES];
         }];
         [items addObject:item];
     }];

@@ -45,10 +45,10 @@
 }
 
 - (void)testHibikiRetData {
-    weakSelf(self);
+    weakSelf(target);
     [self.session requestVideoIDWithAccessID:@"imas_cg" completion:^(NSInteger videoID, NSError * _Nullable error) {
         if (error == nil) {
-            [weakSelf.session requestPlayURLsWithVideoID:videoID completion:^(NSString * _Nullable playURL, NSError * _Nullable error) {
+            [target.session requestPlayURLsWithVideoID:videoID completion:^(NSString * _Nullable playURL, NSError * _Nullable error) {
                 
             }];
         }

@@ -58,6 +58,7 @@
 		4F989CE222E440BF0092EE90 /* APAddLiveURLViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CE122E440BF0092EE90 /* APAddLiveURLViewDataSource.m */; };
 		4F989CED22E466FE0092EE90 /* APTextViewInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CE722E448FD0092EE90 /* APTextViewInputTableViewCell.m */; };
 		4F989CF022E467300092EE90 /* APTextFieldInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CEF22E467300092EE90 /* APTextFieldInputTableViewCell.m */; };
+		4F989CF522E8A80D0092EE90 /* APHomepageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CF422E8A80D0092EE90 /* APHomepageDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +178,8 @@
 		4F989CE722E448FD0092EE90 /* APTextViewInputTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APTextViewInputTableViewCell.m; sourceTree = "<group>"; };
 		4F989CEE22E467300092EE90 /* APTextFieldInputTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APTextFieldInputTableViewCell.h; sourceTree = "<group>"; };
 		4F989CEF22E467300092EE90 /* APTextFieldInputTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APTextFieldInputTableViewCell.m; sourceTree = "<group>"; };
+		4F989CF322E8A80D0092EE90 /* APHomepageDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHomepageDataSource.h; sourceTree = "<group>"; };
+		4F989CF422E8A80D0092EE90 /* APHomepageDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHomepageDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -461,20 +464,23 @@
 		4F989CAB22E367530092EE90 /* Homepage */ = {
 			isa = PBXGroup;
 			children = (
+				4F989CF222E8A5C70092EE90 /* AddDDPlayer */,
 				4F989CDE22E43FED0092EE90 /* AddLiveRoom */,
 				4F989CC022E374010092EE90 /* View */,
-				4F989CB222E3683A0092EE90 /* Model */,
+				4F989CB222E3683A0092EE90 /* ViewModel */,
 				4F989CAF22E368340092EE90 /* APHomepageViewController.h */,
 				4F989CB022E368340092EE90 /* APHomepageViewController.m */,
 			);
 			path = Homepage;
 			sourceTree = "<group>";
 		};
-		4F989CB222E3683A0092EE90 /* Model */ = {
+		4F989CB222E3683A0092EE90 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4F989CF322E8A80D0092EE90 /* APHomepageDataSource.h */,
+				4F989CF422E8A80D0092EE90 /* APHomepageDataSource.m */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		4F989CC022E374010092EE90 /* View */ = {
@@ -547,6 +553,13 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4F989CF222E8A5C70092EE90 /* AddDDPlayer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddDDPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -696,6 +709,7 @@
 				4F989C9622DE1A8E0092EE90 /* APBiliBiliLive.m in Sources */,
 				4F989CC322E374BD0092EE90 /* APHomepageAddItemPopupView.m in Sources */,
 				4F989CD722E4394A0092EE90 /* APFilePathHelper.m in Sources */,
+				4F989CF522E8A80D0092EE90 /* APHomepageDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

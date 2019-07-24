@@ -61,15 +61,15 @@ const NSString *APYoutubeLiveRoomRequestURL = @"https://www.youtube.com/watch?v=
     var config = JSON.parse(ytplayer.config.args.player_response);\
     config.streamingData.hlsManifestUrl;\
     ";
-    weakSelf(self);
+    weakSelf(target);
     [webView evaluateJavaScript:getPlayURLJavascript completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
         if (error == nil) {
-            weakSelf.handler(obj, nil);
+            target.handler(obj, nil);
         } else {
-            weakSelf.handler(nil, error);
+            target.handler(nil, error);
         }
-        [weakSelf.hiddenWebView stopLoading];
-        weakSelf.hiddenWebView = nil;
+        [target.hiddenWebView stopLoading];
+        target.hiddenWebView = nil;
     }];
 }
 

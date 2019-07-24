@@ -8,19 +8,21 @@
 
 #import "APUserDefaultHelper.h"
 
-const NSString *APDDPlayerModelsKey = @"APDDPlayerModelsKey";
-const NSString *APLiveURLModelsKey = @"APLiveURLModelsKey";
-const NSString *APLiveURLFolderModelsKey = @"APLiveURLFolderModelsKey";
+NSString * const APDDPlayerModelsKey = @"APDDPlayerModelsKey";
+NSString * const APLiveURLModelsKey = @"APLiveURLModelsKey";
+NSString * const APLiveURLFolderModelsKey = @"APLiveURLFolderModelsKey";
 
 @implementation APUserDefaultHelper
 MAKE_CLASS_SINGLETON(APUserDefaultHelper, instance, sharedInstance)
 
-- (void)setObject:(id)object forKey:(NSString *)key {
-    [[NSUserDefaults standardUserDefaults] setObject:object forKey:key];
+- (void)setObject:(id<NSCoding>)object forKey:(NSString *)key {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
 }
 
-- (id)objectForKey:(NSString *)key {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+- (id<NSCoding>)objectForKey:(NSString *)key {
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
 - (NSMutableArray *)mutableArrayObjectWithKey:(NSString *)key {
