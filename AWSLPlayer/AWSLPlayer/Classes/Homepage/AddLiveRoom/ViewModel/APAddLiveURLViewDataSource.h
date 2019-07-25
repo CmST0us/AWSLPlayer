@@ -9,11 +9,12 @@
 #import <QMUIKit/QMUIKit.h>
 #import <NSObjectSignals/NSObject+SignalsSlots.h>
 #import "APLiveURLModel.h"
+#import "APLiveURLFolderModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface APAddLiveURLViewDataSource : QMUIStaticTableViewCellDataSource
 @property (nonatomic, strong) APLiveURLModel *liveRoom;
-
+@property (nonatomic, strong) APLiveURLFolderModel *currentSelectFolderModel;
 #pragma mark - Signals
 NS_SIGNAL(didChangeLiveRoom);
 

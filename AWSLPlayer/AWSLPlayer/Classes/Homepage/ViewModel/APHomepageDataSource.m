@@ -30,7 +30,13 @@
 
 - (NSArray<APLiveURLModel *> *)liveURLs {
     if (_mutableLiveURLs == nil) {
-        _mutableLiveURLs = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLModelsKey];
+        NSMutableArray *ta = [NSMutableArray array];
+        [self.liveURLFolders enumerateObjectsUsingBlock:^(APLiveURLFolderModel *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj.liveURLs enumerateObjectsUsingBlock:^(APLiveURLModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [ta addObject:obj];
+            }];
+        }];
+        _mutableLiveURLs = ta;
     }
     return _mutableLiveURLs;
 }

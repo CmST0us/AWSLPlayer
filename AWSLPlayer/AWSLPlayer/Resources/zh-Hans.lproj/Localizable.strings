@@ -31,5 +31,6 @@
 "ap_add_live_url_live_room_name" = "名称";
 "ap_add_live_url_live_room_url" = "地址";
 "ap_add_live_url_live_room_type" = "类型";
+"ap_add_live_url_select_folder" = "选择收藏夹";
 
 "ap_add_live_url_folder_name" = "名称";

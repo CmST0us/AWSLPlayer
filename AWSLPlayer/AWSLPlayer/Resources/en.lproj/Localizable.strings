@@ -31,5 +31,6 @@
 "ap_add_live_url_live_room_name" = "Name";
 "ap_add_live_url_live_room_url" = "URL";
 "ap_add_live_url_live_room_type" = "Type";
+"ap_add_live_url_select_folder" = "Select Folder";
 
 "ap_add_live_url_folder_name" = "Name";

@@ -9,10 +9,12 @@
 #import "APAddLiveURLViewDataSource.h"
 #import "APTextFieldInputTableViewCell.h"
 #import "APMacroHelper.h"
+#import "APUserDefaultHelper.h"
 
 @interface APAddLiveURLViewDataSource () <QMUITextFieldDelegate>
 @property (nonatomic, weak) APTextFieldInputTableViewCell *nameCell;
 @property (nonatomic, weak) APTextFieldInputTableViewCell *urlCell;
+
 @end
 
 @implementation APAddLiveURLViewDataSource
@@ -20,6 +22,7 @@ NS_USE_SIGNAL(didChangeLiveRoom);
 
 - (void)didInitialize {
     [super didInitialize];
+    self.currentSelectFolderModel = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey][0];
     self.liveRoom = [[APLiveURLModel alloc] init];
     self.cellDataSections = [self cellData];
 }
@@ -86,6 +89,10 @@ NS_USE_SIGNAL(didChangeLiveRoom);
         cell.accessoryType = target.liveRoom.urlType == APLiveURLTypeHibikiRadio ? QMUIStaticTableViewCellAccessoryTypeCheckmark : QMUIStaticTableViewCellAccessoryTypeNone;
     };
     
+    QMUIStaticTableViewCellData *selectFolderData = [QMUIStaticTableViewCellData staticTableViewCellDataWithIdentifier:7 image:nil text:NSLocalizedString(@"ap_homepage_section_title_live_url_folder", nil) detailText:self.currentSelectFolderModel.name didSelectTarget:self didSelectAction:@selector(onPressSelectFolder:) accessoryType:QMUIStaticTableViewCellAccessoryTypeDisclosureIndicator];
+    selectFolderData.style = UITableViewCellStyleSubtitle;
+    selectFolderData.height = 44;
+    
     return @[
              @[
                  nameCellData,
@@ -98,10 +105,38 @@ NS_USE_SIGNAL(didChangeLiveRoom);
                  urlHibikiRadioTypeData,
                  urlNicoNicoTypeData
                  ],
+             @[
+                 selectFolderData
+                 ]
              ];
 }
 
 #pragma mark - Action
+- (void)onPressSelectFolder:(QMUIStaticTableViewCellData *)data {
+    weakSelf(target);
+    QMUIDialogSelectionViewController *selectionVC = [[QMUIDialogSelectionViewController alloc] init];
+    selectionVC.title = NSLocalizedString(@"ap_add_live_url_select_folder", nil);
+    selectionVC.rowHeight = 44;
+    selectionVC.selectedItemIndex = 0;
+    NSMutableArray<APLiveURLFolderModel *> *folderArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
+    NSMutableArray *items = [NSMutableArray array];
+    [folderArray enumerateObjectsUsingBlock:^(APLiveURLFolderModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [items addObject:obj.name];
+    }];
+    selectionVC.items = items;
+    selectionVC.didSelectItemBlock = ^(__kindof QMUIDialogSelectionViewController * _Nonnull aDialogViewController, NSUInteger itemIndex) {
+        target.currentSelectFolderModel = folderArray[itemIndex];
+    };
+    [selectionVC addSubmitButtonWithText:NSLocalizedString(@"ap_submit", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
+        [aDialogViewController hideWithAnimated:YES completion:nil];
+        data.detailText = target.currentSelectFolderModel.name;
+        [target.tableView reloadData];
+    }];
+    [selectionVC addCancelButtonWithText:NSLocalizedString(@"ap_cancel", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
+        [aDialogViewController hideWithAnimated:YES completion:nil];
+    }];
+    [selectionVC showWithAnimated:YES completion:nil];
+}
 - (void)textFieldDidChange:(QMUITextField *)textField {
     if (textField == self.nameCell.inputTextField) {
         self.liveRoom.name = textField.text;
