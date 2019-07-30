@@ -67,12 +67,14 @@
 }
 
 - (void)navigationBarSaveButtonAction:(id)sender {
-    NSMutableArray *mutableArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
+#warning TODO
+//    NSMutableArray *mutableArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
+    NSMutableArray *mutableArray = @[];
     NSMutableArray *t = [[NSMutableArray alloc] initWithArray:self.dataSource.currentSelectFolderModel.liveURLs];
     [t addObject:self.dataSource.liveRoom];
     self.dataSource.currentSelectFolderModel.liveURLs = t;
     [mutableArray addObject:self.dataSource.currentSelectFolderModel];
-    [[APUserDefaultHelper sharedInstance] setObject:mutableArray forKey:APLiveURLFolderModelsKey];
+//    [[APUserDefaultHelper sharedInstance] setObject:mutableArray forKey:APLiveURLFolderModelsKey];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -59,6 +59,7 @@
 		4F989CED22E466FE0092EE90 /* APTextViewInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CE722E448FD0092EE90 /* APTextViewInputTableViewCell.m */; };
 		4F989CF022E467300092EE90 /* APTextFieldInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CEF22E467300092EE90 /* APTextFieldInputTableViewCell.m */; };
 		4F989CF522E8A80D0092EE90 /* APHomepageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CF422E8A80D0092EE90 /* APHomepageDataSource.m */; };
+		4FEE4C1422F0A45C00BCA528 /* APUserStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,8 @@
 		4F5C334522DA520C00D3FCA1 /* VideoCodecKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VideoCodecKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C334922DA520E00D3FCA1 /* NSObjectSignals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NSObjectSignals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C334C22DA52D300D3FCA1 /* Masonry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F7884F822F0A76F00557981 /* APUserStorageKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserStorageKey.h; sourceTree = "<group>"; };
+		4F7884F922F0ADF700557981 /* APUserDefaultKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserDefaultKey.h; sourceTree = "<group>"; };
 		4F989C9822DE23A00092EE90 /* APHibikiURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHibikiURLSession.h; sourceTree = "<group>"; };
 		4F989C9922DE23A00092EE90 /* APHibikiURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHibikiURLSession.m; sourceTree = "<group>"; };
 		4F989C9C22DE2E580092EE90 /* APHibikiLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHibikiLive.h; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 		4F989CEF22E467300092EE90 /* APTextFieldInputTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APTextFieldInputTableViewCell.m; sourceTree = "<group>"; };
 		4F989CF322E8A80D0092EE90 /* APHomepageDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHomepageDataSource.h; sourceTree = "<group>"; };
 		4F989CF422E8A80D0092EE90 /* APHomepageDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHomepageDataSource.m; sourceTree = "<group>"; };
+		4FEE4C1222F0A45C00BCA528 /* APUserStorageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserStorageHelper.h; sourceTree = "<group>"; };
+		4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APUserStorageHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -512,6 +517,10 @@
 			children = (
 				4F989CD522E4394A0092EE90 /* APFilePathHelper.h */,
 				4F989CD622E4394A0092EE90 /* APFilePathHelper.m */,
+				4F7884F822F0A76F00557981 /* APUserStorageKey.h */,
+				4F7884F922F0ADF700557981 /* APUserDefaultKey.h */,
+				4FEE4C1222F0A45C00BCA528 /* APUserStorageHelper.h */,
+				4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */,
 				4F989CD822E439580092EE90 /* APUserDefaultHelper.h */,
 				4F989CD922E439580092EE90 /* APUserDefaultHelper.m */,
 			);
@@ -687,6 +696,7 @@
 				4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */,
 				4F989CD222E432E20092EE90 /* APDDPlayerLayoutModel.m in Sources */,
 				4F989CC922E431540092EE90 /* APLiveURLModel.m in Sources */,
+				4FEE4C1422F0A45C00BCA528 /* APUserStorageHelper.m in Sources */,
 				4F989CED22E466FE0092EE90 /* APTextViewInputTableViewCell.m in Sources */,
 				4F25B42C22DA5CE800F09FAC /* APViewController.m in Sources */,
 				4F989C9A22DE23A00092EE90 /* APHibikiURLSession.m in Sources */,

@@ -22,7 +22,8 @@ NS_USE_SIGNAL(didChangeLiveRoom);
 
 - (void)didInitialize {
     [super didInitialize];
-    self.currentSelectFolderModel = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey][0];
+#warning TODO
+//    self.currentSelectFolderModel = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey][0];
     self.liveRoom = [[APLiveURLModel alloc] init];
     self.cellDataSections = [self cellData];
 }
@@ -118,7 +119,10 @@ NS_USE_SIGNAL(didChangeLiveRoom);
     selectionVC.title = NSLocalizedString(@"ap_add_live_url_select_folder", nil);
     selectionVC.rowHeight = 44;
     selectionVC.selectedItemIndex = 0;
-    NSMutableArray<APLiveURLFolderModel *> *folderArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
+#warning TODO
+//    NSMutableArray<APLiveURLFolderModel *> *folderArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
+    NSMutableArray<APLiveURLFolderModel *> *folderArray = @[];
+    
     NSMutableArray *items = [NSMutableArray array];
     [folderArray enumerateObjectsUsingBlock:^(APLiveURLFolderModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [items addObject:obj.name];

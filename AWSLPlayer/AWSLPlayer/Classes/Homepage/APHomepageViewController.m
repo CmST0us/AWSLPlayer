@@ -64,9 +64,11 @@
 - (void)createNewLiveURLFolderWithName:(NSString *)name {
     APLiveURLFolderModel *model = [[APLiveURLFolderModel alloc] init];
     model.name = name;
+    /*
     NSMutableArray *folders = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
     [folders addObject:model];
     [[APUserDefaultHelper sharedInstance] setObject:folders forKey:APLiveURLFolderModelsKey];
+     */
 }
 
 - (void)gotoAddLiveURLViewController {

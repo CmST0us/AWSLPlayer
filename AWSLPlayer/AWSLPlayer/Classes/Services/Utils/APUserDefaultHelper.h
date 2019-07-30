@@ -7,20 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APMacroHelper.h"
+#import "APUserStorageHelper.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const APDDPlayerModelsKey;
-extern NSString * const APLiveURLModelsKey;
-extern NSString * const APLiveURLFolderModelsKey;
+extern NSString * const APUserDefaultHelperValueClassTypeKey;
+extern NSString * const APUserDefaultHelperValueDefaultKey;
 
-@interface APUserDefaultHelper : NSObject
+// 用于储存
+@interface APUserDefaultHelper : APUserStorageHelper
 + (instancetype)sharedInstance;
 
 - (void)setObject:(id)object forKey:(NSString *)key;
-- (nullable id)objectForKey:(NSString *)key;
+- (id)objectForKey:(NSString *)key;
 
-- (NSMutableArray *)mutableArrayObjectWithKey:(NSString *)key;
+// APUserDefaultKey
+- (NSDictionary *)userDefaultConfigs;
 
 @end
 
