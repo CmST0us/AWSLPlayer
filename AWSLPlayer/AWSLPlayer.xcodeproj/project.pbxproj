@@ -35,6 +35,7 @@
 		4F5C334B22DA520E00D3FCA1 /* NSObjectSignals.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334922DA520E00D3FCA1 /* NSObjectSignals.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F5C334D22DA52D300D3FCA1 /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334C22DA52D300D3FCA1 /* Masonry.framework */; };
 		4F5C334E22DA52D300D3FCA1 /* Masonry.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334C22DA52D300D3FCA1 /* Masonry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F88D39D22F1F1070019E082 /* APUserStorageHelper+Convinence.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F88D39C22F1F1070019E082 /* APUserStorageHelper+Convinence.m */; };
 		4F989C9322DE1A6E0092EE90 /* APLineLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48C22DCDDFA00F09FAC /* APLineLive.m */; };
 		4F989C9422DE1A720092EE90 /* APYoutubeLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */; };
 		4F989C9622DE1A8E0092EE90 /* APBiliBiliLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B45022DB02BD00F09FAC /* APBiliBiliLive.m */; };
@@ -140,6 +141,8 @@
 		4F5C334C22DA52D300D3FCA1 /* Masonry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7884F822F0A76F00557981 /* APUserStorageKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserStorageKey.h; sourceTree = "<group>"; };
 		4F7884F922F0ADF700557981 /* APUserDefaultKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserDefaultKey.h; sourceTree = "<group>"; };
+		4F88D39B22F1F1070019E082 /* APUserStorageHelper+Convinence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "APUserStorageHelper+Convinence.h"; sourceTree = "<group>"; };
+		4F88D39C22F1F1070019E082 /* APUserStorageHelper+Convinence.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "APUserStorageHelper+Convinence.m"; sourceTree = "<group>"; };
 		4F989C9822DE23A00092EE90 /* APHibikiURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHibikiURLSession.h; sourceTree = "<group>"; };
 		4F989C9922DE23A00092EE90 /* APHibikiURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHibikiURLSession.m; sourceTree = "<group>"; };
 		4F989C9C22DE2E580092EE90 /* APHibikiLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHibikiLive.h; sourceTree = "<group>"; };
@@ -430,6 +433,21 @@
 			path = AWSLPlayer;
 			sourceTree = "<group>";
 		};
+		4F88D39722F1F0A90019E082 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				4F7884F822F0A76F00557981 /* APUserStorageKey.h */,
+				4F7884F922F0ADF700557981 /* APUserDefaultKey.h */,
+				4FEE4C1222F0A45C00BCA528 /* APUserStorageHelper.h */,
+				4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */,
+				4F989CD822E439580092EE90 /* APUserDefaultHelper.h */,
+				4F989CD922E439580092EE90 /* APUserDefaultHelper.m */,
+				4F88D39B22F1F1070019E082 /* APUserStorageHelper+Convinence.h */,
+				4F88D39C22F1F1070019E082 /* APUserStorageHelper+Convinence.m */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		4F989C9722DE238E0092EE90 /* Hibiki */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,14 +533,9 @@
 		4F989CD422E435AB0092EE90 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4F88D39722F1F0A90019E082 /* Storage */,
 				4F989CD522E4394A0092EE90 /* APFilePathHelper.h */,
 				4F989CD622E4394A0092EE90 /* APFilePathHelper.m */,
-				4F7884F822F0A76F00557981 /* APUserStorageKey.h */,
-				4F7884F922F0ADF700557981 /* APUserDefaultKey.h */,
-				4FEE4C1222F0A45C00BCA528 /* APUserStorageHelper.h */,
-				4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */,
-				4F989CD822E439580092EE90 /* APUserDefaultHelper.h */,
-				4F989CD922E439580092EE90 /* APUserDefaultHelper.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -699,6 +712,7 @@
 				4FEE4C1422F0A45C00BCA528 /* APUserStorageHelper.m in Sources */,
 				4F989CED22E466FE0092EE90 /* APTextViewInputTableViewCell.m in Sources */,
 				4F25B42C22DA5CE800F09FAC /* APViewController.m in Sources */,
+				4F88D39D22F1F1070019E082 /* APUserStorageHelper+Convinence.m in Sources */,
 				4F989C9A22DE23A00092EE90 /* APHibikiURLSession.m in Sources */,
 				4F25B48022DB804100F09FAC /* APYoutubeURLSession.m in Sources */,
 				4F989CAA22E0D4D40092EE90 /* APMediaPlayerDisplayLayer.m in Sources */,

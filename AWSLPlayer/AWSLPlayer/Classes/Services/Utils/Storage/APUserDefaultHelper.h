@@ -18,9 +18,6 @@ extern NSString * const APUserDefaultHelperValueDefaultKey;
 @interface APUserDefaultHelper : APUserStorageHelper
 + (instancetype)sharedInstance;
 
-- (void)setObject:(id)object forKey:(NSString *)key;
-- (id)objectForKey:(NSString *)key;
-
 // APUserDefaultKey
 - (NSDictionary *)userDefaultConfigs;
 

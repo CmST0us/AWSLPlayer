@@ -31,7 +31,7 @@ extern NSString * const APUserDefaultHelperValueDefaultKey;
 
 - (void)listenKey:(NSString *)aKey observer:(NSObject *)aObserver slot:(SEL)aSlot;
 - (void)observerStopListen:(NSObject *)observer;
-- (void)observer:(NSObject *)observer stopListenKey:(NSString *)key;
+//- (void)observer:(NSObject *)observer stopListenKey:(NSString *)key;
 
 @end
 
