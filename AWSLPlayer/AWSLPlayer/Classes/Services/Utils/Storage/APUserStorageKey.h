@@ -9,9 +9,8 @@
 #ifndef APUserStorageKey_h
 #define APUserStorageKey_h
 
-// 收藏夹
-#define kAPUserStorageKeyURLFolder @"APUserStorageKeyURLFolder"
-// DD播放器
-#define kAPUserStorageKeyDDPlayer @"APUserStorageKeyDDPlayer"
+// 直播间，收藏夹，播放器容器Key
+#define kAPUserStorageKeyModelContainer @"APUserStorageKeyModelContainer"
+#define kAPUserStorageModelContainerClassName @"APModelStorageContainer"
 
 #endif /* APUserStorageKey_h */

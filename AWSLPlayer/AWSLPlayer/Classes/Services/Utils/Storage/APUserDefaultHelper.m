@@ -9,9 +9,6 @@
 #import "APUserDefaultKey.h"
 #import "APUserDefaultHelper.h"
 
-NSString * const APUserDefaultHelperValueClassTypeKey = @"APUserDefaultHelperClassTypeKey";
-NSString * const APUserDefaultHelperValueDefaultKey = @"APUserDefaultHelperDefaultKey";
-
 @implementation APUserDefaultHelper
 MAKE_CLASS_SINGLETON(APUserDefaultHelper, instance, sharedInstance)
 
@@ -19,7 +16,7 @@ MAKE_CLASS_SINGLETON(APUserDefaultHelper, instance, sharedInstance)
     NSDictionary *keyConfig = [[self userDefaultConfigs] valueForKey:key];
     if (keyConfig != nil && [keyConfig isKindOfClass:[NSDictionary class]]) {
         // check value class type
-        if (object != nil && [object isKindOfClass:NSClassFromString(keyConfig[APUserDefaultHelperValueClassTypeKey])]) {
+        if (object != nil && [object isKindOfClass:NSClassFromString(keyConfig[APUserStorageHelperValueClassTypeKey])]) {
             [[NSUserDefaults standardUserDefaults] setObject:object forKey:key];
             [self.storage setValue:object forKey:key];
         }

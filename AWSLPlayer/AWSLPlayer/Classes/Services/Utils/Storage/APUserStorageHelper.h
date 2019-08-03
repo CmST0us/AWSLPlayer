@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const APUserDefaultHelperValueClassTypeKey;
-extern NSString * const APUserDefaultHelperValueDefaultKey;
+extern NSString * const APUserStorageHelperValueClassTypeKey;
+extern NSString * const APUserStorageHelperValueDefaultKey;
 
 @interface APUserStorageHelper : NSObject
 @property (nonatomic, readonly) NSMutableDictionary *storage;
@@ -24,14 +24,6 @@ extern NSString * const APUserDefaultHelperValueDefaultKey;
 
 // APUserStorageKey
 - (NSDictionary *)userDefaultConfigs;
-
-@end
-
-@interface APUserStorageHelper (KeyListening)
-
-- (void)listenKey:(NSString *)aKey observer:(NSObject *)aObserver slot:(SEL)aSlot;
-- (void)observerStopListen:(NSObject *)observer;
-//- (void)observer:(NSObject *)observer stopListenKey:(NSString *)key;
 
 @end
 

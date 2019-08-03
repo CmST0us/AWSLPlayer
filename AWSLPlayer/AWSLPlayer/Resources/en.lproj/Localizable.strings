@@ -8,6 +8,9 @@
 
 "ap_cancel" = "Cancel";
 "ap_submit" = "Submit";
+"ap_default" = "Default";
+
+
 
 "ap_homepage_title" = "DD Player";
 "ap_homepage_add_button_title_live_url" = "Live Room";

@@ -11,9 +11,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const APUserDefaultHelperValueClassTypeKey;
-extern NSString * const APUserDefaultHelperValueDefaultKey;
-
 // 用于储存
 @interface APUserDefaultHelper : APUserStorageHelper
 + (instancetype)sharedInstance;

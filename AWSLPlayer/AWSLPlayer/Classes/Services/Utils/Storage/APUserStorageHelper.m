@@ -10,8 +10,12 @@
 #import <NSObjectSignals/NSObject+SignalsSlots.h>
 #import "APUserStorageKey.h"
 #import "APUserStorageHelper.h"
-
+#import "APUserStorageHasDefaultProtocol.h"
 #define kAPUserStorageHelperSaveInterval 10
+
+NSString * const APUserStorageHelperValueClassTypeKey = @"ClassTypeKey";
+NSString * const APUserStorageHelperValueDefaultKey = @"DefaultKey";
+NSString * const APUserStorageHelperUseDefauleValueSelector = @"$defaultValue";
 
 @interface APUserStorageHelper () {
     pthread_mutex_t _saveLocker;
@@ -51,7 +55,7 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
     NSDictionary *keyConfig = [[self userDefaultConfigs] valueForKey:key];
     if (keyConfig != nil && [keyConfig isKindOfClass:[NSDictionary class]]) {
         // check value class type
-        if (object != nil && [object isKindOfClass:NSClassFromString(keyConfig[APUserDefaultHelperValueClassTypeKey])]) {
+        if (object != nil && [object isKindOfClass:NSClassFromString(keyConfig[APUserStorageHelperValueClassTypeKey])]) {
             [self.storage setValue:object forKey:key];
             self.didSaveLastChange = NO;
         }
@@ -64,13 +68,22 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
     NSDictionary *keyConfig = [[self userDefaultConfigs] valueForKey:key];
     if (keyConfig != nil && [keyConfig isKindOfClass:[NSDictionary class]]) {
         id obj = [self.storage valueForKey:key];
-        Class valueClassType = keyConfig[APUserDefaultHelperValueClassTypeKey];
+        Class valueClassType = keyConfig[APUserStorageHelperValueClassTypeKey];
         if (obj != nil && [obj isKindOfClass:valueClassType]) {
             pthread_mutex_unlock(&_saveLocker);
             return obj;
         }
     }
-    id defaultObj = keyConfig[APUserDefaultHelperValueDefaultKey];
+    id defaultObj = keyConfig[APUserStorageHelperValueDefaultKey];
+    Class targetClass = keyConfig[APUserStorageHelperValueClassTypeKey];
+    if (defaultObj != nil &&
+        [defaultObj isKindOfClass:[NSString class]] &&
+        [defaultObj isEqualToString:APUserStorageHelperUseDefauleValueSelector] == NSOrderedSame &&
+        [targetClass conformsToProtocol:@protocol(APUserStorageHasDefaultProtocol)] &&
+        [targetClass respondsToSelector:@selector(defaultValue)]) {
+        Class<APUserStorageHasDefaultProtocol> target = targetClass;
+        defaultObj = [target defaultValue];
+    }
     [self.storage setValue:defaultObj forKey:key];
     pthread_mutex_unlock(&_saveLocker);
     return defaultObj;
@@ -93,29 +106,12 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
         return config;
     }
     config = @{
-        kAPUserStorageKeyURLFolder: @{
-                APUserDefaultHelperValueClassTypeKey: @"NSDictionary",
-                APUserDefaultHelperValueDefaultKey: @{},
+        kAPUserStorageKeyModelContainer: @{
+                APUserStorageHelperValueClassTypeKey: @"APModelStorageContainer",
+                APUserStorageHelperValueDefaultKey: APUserStorageHelperUseDefauleValueSelector,
         },
     };
     return config;
 }
-
-@end
-
-
-@implementation APUserStorageHelper (KeyListening)
-NS_SIGNAL(storageChange) {
-    
-}
-
-- (void)listenKey:(NSString *)aKey observer:(NSObject *)aObserver slot:(SEL)aSlot {
-    [self.storage listenKeypath:aKey pairWithSignal:NS_SIGNAL_SELECTOR(storageChange) forObserver:aObserver slot:aSlot];
-}
-
-- (void)observerStopListen:(NSObject *)observer {
-    [self.storage disconnectAllSignalForObserver:observer];
-}
-
 
 @end

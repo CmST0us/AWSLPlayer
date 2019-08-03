@@ -16,7 +16,7 @@
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-    self = [super init];
+    self = [self init];
     if (self) {
         _name = [coder decodeObjectForKey:@"name"];
         _liveURL = [coder decodeObjectForKey:@"liveURL"];

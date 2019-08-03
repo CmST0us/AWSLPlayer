@@ -7,12 +7,12 @@
 //
 
 #import "APUserStorageHelper.h"
-#import "APLiveURLFolderModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class APModelStorageContainer;
 @interface APUserStorageHelper (Convinence)
-
++ (APModelStorageContainer *)modelStorageContainer;
 @end
 
 NS_ASSUME_NONNULL_END

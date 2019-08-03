@@ -60,6 +60,7 @@
 		4F989CED22E466FE0092EE90 /* APTextViewInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CE722E448FD0092EE90 /* APTextViewInputTableViewCell.m */; };
 		4F989CF022E467300092EE90 /* APTextFieldInputTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CEF22E467300092EE90 /* APTextFieldInputTableViewCell.m */; };
 		4F989CF522E8A80D0092EE90 /* APHomepageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F989CF422E8A80D0092EE90 /* APHomepageDataSource.m */; };
+		4FB559D022F5C2990073BB60 /* APModelStorageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB559CF22F5C2990073BB60 /* APModelStorageContainer.m */; };
 		4FEE4C1422F0A45C00BCA528 /* APUserStorageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -186,6 +187,9 @@
 		4F989CEF22E467300092EE90 /* APTextFieldInputTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APTextFieldInputTableViewCell.m; sourceTree = "<group>"; };
 		4F989CF322E8A80D0092EE90 /* APHomepageDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHomepageDataSource.h; sourceTree = "<group>"; };
 		4F989CF422E8A80D0092EE90 /* APHomepageDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHomepageDataSource.m; sourceTree = "<group>"; };
+		4FB559CE22F5C2990073BB60 /* APModelStorageContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APModelStorageContainer.h; sourceTree = "<group>"; };
+		4FB559CF22F5C2990073BB60 /* APModelStorageContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APModelStorageContainer.m; sourceTree = "<group>"; };
+		4FB559D122F5CAF90073BB60 /* APUserStorageHasDefaultProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserStorageHasDefaultProtocol.h; sourceTree = "<group>"; };
 		4FEE4C1222F0A45C00BCA528 /* APUserStorageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserStorageHelper.h; sourceTree = "<group>"; };
 		4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APUserStorageHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -438,12 +442,11 @@
 			children = (
 				4F7884F822F0A76F00557981 /* APUserStorageKey.h */,
 				4F7884F922F0ADF700557981 /* APUserDefaultKey.h */,
+				4FB559D122F5CAF90073BB60 /* APUserStorageHasDefaultProtocol.h */,
 				4FEE4C1222F0A45C00BCA528 /* APUserStorageHelper.h */,
 				4FEE4C1322F0A45C00BCA528 /* APUserStorageHelper.m */,
 				4F989CD822E439580092EE90 /* APUserDefaultHelper.h */,
 				4F989CD922E439580092EE90 /* APUserDefaultHelper.m */,
-				4F88D39B22F1F1070019E082 /* APUserStorageHelper+Convinence.h */,
-				4F88D39C22F1F1070019E082 /* APUserStorageHelper+Convinence.m */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -526,6 +529,10 @@
 				4F989CC822E431540092EE90 /* APLiveURLModel.m */,
 				4F989CCA22E431820092EE90 /* APLiveURLFolderModel.h */,
 				4F989CCB22E431820092EE90 /* APLiveURLFolderModel.m */,
+				4FB559CE22F5C2990073BB60 /* APModelStorageContainer.h */,
+				4FB559CF22F5C2990073BB60 /* APModelStorageContainer.m */,
+				4F88D39B22F1F1070019E082 /* APUserStorageHelper+Convinence.h */,
+				4F88D39C22F1F1070019E082 /* APUserStorageHelper+Convinence.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -707,6 +714,7 @@
 				4F989CDA22E439580092EE90 /* APUserDefaultHelper.m in Sources */,
 				4F25B45522DB048000F09FAC /* APURLSession.m in Sources */,
 				4F25B45822DB04C500F09FAC /* NSError+APURLSession.m in Sources */,
+				4FB559D022F5C2990073BB60 /* APModelStorageContainer.m in Sources */,
 				4F989CD222E432E20092EE90 /* APDDPlayerLayoutModel.m in Sources */,
 				4F989CC922E431540092EE90 /* APLiveURLModel.m in Sources */,
 				4FEE4C1422F0A45C00BCA528 /* APUserStorageHelper.m in Sources */,

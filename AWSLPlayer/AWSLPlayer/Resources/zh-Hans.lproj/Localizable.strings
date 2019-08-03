@@ -8,6 +8,7 @@
 
 "ap_cancel" = "取消";
 "ap_submit" = "确定";
+"ap_default" = "默认";
 
 "ap_homepage_title" = "DD 播放器";
 "ap_homepage_add_button_title_live_url" = "直播间";
