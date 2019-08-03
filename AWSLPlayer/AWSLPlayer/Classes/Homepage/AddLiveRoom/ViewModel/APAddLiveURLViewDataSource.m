@@ -141,6 +141,7 @@ NS_USE_SIGNAL(didChangeLiveRoom);
     }];
     [selectionVC addCancelButtonWithText:NSLocalizedString(@"ap_cancel", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
         [aDialogViewController hideWithAnimated:YES completion:nil];
+        [target.tableView reloadData];
     }];
     [selectionVC showWithAnimated:YES completion:nil];
 }
