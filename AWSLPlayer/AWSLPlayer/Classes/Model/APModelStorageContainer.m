@@ -12,7 +12,8 @@
 
 #define kAPModelStorageDefaultLiveURL @"https://www.youtube.com/watch?v=vrwSrCr9J4s"
 #define kAPModelStorageDefaultLiveURLName @"24時間"
-#define kAPModelStorageDefaultLiveFolderKey @"Default"
+
+NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
 
 @interface APModelStorageContainer ()
 @property (nonatomic, strong) NSMutableDictionary<NSString *, APLiveURLModel *> *liveURLs;
@@ -65,23 +66,46 @@
     [coder encodeObject:self.players forKey:@"players"];
 }
 
+- (void)addLiveURL:(APLiveURLModel *)model inFolder:(APLiveURLFolderModel *)folderModel {
+    if ([folderModel.name isEqualToString:self.liveURLFolders[APModelStorageDefaultLiveFolderKey].name]) {
+        // Default Folder
+        model.folderName = APModelStorageDefaultLiveFolderKey;
+        [self.liveURLFolders[APModelStorageDefaultLiveFolderKey].liveURLs addObject:model];
+    } else {
+        model.folderName = folderModel.name;
+        APLiveURLFolderModel *targetFolder = [self.liveURLFolders objectForKey:folderModel.name];
+        if (targetFolder == nil) {
+            targetFolder = [[APLiveURLFolderModel alloc] init];
+            targetFolder.name = folderModel.name;
+            targetFolder.liveURLs = [[NSMutableArray alloc] init];
+            [self.liveURLFolders setObject:targetFolder forKey:targetFolder.name];
+        }
+        [targetFolder.liveURLs addObject:model];
+    }
+    [self.liveURLs setObject:model forKey:model.name];
+}
+
+- (APLiveURLFolderModel *)defaultFolder {
+    return [self.liveURLFolders objectForKey:APModelStorageDefaultLiveFolderKey];
+}
+
 + (id)defaultValue {
     APModelStorageContainer *defaultConfig = [[APModelStorageContainer alloc] init];
     
     APLiveURLModel *liveURL = [[APLiveURLModel alloc] init];
     liveURL.urlType = APLiveURLTypeYoutube;
     liveURL.name = kAPModelStorageDefaultLiveURLName;
+    liveURL.folderName = APModelStorageDefaultLiveFolderKey;
     liveURL.liveURL = [NSURL URLWithString:kAPModelStorageDefaultLiveURL];
     
     APLiveURLFolderModel *defaultFolder = [[APLiveURLFolderModel alloc] init];
     defaultFolder.name = NSLocalizedString(@"ap_default", nil);
-    defaultFolder.liveURLs = @[liveURL];
+    defaultFolder.liveURLs = [NSMutableArray arrayWithObject:liveURL];
     
     [defaultConfig.liveURLs setObject:liveURL forKey:liveURL.name];
-    [defaultConfig.liveURLFolders setObject:defaultFolder forKey:kAPModelStorageDefaultLiveFolderKey];
+    [defaultConfig.liveURLFolders setObject:defaultFolder forKey:APModelStorageDefaultLiveFolderKey];
     
     return defaultConfig;
 }
-
 
 @end

@@ -27,7 +27,6 @@ NSString * const APUserStorageHelperStorageFileSaveName = @"storage.cfg";
 
 @property (nonatomic, strong) NSTimer *storageSaveTimer;
 
-@property (nonatomic, assign) BOOL didSaveLastChange;
 @end
 
 @implementation APUserStorageHelper
@@ -44,7 +43,6 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
             _storage = [[NSMutableDictionary alloc] init];
         }
         _storageSaveTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(saveStorage) userInfo:nil repeats:YES];
-        _didSaveLastChange = NO;
         pthread_mutex_init(&_saveLocker, NULL);
     }
     return self;
@@ -61,7 +59,6 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
         // check value class type
         if (object != nil && [object isKindOfClass:NSClassFromString(keyConfig[APUserStorageHelperValueClassTypeKey])]) {
             [self.storage setValue:object forKey:key];
-            self.didSaveLastChange = NO;
         }
     }
     pthread_mutex_unlock(&_saveLocker);
@@ -94,16 +91,16 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
 }
 
 - (void)saveStorage {
-    if (self.didSaveLastChange) {
-        return;
-    }
     pthread_mutex_lock(&_saveLocker);
     // save changes;
     if (self.storageFilePath.length > 0) {
         [NSKeyedArchiver archiveRootObject:self.storage toFile:self.storageFilePath];
     }
-    self.didSaveLastChange = YES;
     pthread_mutex_unlock(&_saveLocker);
+}
+
++ (void)clearStorage {
+    [[NSFileManager defaultManager] removeItemAtPath:[[APFilePathHelper sharedInstance] fileSavePathWithFileName:APUserStorageHelperStorageFileSaveName] error:nil];
 }
 
 - (NSDictionary *)userDefaultConfigs {

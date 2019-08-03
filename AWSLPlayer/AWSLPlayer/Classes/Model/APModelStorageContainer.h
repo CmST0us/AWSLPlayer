@@ -13,11 +13,16 @@
 #import "APDDPlayerModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
+extern NSString * const APModelStorageDefaultLiveFolderKey;
 
 @interface APModelStorageContainer : NSObject <NSCoding, APUserStorageHasDefaultProtocol>
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APLiveURLModel *> *liveURLs;
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APLiveURLFolderModel *> *liveURLFolders;
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APDDPlayerModel *> *players;
+
+- (APLiveURLFolderModel *)defaultFolder;
+- (void)addLiveURL:(APLiveURLModel *)model inFolder:(APLiveURLFolderModel *)folderModel;
+
 @end
 
 NS_ASSUME_NONNULL_END

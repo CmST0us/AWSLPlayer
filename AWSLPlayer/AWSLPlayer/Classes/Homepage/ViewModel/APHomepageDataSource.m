@@ -59,4 +59,8 @@
     return [self titles][section];
 }
 
+- (void)addLiveURLFolders:(APLiveURLFolderModel *)urlFolders {
+    [self.container.liveURLFolders setObject:urlFolders forKey:urlFolders.name];
+}
+
 @end

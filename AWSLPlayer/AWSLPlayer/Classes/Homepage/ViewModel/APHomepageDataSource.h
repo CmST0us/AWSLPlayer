@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, APHomepageDataSourceSectionType) {
 - (NSInteger)numberOfRowInSection:(APHomepageDataSourceSectionType)section;
 - (NSString *)titleForSection:(APHomepageDataSourceSectionType)secion;
 
+- (void)addLiveURLFolders:(APLiveURLFolderModel *)urlFolders;
 @end
 
 NS_ASSUME_NONNULL_END

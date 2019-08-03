@@ -9,12 +9,14 @@
 #import "APAddLiveURLViewDataSource.h"
 #import "APTextFieldInputTableViewCell.h"
 #import "APMacroHelper.h"
-#import "APUserDefaultHelper.h"
+#import "APUserStorageHelper+Convinence.h"
 
 @interface APAddLiveURLViewDataSource () <QMUITextFieldDelegate>
 @property (nonatomic, weak) APTextFieldInputTableViewCell *nameCell;
 @property (nonatomic, weak) APTextFieldInputTableViewCell *urlCell;
 
+@property (nonatomic, copy) NSArray *folders;
+@property (nonatomic, assign) NSUInteger currentSelectIndex;
 @end
 
 @implementation APAddLiveURLViewDataSource
@@ -22,10 +24,11 @@ NS_USE_SIGNAL(didChangeLiveRoom);
 
 - (void)didInitialize {
     [super didInitialize];
-#warning TODO
-//    self.currentSelectFolderModel = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey][0];
+    self.currentSelectFolderModel = [[APUserStorageHelper modelStorageContainer] defaultFolder];
     self.liveRoom = [[APLiveURLModel alloc] init];
     self.cellDataSections = [self cellData];
+    self.folders = [[APUserStorageHelper modelStorageContainer].liveURLFolders allValues];
+    self.currentSelectIndex = 0;
 }
 
 
@@ -118,10 +121,9 @@ NS_USE_SIGNAL(didChangeLiveRoom);
     QMUIDialogSelectionViewController *selectionVC = [[QMUIDialogSelectionViewController alloc] init];
     selectionVC.title = NSLocalizedString(@"ap_add_live_url_select_folder", nil);
     selectionVC.rowHeight = 44;
-    selectionVC.selectedItemIndex = 0;
-#warning TODO
-//    NSMutableArray<APLiveURLFolderModel *> *folderArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
-    NSMutableArray<APLiveURLFolderModel *> *folderArray = @[];
+    selectionVC.selectedItemIndex = self.currentSelectIndex;
+
+    NSArray<APLiveURLFolderModel *> *folderArray = self.folders;
     
     NSMutableArray *items = [NSMutableArray array];
     [folderArray enumerateObjectsUsingBlock:^(APLiveURLFolderModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -130,6 +132,7 @@ NS_USE_SIGNAL(didChangeLiveRoom);
     selectionVC.items = items;
     selectionVC.didSelectItemBlock = ^(__kindof QMUIDialogSelectionViewController * _Nonnull aDialogViewController, NSUInteger itemIndex) {
         target.currentSelectFolderModel = folderArray[itemIndex];
+        target.currentSelectIndex = itemIndex;
     };
     [selectionVC addSubmitButtonWithText:NSLocalizedString(@"ap_submit", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
         [aDialogViewController hideWithAnimated:YES completion:nil];

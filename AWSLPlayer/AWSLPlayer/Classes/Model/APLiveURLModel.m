@@ -13,6 +13,7 @@
     [coder encodeObject:_name forKey:@"name"];
     [coder encodeObject:_liveURL forKey:@"liveURL"];
     [coder encodeObject:@(_urlType) forKey:@"urlType"];
+    [coder encodeObject:_folderName forKey:@"folderName"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -21,6 +22,7 @@
         _name = [coder decodeObjectForKey:@"name"];
         _liveURL = [coder decodeObjectForKey:@"liveURL"];
         _urlType = [[coder decodeObjectForKey:@"urlType"] unsignedIntegerValue];
+        _folderName = [coder decodeObjectForKey:@"folderName"];
     }
     return self;
 }
@@ -29,6 +31,9 @@
     self = [super init];
     if (self) {
         _urlType = APLiveURLTypeRaw;
+        _name = @"";
+        _liveURL = [NSURL URLWithString:@""];
+        _folderName = @"";
     }
     return self;
 }

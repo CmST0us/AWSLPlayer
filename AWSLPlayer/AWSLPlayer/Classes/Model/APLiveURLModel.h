@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, APLiveURLType) {
 @interface APLiveURLModel : NSObject <NSCoding>
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSURL *liveURL;
+@property (nonatomic, strong) NSString *folderName;
 @property (nonatomic, assign) APLiveURLType urlType;
 @end
 

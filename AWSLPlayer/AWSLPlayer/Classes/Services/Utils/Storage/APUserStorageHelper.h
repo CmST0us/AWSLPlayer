@@ -25,6 +25,8 @@ extern NSString * const APUserStorageHelperValueDefaultKey;
 // save right now
 - (void)saveStorage;
 
++ (void)clearStorage;
+
 // APUserStorageKey
 - (NSDictionary *)userDefaultConfigs;
 
