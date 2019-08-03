@@ -72,17 +72,17 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
     NSDictionary *keyConfig = [[self userDefaultConfigs] valueForKey:key];
     if (keyConfig != nil && [keyConfig isKindOfClass:[NSDictionary class]]) {
         id obj = [self.storage valueForKey:key];
-        Class valueClassType = keyConfig[APUserStorageHelperValueClassTypeKey];
+        Class valueClassType = NSClassFromString(keyConfig[APUserStorageHelperValueClassTypeKey]);
         if (obj != nil && [obj isKindOfClass:valueClassType]) {
             pthread_mutex_unlock(&_saveLocker);
             return obj;
         }
     }
     id defaultObj = keyConfig[APUserStorageHelperValueDefaultKey];
-    Class targetClass = keyConfig[APUserStorageHelperValueClassTypeKey];
+    Class targetClass = NSClassFromString(keyConfig[APUserStorageHelperValueClassTypeKey]);
     if (defaultObj != nil &&
         [defaultObj isKindOfClass:[NSString class]] &&
-        [defaultObj isEqualToString:APUserStorageHelperUseDefauleValueSelector] == NSOrderedSame &&
+        [defaultObj isEqualToString:APUserStorageHelperUseDefauleValueSelector] &&
         [targetClass conformsToProtocol:@protocol(APUserStorageHasDefaultProtocol)] &&
         [targetClass respondsToSelector:@selector(defaultValue)]) {
         Class<APUserStorageHasDefaultProtocol> target = targetClass;
@@ -113,7 +113,7 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
     }
     config = @{
         kAPUserStorageKeyModelContainer: @{
-                APUserStorageHelperValueClassTypeKey: @"APModelStorageContainer",
+                APUserStorageHelperValueClassTypeKey: kAPUserStorageModelContainerClassName,
                 APUserStorageHelperValueDefaultKey: APUserStorageHelperUseDefauleValueSelector,
         },
     };

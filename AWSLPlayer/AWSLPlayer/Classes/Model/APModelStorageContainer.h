@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "APUserStorageHasDefaultProtocol.h"
+#import "APLiveURLFolderModel.h"
+#import "APLiveURLModel.h"
+#import "APDDPlayerModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class APLiveURLFolderModel;
-@class APLiveURLModel;
-@class APDDPlayerModel;
 @interface APModelStorageContainer : NSObject <NSCoding, APUserStorageHasDefaultProtocol>
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APLiveURLModel *> *liveURLs;
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APLiveURLFolderModel *> *liveURLFolders;

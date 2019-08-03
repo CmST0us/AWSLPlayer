@@ -65,7 +65,7 @@
     [coder encodeObject:self.players forKey:@"players"];
 }
 
-+ (APModelStorageContainer *)defaultValue {
++ (id)defaultValue {
     APModelStorageContainer *defaultConfig = [[APModelStorageContainer alloc] init];
     
     APLiveURLModel *liveURL = [[APLiveURLModel alloc] init];

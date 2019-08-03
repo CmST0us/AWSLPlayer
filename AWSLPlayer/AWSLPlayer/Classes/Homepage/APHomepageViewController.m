@@ -6,13 +6,14 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
-#import "APHomepageAddItemPopupView.h"
+
 #import "APHomepageViewController.h"
-#import "APHomepageDataSource.h"
 #import "APAddLiveURLViewController.h"
-#import "APUserDefaultHelper.h"
 #import "APNavigationController.h"
-#import "APLiveURLFolderModel.h"
+#import "APHomepageAddItemPopupView.h"
+
+#import "APMacroHelper.h"
+#import "APHomepageDataSource.h"
 
 @interface APHomepageViewController () <QMUITableViewDelegate>
 @property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
@@ -57,7 +58,6 @@
 }
 
 - (void)reloadAllData {
-    [self.dataSource reloadData];
     [self.tableView reloadData];
 }
 

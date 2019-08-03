@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol APUserStorageHasDefaultProtocol <NSObject>
+@required
 + (id)defaultValue;
 @end
 
