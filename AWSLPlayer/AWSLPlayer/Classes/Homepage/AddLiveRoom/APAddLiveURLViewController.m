@@ -8,7 +8,7 @@
 
 #import "APAddLiveURLViewDataSource.h"
 #import "APAddLiveURLViewController.h"
-#import "APUserDefaultHelper.h"
+#import "APUserStorageHelper+Convinence.h"
 
 @interface APAddLiveURLViewController ()
 @property (nonatomic, strong) APAddLiveURLViewDataSource *dataSource;
@@ -46,7 +46,7 @@
     if (model.liveURL == nil || model.liveURL.absoluteString.length == 0) {
         return NO;
     }
-    if (model.liveURL == APLiveURLTypeRaw) {
+    if (model.urlType == APLiveURLTypeRaw) {
         return NO;
     }
     return YES;
@@ -67,12 +67,7 @@
 }
 
 - (void)navigationBarSaveButtonAction:(id)sender {
-    NSMutableArray *mutableArray = [[APUserDefaultHelper sharedInstance] mutableArrayObjectWithKey:APLiveURLFolderModelsKey];
-    NSMutableArray *t = [[NSMutableArray alloc] initWithArray:self.dataSource.currentSelectFolderModel.liveURLs];
-    [t addObject:self.dataSource.liveRoom];
-    self.dataSource.currentSelectFolderModel.liveURLs = t;
-    [mutableArray addObject:self.dataSource.currentSelectFolderModel];
-    [[APUserDefaultHelper sharedInstance] setObject:mutableArray forKey:APLiveURLFolderModelsKey];
+    [[APUserStorageHelper modelStorageContainer] addLiveURL:self.dataSource.liveRoom inFolder:self.dataSource.currentSelectFolderModel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

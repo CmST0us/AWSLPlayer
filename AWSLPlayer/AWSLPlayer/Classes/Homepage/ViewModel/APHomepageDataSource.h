@@ -8,9 +8,7 @@
 
 #import <QMUIKit/QMUIKit.h>
 #import <Foundation/Foundation.h>
-#import "APLiveURLModel.h"
-#import "APDDPlayerModel.h"
-#import "APLiveURLFolderModel.h"
+#import "APModelStorageContainer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,14 +22,13 @@ typedef NS_ENUM(NSInteger, APHomepageDataSourceSectionType) {
 
 @property (nonatomic, readonly) NSArray<APLiveURLModel *> *liveURLs;
 @property (nonatomic, readonly) NSArray<APLiveURLFolderModel *> *liveURLFolders;
-- (void)reloadData;
+@property (nonatomic, weak) APModelStorageContainer *container;
 
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfRowInSection:(APHomepageDataSourceSectionType)section;
 - (NSString *)titleForSection:(APHomepageDataSourceSectionType)secion;
 
-- (void)removeLiveURLsAtIndex:(NSInteger)index;
-
+- (void)addLiveURLFolders:(APLiveURLFolderModel *)urlFolders;
 @end
 
 NS_ASSUME_NONNULL_END
