@@ -11,15 +11,18 @@
 #import "APUserStorageKey.h"
 #import "APUserStorageHelper.h"
 #import "APUserStorageHasDefaultProtocol.h"
+#import "APFilePathHelper.h"
 #define kAPUserStorageHelperSaveInterval 10
 
 NSString * const APUserStorageHelperValueClassTypeKey = @"ClassTypeKey";
 NSString * const APUserStorageHelperValueDefaultKey = @"DefaultKey";
 NSString * const APUserStorageHelperUseDefauleValueSelector = @"$defaultValue";
+NSString * const APUserStorageHelperStorageFileSaveName = @"storage.cfg";
 
 @interface APUserStorageHelper () {
     pthread_mutex_t _saveLocker;
 }
+@property (nonatomic, copy) NSString *storageFilePath;
 @property (nonatomic, strong) NSMutableDictionary *storage;
 
 @property (nonatomic, strong) NSTimer *storageSaveTimer;
@@ -33,7 +36,8 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
 - (instancetype)init {
     self = [super init];
     if (self) {
-        NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:NSStringFromClass([self class])];
+        _storageFilePath = [[APFilePathHelper sharedInstance] fileSavePathWithFileName:APUserStorageHelperStorageFileSaveName];
+        NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithFile:_storageFilePath];
         if (dict) {
             _storage = [[NSMutableDictionary alloc] initWithDictionary:dict];
         } else {
@@ -95,7 +99,9 @@ MAKE_CLASS_SINGLETON(APUserStorageHelper, instance, sharedInstance)
     }
     pthread_mutex_lock(&_saveLocker);
     // save changes;
-    [[NSUserDefaults standardUserDefaults] setObject:self.storage forKey:NSStringFromClass([self class])];
+    if (self.storageFilePath.length > 0) {
+        [NSKeyedArchiver archiveRootObject:self.storage toFile:self.storageFilePath];
+    }
     self.didSaveLastChange = YES;
     pthread_mutex_unlock(&_saveLocker);
 }
