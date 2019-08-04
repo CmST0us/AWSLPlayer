@@ -1,0 +1,41 @@
+//
+//  APPlayerViewModel.h
+//  AWSLPlayer
+//
+//  Created by CmST0us on 2019/8/4.
+//  Copyright © 2019 eric3u. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
+#import <NSObjectSignals/NSObject+SignalsSlots.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@class APLiveURLModel;
+@interface APPlayerViewModel : NSObject
+
+@property (nonatomic, readonly) BOOL isPlayerInit;
+
+@property (nonatomic, strong) APLiveURLModel *liveURLModel;
+@property (nonatomic, strong) NSDictionary *playURLs;
+
+@property (nonatomic, strong) AVPlayer *player;
+
+#pragma mark - Subclass Override
+- (void)setupPlayer;
+- (void)setupPlayerWithPlayURLs:(NSDictionary *)playURLs;
+
+// 绑定数据，使用抛出信号
+- (void)bindData;
+
+#pragma mark - Signals
+// 播放器状态改变
+// Slot 参数
+// @param: newValue 新状态
+// @param: oldValue 之前状态
+NS_SIGNAL(playerStatusChange);
+
+@end
+
+NS_ASSUME_NONNULL_END

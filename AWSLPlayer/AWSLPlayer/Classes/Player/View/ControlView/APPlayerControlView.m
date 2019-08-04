@@ -1,14 +1,14 @@
 //
-//  APMediaPlayerControlView.m
+//  APPlayerControlView.m
 //  AWSLPlayer
 //
-//  Created by CmST0us on 2019/7/19.
+//  Created by CmST0us on 2019/8/4.
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
-#import "APMediaPlayerControlView.h"
+#import "APPlayerControlView.h"
 
-@implementation APMediaPlayerControlView
+@implementation APPlayerControlView
 
 /*
 // Only override drawRect: if you perform custom drawing.
