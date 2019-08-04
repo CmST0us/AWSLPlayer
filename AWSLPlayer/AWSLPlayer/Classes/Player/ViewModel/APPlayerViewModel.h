@@ -21,19 +21,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *playURLs;
 
 @property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, assign) BOOL isPlaying;
 
 #pragma mark - Subclass Override
 - (void)setupPlayer;
 - (void)setupPlayerWithPlayURLs:(NSDictionary *)playURLs;
 
+- (void)play;
+- (void)pause;
+- (void)stop;
+
 // 绑定数据，使用抛出信号
-- (void)bindData;
 
 #pragma mark - Signals
 // 播放器状态改变
 // Slot 参数
-// @param: newValue 新状态
-// @param: oldValue 之前状态
+// @param: newValue
+// @param: oldValue
+// @param: view model
 NS_SIGNAL(playerStatusChange);
 
 @end

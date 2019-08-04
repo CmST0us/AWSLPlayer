@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, nullable) NSDictionary<NSString *, NSURL *> *playURLs;
 
+- (nullable instancetype)initWithLiveRoomURL:(NSURL *)url;
 - (instancetype)initWithRoomID:(NSInteger)roomID;
 - (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block;
     

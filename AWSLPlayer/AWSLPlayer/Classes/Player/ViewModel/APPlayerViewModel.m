@@ -12,7 +12,7 @@
 NS_CLOSE_SIGNAL_WARN(playerStatusChange);
 
 NS_PROPERTY_SLOT(playerStatus) {
-    [self emitSignal:NS_SIGNAL_SELECTOR(playerStatusChange) withParams:@[newValue, oldValue]];
+    [self emitSignal:NS_SIGNAL_SELECTOR(playerStatusChange) withParams:@[newValue, oldValue, self]];
 }
 
 - (instancetype)init {
@@ -40,13 +40,28 @@ NS_PROPERTY_SLOT(playerStatus) {
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:defaultURL];
     self.player = [AVPlayer playerWithPlayerItem:item];
     _isPlayerInit = YES;
+    
+    [self bindData];
 }
 
 - (void)bindData {
     // 绑定播放器状态变更
     [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
     
-    
+}
+
+- (void)play {
+    [self.player play];
+    self.isPlaying = YES;
+}
+
+- (void)pause {
+    [self.player pause];
+    self.isPlaying = NO;
+}
+
+- (void)stop {
+    [self.player pause];
 }
 
 @end

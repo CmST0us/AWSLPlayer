@@ -6,6 +6,9 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
+#import <Masonry/Masonry.h>
+#import "APPlayerControlView.h"
+#import "APPlayerDisplayView.h"
 #import "APPlayerView.h"
 
 @implementation APPlayerView
@@ -18,14 +21,27 @@
     
     [self addSubview:self.displayView];
     [self addSubview:self.controlView];
+    
+    [self.displayView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
+    [self.controlView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
+    
 }
 
 - (Class)displayViewClass {
-    return NSClassFromString(@"APPlayerDisplayView");
+    return [APPlayerDisplayView class];
 }
 
 - (Class)controlViewClass {
-    return NSClassFromString(@"APPlayerControlView");
+    return [APPlayerControlView class];
+}
+
+- (void)setupWithViewModel:(APPlayerViewModel *)model {
+    [self.controlView setupWithViewModel:model];
+    [self.displayView setupWithViewModel:model];
 }
 
 @end

@@ -10,12 +10,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class APPlayerViewModel;
+@class APPlayerDisplayView;
+@class APPlayerControlView;
 @interface APPlayerView : APView
-@property (nonatomic, strong) APView *displayView;
-@property (nonatomic, strong) APView *controlView;
+@property (nonatomic, strong) APPlayerDisplayView *displayView;
+@property (nonatomic, strong) APPlayerControlView *controlView;
 
 - (Class)displayViewClass;
 - (Class)controlViewClass;
+
+- (void)setupWithViewModel:(APPlayerViewModel *)model;
 
 @end
 

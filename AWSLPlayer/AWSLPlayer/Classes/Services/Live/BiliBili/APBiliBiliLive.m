@@ -29,6 +29,22 @@
     return self;
 }
 
+- (instancetype)initWithLiveRoomURL:(NSURL *)url {
+    if (url.absoluteString.length == 0) {
+        return nil;
+    }
+    NSString *s = url.absoluteString;
+    NSString *regex = @"live.bilibili.com\\/\\d+";
+    NSRange range = [s rangeOfString:regex options:NSRegularExpressionSearch];
+    if (range.location == NSNotFound) {
+        return nil;
+    }
+    range.location += 18;
+    range.length -= 18;
+    NSString *roomID = [s substringWithRange:range];
+    return [self initWithRoomID:[roomID integerValue]];
+}
+
 - (APBiliBiliURLSession *)session {
     if (_session == nil) {
         _session = [[APBiliBiliURLSession alloc] init];

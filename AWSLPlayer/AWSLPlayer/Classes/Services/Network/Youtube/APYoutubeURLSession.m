@@ -11,7 +11,7 @@
 #import "APYoutubeURLSession.h"
 #import "APMacroHelper.h"
 #import "NSError+APURLSession.h"
-const NSString *APYoutubeLiveRoomRequestURL = @"https://www.youtube.com/watch?v=%@";
+const NSString *APYoutubeLiveRoomRequestURL = @"https://www.youtube.com/watch?v=%@&app=desktop";
 
 @interface APYoutubeURLSession () <WKNavigationDelegate>
 @property (nonatomic, copy) APYoutubeURLSessionRequestPlayURLHandler handler;
@@ -40,6 +40,7 @@ const NSString *APYoutubeLiveRoomRequestURL = @"https://www.youtube.com/watch?v=
 - (WKWebView *)hiddenWebView {
     if (_hiddenWebView == nil) {
         WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+        configuration.applicationNameForUserAgent = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36";
         _hiddenWebView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];
         _hiddenWebView.navigationDelegate = self;
     }
@@ -53,6 +54,7 @@ const NSString *APYoutubeLiveRoomRequestURL = @"https://www.youtube.com/watch?v=
         block(nil, [NSError errorWithAPURLSessionError:APURLSessionErrorBadURL userInfo:nil]);
         return;
     }
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:liveRoomURL];
     [self.hiddenWebView loadRequest:[NSURLRequest requestWithURL:liveRoomURL]];
 }
 

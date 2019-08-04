@@ -14,5 +14,9 @@
 
 @implementation APNavigationController
 
+- (void)didInitialize {
+    [super didInitialize];
+    self.modalPresentationStyle = UIModalPresentationFullScreen;
+}
 
 @end

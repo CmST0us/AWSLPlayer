@@ -8,6 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import "APPlayerViewModel.h"
 #import "APPlayerDisplayView.h"
 
 @interface APPlayerDisplayView ()
@@ -22,6 +23,10 @@
 
 - (AVPlayerLayer *)playerLayer {
     return (AVPlayerLayer *)self.layer;
+}
+
+- (void)setupWithViewModel:(APPlayerViewModel *)model {
+    self.playerLayer.player = model.player;
 }
 
 @end

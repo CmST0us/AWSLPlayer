@@ -25,6 +25,9 @@ typedef NS_ENUM(NSUInteger, APLiveURLType) {
 @property (nonatomic, strong) NSURL *liveURL;
 @property (nonatomic, strong) NSString *folderName;
 @property (nonatomic, assign) APLiveURLType urlType;
+
+// just hold liveURL processor
+@property (nonatomic, strong, nullable) id processor;
 @end
 
 NS_ASSUME_NONNULL_END

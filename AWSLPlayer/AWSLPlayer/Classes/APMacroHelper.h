@@ -2,6 +2,7 @@
 #define _APMACROHELPER_HEADER_
 
 #define weakSelf(obj) __weak typeof(self) obj = self
+#define strongSelf(type, obj) __strong typeof(type) obj = type
 
 #define MAKE_CLASS_SINGLETON(className, staticInstanceName, methodName) \
 static className *staticInstanceName = nil;\

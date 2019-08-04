@@ -10,6 +10,8 @@
 #import "APHomepageViewController.h"
 #import "APAddLiveURLViewController.h"
 #import "APNavigationController.h"
+#import "APPlayerViewController.h"
+
 #import "APHomepageAddItemPopupView.h"
 
 #import "APMacroHelper.h"
@@ -117,6 +119,19 @@
         cell.textLabel.text = self.dataSource.liveURLFolders[indexPath.row].name;
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    
+    if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
+        APDDPlayerModel *ddPlayer = [[APDDPlayerModel alloc] init];
+        ddPlayer.liveURLs = @{
+            @(1): self.dataSource.liveURLs[indexPath.row]
+        };
+        APPlayerViewController *vc = [[APPlayerViewController alloc] initWithDDPlayerModel:ddPlayer];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

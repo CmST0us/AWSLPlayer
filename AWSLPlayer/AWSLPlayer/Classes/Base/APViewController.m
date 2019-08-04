@@ -15,5 +15,9 @@
 
 @implementation APViewController
 
+- (void)didInitialize {
+    [super didInitialize];
+    self.modalPresentationStyle = UIModalPresentationFullScreen;
+}
 
 @end

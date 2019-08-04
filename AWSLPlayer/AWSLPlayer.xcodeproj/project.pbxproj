@@ -25,6 +25,7 @@
 		4F25B48022DB804100F09FAC /* APYoutubeURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B47F22DB804100F09FAC /* APYoutubeURLSession.m */; };
 		4F25B48822DCD68D00F09FAC /* APLineLiveURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48722DCD68D00F09FAC /* APLineLiveURLSession.m */; };
 		4F28BA9522F691740084915D /* APVVMBindingContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28BA9422F691740084915D /* APVVMBindingContainer.m */; };
+		4F28BAA122F6B7DA0084915D /* APButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28BAA022F6B7DA0084915D /* APButton.m */; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
 		4F5C333922DA4F1800D3FCA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C333822DA4F1800D3FCA1 /* Assets.xcassets */; };
@@ -133,6 +134,8 @@
 		4F25B48C22DCDDFA00F09FAC /* APLineLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APLineLive.m; sourceTree = "<group>"; };
 		4F28BA9322F691740084915D /* APVVMBindingContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APVVMBindingContainer.h; sourceTree = "<group>"; };
 		4F28BA9422F691740084915D /* APVVMBindingContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APVVMBindingContainer.m; sourceTree = "<group>"; };
+		4F28BA9F22F6B7DA0084915D /* APButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APButton.h; sourceTree = "<group>"; };
+		4F28BAA022F6B7DA0084915D /* APButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APButton.m; sourceTree = "<group>"; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -303,6 +306,8 @@
 				4F989CAD22E368220092EE90 /* APTableViewController.m */,
 				4F25B42D22DA5D0500F09FAC /* APView.h */,
 				4F25B42E22DA5D0500F09FAC /* APView.m */,
+				4F28BA9F22F6B7DA0084915D /* APButton.h */,
+				4F28BAA022F6B7DA0084915D /* APButton.m */,
 				4F28BA9322F691740084915D /* APVVMBindingContainer.h */,
 				4F28BA9422F691740084915D /* APVVMBindingContainer.m */,
 			);
@@ -763,6 +768,7 @@
 				4F989CDD22E43DF10092EE90 /* APAddLiveURLViewController.m in Sources */,
 				4F5C333F22DA4F1800D3FCA1 /* main.m in Sources */,
 				4F25B46722DB134300F09FAC /* NSURLRequest+APURLRequest.m in Sources */,
+				4F28BAA122F6B7DA0084915D /* APButton.m in Sources */,
 				4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */,
 				4F83538222F68511000B5793 /* APPlayerControlView.m in Sources */,
 				4F25B43222DA5D3100F09FAC /* APNavigationController.m in Sources */,

@@ -6,6 +6,7 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
+#import <NSObjectSignals/NSObject+SignalsSlots.h>
 #import "APViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -14,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface APPlayerViewController : APViewController
 
 - (instancetype)initWithDDPlayerModel:(APDDPlayerModel *)model;
+
+#pragma mark - Signals
+
 
 @end
 
