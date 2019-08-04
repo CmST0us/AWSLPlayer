@@ -10,15 +10,8 @@
 
 @implementation APButton
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    CGRect hitTect = CGRectMake(0 - self.extraTouchInsets.left,
-                                0 - self.extraTouchInsets.top,
-                                self.extraTouchInsets.left + self.bounds.size.width + self.extraTouchInsets.right,
-                                self.extraTouchInsets.top + self.bounds.size.height + self.extraTouchInsets.bottom);
-    if (CGRectContainsPoint(hitTect, point)) {
-        return self;
-    }
-    return nil;
+- (void)setExtraTouchInsets:(UIEdgeInsets)extraTouchInsets {
+    self.qmui_outsideEdge = extraTouchInsets;
 }
 
 @end

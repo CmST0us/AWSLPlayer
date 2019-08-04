@@ -47,7 +47,7 @@ NS_PROPERTY_SLOT(isPlaying) {
 - (APButton *)playPauseButton {
     if (_playPauseButton == nil) {
         _playPauseButton = [[APButton alloc] init];
-        _playPauseButton.extraTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _playPauseButton.extraTouchInsets = UIEdgeInsetsMake(-20, -20, -20, -20);
         [_playPauseButton setBackgroundColor:UIColorRed];
         [_playPauseButton addTarget:self action:@selector(didPressPlayPauseButton:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -58,7 +58,7 @@ NS_PROPERTY_SLOT(isPlaying) {
 - (APButton *)exitPlayerButton {
     if (_exitPlayerButton == nil) {
         _exitPlayerButton = [[APButton alloc] init];
-        _exitPlayerButton.extraTouchInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+        _exitPlayerButton.extraTouchInsets = UIEdgeInsetsMake(-20, -20, -20, -20);
         [_exitPlayerButton setBackgroundColor:UIColorBlue];
         [_exitPlayerButton addTarget:self action:@selector(didPressExitPlayerButton:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -92,6 +92,7 @@ NS_PROPERTY_SLOT(isPlaying) {
 }
 
 - (void)didPressPlayPauseButton:(id)sender {
+    if (self.viewModel == nil) return;
     [self emitSignal:NS_SIGNAL_SELECTOR(didPressPlayPauseButton) withParams:@[self, self.viewModel, sender]];
 }
 
@@ -114,13 +115,13 @@ NS_PROPERTY_SLOT(isPlaying) {
 - (void)miniStateSetupConstraints {
     [self.playPauseButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.centerY.equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
     
     [self.exitPlayerButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(20);
-        make.top.equalTo(self).offset(30);
-        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.top.equalTo(self).offset(44);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
 }
 
@@ -144,8 +145,8 @@ NS_PROPERTY_SLOT(isPlaying) {
     
     [self.exitPlayerButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(20);
-        make.top.equalTo(self).offset(30);
-        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.top.equalTo(self).offset(44);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
 }
 @end
