@@ -47,21 +47,21 @@ NS_PROPERTY_SLOT(playerStatus) {
 - (void)bindData {
     // 绑定播放器状态变更
     [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
-    
 }
 
 - (void)play {
     [self.player play];
-    self.isPlaying = YES;
+    _isPlaying = YES;
 }
 
 - (void)pause {
     [self.player pause];
-    self.isPlaying = NO;
+    _isPlaying = NO;
 }
 
 - (void)stop {
     [self.player pause];
+    _isPlaying = NO;
 }
 
 @end
