@@ -43,9 +43,13 @@
     }
     return self;
 }
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)bindData {
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 #pragma mark - Slot
@@ -61,7 +65,6 @@
     }];
     if ([newValue isEqualToNumber:@(AVPlayerStatusReadyToPlay)]) {
         [viewModel play];
-        v.controlView.isPlaying = viewModel.isPlaying;
     }
 }
 
@@ -73,7 +76,6 @@
     } else {
         [viewModel play];
     }
-    controlView.isPlaying = viewModel.isPlaying;
 }
 
 - (NS_SLOT)onPressExitPlayerButtonWithView:(APPlayerControlView *)view
@@ -82,6 +84,48 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (NS_SLOT)onEnterBackgroundPlayerRateChangeWithNewValue:(NSNumber *)newValue
+                                                oldValue:(NSNumber *)oldValue
+                                               viewModel:(APPlayerViewModel *)viewModel {
+    if ([newValue floatValue] < 0.0001) {
+        if (viewModel.enableBackground) {
+            [viewModel play];
+        }
+    }
+}
+#pragma mark - Action
+- (void)onAppDidEnterBackground {
+    [self pauseAll:YES];
+}
+
+- (void)onAppWillEnterForeground {
+    [self playAll:YES];
+}
+
+#pragma mark - Private
+- (void)pauseAll:(BOOL)shouldCheckPlayInBackground {
+    [self.playersContainer enumerateObjectsUsingBlock:^(APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (shouldCheckPlayInBackground) {
+            if (![obj viewModel].enableBackground) {
+                [[obj viewModel] pause];
+            } else {
+                [[obj viewModel] connectSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self slot:NS_SLOT_SELECTOR(onEnterBackgroundPlayerRateChangeWithNewValue:oldValue:viewModel:)];
+            }
+        } else {
+            [[obj viewModel] pause];
+        }
+        
+    }];
+}
+
+- (void)playAll:(BOOL)shouldKeepLastStatus {
+    [self.playersContainer enumerateObjectsUsingBlock:^(APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [[obj viewModel] disconnectSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self];
+        if (!shouldKeepLastStatus) {
+            [[obj viewModel] play];
+        }
+    }];
+}
 #pragma mark - Lazy Init
 
 
@@ -141,4 +185,31 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeRemoteControl) {
+        switch (event.subtype) {
+            case UIEventSubtypeRemoteControlPlay:
+                [self playAll:NO];
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                [self pauseAll:YES];
+            default:
+                break;
+        }
+    }
+}
 @end

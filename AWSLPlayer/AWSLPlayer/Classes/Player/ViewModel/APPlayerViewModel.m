@@ -8,17 +8,32 @@
 
 #import "APPlayerViewModel.h"
 
-@implementation APPlayerViewModel
-NS_CLOSE_SIGNAL_WARN(playerStatusChange);
+@interface APPlayerViewModel ()
+@property (nonatomic, assign) BOOL isPlaying;
+@end
 
+@implementation APPlayerViewModel
+
+NS_CLOSE_SIGNAL_WARN(playerStatusChange);
 NS_PROPERTY_SLOT(playerStatus) {
     [self emitSignal:NS_SIGNAL_SELECTOR(playerStatusChange) withParams:@[newValue, oldValue, self]];
+}
+
+NS_CLOSE_SIGNAL_WARN(rateChange);
+NS_PROPERTY_SLOT(rate) {
+    if ([newValue floatValue] > 0.001) {
+        self.isPlaying = YES;
+    } else {
+        self.isPlaying = NO;
+    }
+    [self emitSignal:NS_SIGNAL_SELECTOR(rateChange) withParams:@[newValue, oldValue, self]];
 }
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         _isPlayerInit = NO;
+        _enableBackground = YES;
     }
     return self;
 }
@@ -47,21 +62,19 @@ NS_PROPERTY_SLOT(playerStatus) {
 - (void)bindData {
     // 绑定播放器状态变更
     [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
+    [self.player listenKeypath:@"rate" pairWithSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(rate)];
 }
 
 - (void)play {
     [self.player play];
-    _isPlaying = YES;
 }
 
 - (void)pause {
     [self.player pause];
-    _isPlaying = NO;
 }
 
 - (void)stop {
     [self.player pause];
-    _isPlaying = NO;
 }
 
 @end

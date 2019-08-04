@@ -13,9 +13,32 @@
 
 @interface APPlayerDisplayView ()
 @property (nonatomic, readonly) AVPlayerLayer *playerLayer;
+@property (nonatomic, weak) APPlayerViewModel *viewModel;
 @end
 
 @implementation APPlayerDisplayView
+
+- (void)didInitialize {
+    [super didInitialize];
+    
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)bindData {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAppBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)onAppEnterBackground {
+    self.playerLayer.player = nil;
+}
+
+- (void)onAppBecomeActive {
+    self.playerLayer.player = self.viewModel.player;
+}
 
 + (Class)layerClass {
     return [AVPlayerLayer class];
@@ -26,6 +49,7 @@
 }
 
 - (void)setupWithViewModel:(APPlayerViewModel *)model {
+    self.viewModel = model;
     self.playerLayer.player = model.player;
 }
 

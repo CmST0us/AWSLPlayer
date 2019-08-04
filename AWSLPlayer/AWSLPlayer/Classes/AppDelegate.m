@@ -26,6 +26,11 @@
     APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:self.hp];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    
+    // Setup AVAudioSession
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [session setActive:YES error:nil];
     return YES;
 }
 

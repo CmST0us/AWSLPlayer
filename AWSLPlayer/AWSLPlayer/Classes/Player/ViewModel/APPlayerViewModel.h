@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, readonly) BOOL isPlaying;
 
+#pragma mark - Configuration
+@property (nonatomic, assign) BOOL enableBackground;
+
 #pragma mark - Subclass Override
 - (void)setupPlayer;
 - (void)setupPlayerWithPlayURLs:(NSDictionary *)playURLs;
@@ -41,6 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
 // @param: view model
 NS_SIGNAL(playerStatusChange);
 
+// 播放速度: NSNumber
+// @param: newValue
+// @param: oldValue
+// @param: view model
+NS_SIGNAL(rateChange);
 @end
 
 NS_ASSUME_NONNULL_END

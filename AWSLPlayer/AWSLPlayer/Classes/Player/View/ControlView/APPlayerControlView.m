@@ -10,6 +10,7 @@
 #import <Masonry/Masonry.h>
 #import "APButton.h"
 
+#import "APPlayerViewModel.h"
 #import "APPlayerControlView.h"
 
 @interface APPlayerControlView ()
@@ -23,6 +24,13 @@
 NS_CLOSE_SIGNAL_WARN(didPressPlayPauseButton);
 NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
 
+#pragma mark - Property Slot
+NS_CLOSE_SIGNAL_WARN(isPlayingChange);
+NS_PROPERTY_SLOT(isPlaying) {
+    self.isPlaying = [newValue boolValue];
+}
+
+#pragma mark -
 - (void)didInitialize {
     [super didInitialize];
     [self addSubview:self.playPauseButton];
@@ -30,6 +38,10 @@ NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
     
     self.controlViewType = APPlayerControlViewTypeMini;
     [self miniState];
+}
+
+- (void)bindData {
+    [self.viewModel listenKeypath:@"isPlaying" pairWithSignal:NS_SIGNAL_SELECTOR(isPlayingChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(isPlaying)];
 }
 
 - (APButton *)playPauseButton {
@@ -46,7 +58,7 @@ NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
 - (APButton *)exitPlayerButton {
     if (_exitPlayerButton == nil) {
         _exitPlayerButton = [[APButton alloc] init];
-        _exitPlayerButton.extraTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _exitPlayerButton.extraTouchInsets = UIEdgeInsetsMake(20, 20, 20, 20);
         [_exitPlayerButton setBackgroundColor:UIColorBlue];
         [_exitPlayerButton addTarget:self action:@selector(didPressExitPlayerButton:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -67,6 +79,7 @@ NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
 
 - (void)setupWithViewModel:(APPlayerViewModel *)model {
     self.viewModel = model;
+    [self bindData];
 }
 
 - (void)setIsPlaying:(BOOL)isPlaying {
@@ -83,7 +96,7 @@ NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
 }
 
 - (void)didPressExitPlayerButton:(id)sender {
-    [self emitSignal:NS_SIGNAL_SELECTOR(didPressExitPlayerButton) withParams:@[self, self.viewModel, sender]];
+    [self emitSignal:NS_SIGNAL_SELECTOR(didPressExitPlayerButton) withParams:@[self, self.viewModel ? : [NSNull null], sender]];
 }
 
 @end
@@ -106,7 +119,7 @@ NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
     
     [self.exitPlayerButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(20);
-        make.top.equalTo(self).offset(10);
+        make.top.equalTo(self).offset(30);
         make.size.mas_equalTo(CGSizeMake(20, 20));
     }];
 }
@@ -131,7 +144,7 @@ NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
     
     [self.exitPlayerButton mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).offset(20);
-        make.top.equalTo(self).offset(10);
+        make.top.equalTo(self).offset(30);
         make.size.mas_equalTo(CGSizeMake(20, 20));
     }];
 }
