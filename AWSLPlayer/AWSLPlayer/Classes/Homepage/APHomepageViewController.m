@@ -117,6 +117,8 @@
         cell.textLabel.text = self.dataSource.liveURLs[indexPath.row].name;
     } else if (indexPath.section == APHomepageDataSourceSectionTypeFolder) {
         cell.textLabel.text = self.dataSource.liveURLFolders[indexPath.row].name;
+    } else if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
+        cell.textLabel.text = self.dataSource.players[indexPath.row].name;
     }
     return cell;
 }
@@ -127,9 +129,13 @@
     if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
         APDDPlayerModel *ddPlayer = [[APDDPlayerModel alloc] init];
         ddPlayer.liveURLs = @{
-            @(1): self.dataSource.liveURLs[indexPath.row]
+            @(0): self.dataSource.liveURLs[indexPath.row]
         };
         APPlayerViewController *vc = [[APPlayerViewController alloc] initWithDDPlayerModel:ddPlayer];
+        [self presentViewController:vc animated:YES completion:nil];
+    } else if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
+        APDDPlayerModel *model = self.dataSource.players[indexPath.row];
+        APPlayerViewController *vc = [[APPlayerViewController alloc] initWithDDPlayerModel:model];
         [self presentViewController:vc animated:YES completion:nil];
     }
 }

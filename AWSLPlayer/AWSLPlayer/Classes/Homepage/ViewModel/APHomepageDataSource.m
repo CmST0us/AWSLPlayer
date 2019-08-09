@@ -23,6 +23,10 @@
     return [self.container.liveURLFolders allValues];
 }
 
+- (NSArray<APDDPlayerModel *> *)players {
+    return [self.container.players allValues];
+}
+
 - (APModelStorageContainer *)container {
     return [APUserStorageHelper modelStorageContainer];
 }

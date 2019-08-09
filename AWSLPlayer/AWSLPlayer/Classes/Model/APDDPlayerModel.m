@@ -7,11 +7,13 @@
 //
 
 #import "APDDPlayerModel.h"
-
+#import "APDDPlayerLayoutModel.h"
 @implementation APDDPlayerModel
+
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:_layoutModel forKey:@"layoutModel"];
     [coder encodeObject:_liveURLs forKey:@"liveURLs"];
+    [coder encodeObject:_name forKey:@"name"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -19,7 +21,30 @@
     if (self) {
         _layoutModel = [coder decodeObjectForKey:@"layoutModel"];
         _liveURLs = [coder decodeObjectForKey:@"liveURLs"];
+        _name = [coder decodeObjectForKey:@"name"];
     }
     return self;
 }
+
+- (NSString *)name {
+    if (_name == nil) {
+        _name = @"";
+    }
+    return _name;
+}
+
+- (APDDPlayerLayoutModel *)layoutModel {
+    if (_layoutModel == nil) {
+        _layoutModel = [[APDDPlayerLayoutModel alloc] init];
+    }
+    return _layoutModel;
+}
+
+- (NSDictionary<NSNumber *,APLiveURLModel *> *)liveURLs {
+    if (_liveURLs == nil) {
+        _liveURLs = @{};
+    }
+    return _liveURLs;
+}
+
 @end

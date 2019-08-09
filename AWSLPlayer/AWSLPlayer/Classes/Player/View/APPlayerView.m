@@ -44,4 +44,15 @@
     [self.displayView setupWithViewModel:model];
 }
 
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.controlView.layer.opacity < 0.01) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.controlView.layer.opacity = 1;
+        }];
+    } else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.controlView.layer.opacity = 0;
+        }];
+    }
+}
 @end

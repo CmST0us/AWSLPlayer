@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, APHomepageDataSourceSectionType) {
 
 @property (nonatomic, readonly) NSArray<APLiveURLModel *> *liveURLs;
 @property (nonatomic, readonly) NSArray<APLiveURLFolderModel *> *liveURLFolders;
+@property (nonatomic, readonly) NSArray<APDDPlayerModel *> *players;
 @property (nonatomic, weak) APModelStorageContainer *container;
 
 - (NSInteger)numberOfSections;

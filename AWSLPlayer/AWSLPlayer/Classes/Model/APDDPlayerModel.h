@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class APDDPlayerLayoutModel;
 @class APLiveURLModel;
 @interface APDDPlayerModel : NSObject <NSCoding>
+@property (nonatomic, copy) NSString *name;
 // 布局，默认四分屏
 @property (nonatomic, strong, nonnull) APDDPlayerLayoutModel *layoutModel;
 // 直播间地址，对应布局Index

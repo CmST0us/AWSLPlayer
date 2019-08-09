@@ -13,6 +13,7 @@
 #import "APVVMBindingContainer.h"
 #import "APDDPlayerModel.h"
 #import "APLiveURLModel.h"
+#import "APDDPlayerLayoutModel.h"
 
 #import "APYoutubeLive.h"
 #import "APBiliBiliLive.h"
@@ -24,7 +25,7 @@
 
 @interface APPlayerViewController ()
 @property (nonatomic, strong) APDDPlayerModel *ddPlayerModel;
-@property (nonatomic, strong) NSMutableArray<APVVMBindingContainer<APPlayerView *, APPlayerViewModel *> *> *playersContainer;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, APVVMBindingContainer<APPlayerView *, APPlayerViewModel *> *> *playersContainer;
 @end
 
 @implementation APPlayerViewController
@@ -34,12 +35,7 @@
     self = [super init];
     if (self) {
         _ddPlayerModel = model;
-        _playersContainer = [[NSMutableArray alloc] initWithCapacity:model.liveURLs.count];
-        
-        [self setupPlayerView];
-        [self addSubviews];
-        [self setupConstraints];
-        [self bindData];
+        _playersContainer = [[NSMutableDictionary alloc] initWithCapacity:model.liveURLs.count];
     }
     return self;
 }
@@ -58,7 +54,7 @@
                                    oldValue:(NSNumber *)oldValue
                                   viewModel:(APPlayerViewModel *)viewModel{
     __block APPlayerView *v = nil;
-    [self.playersContainer enumerateObjectsUsingBlock:^(APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
         if ([obj viewModel] == viewModel) {
             v = [obj view];
         }
@@ -104,7 +100,7 @@
 
 #pragma mark - Private
 - (void)pauseAll:(BOOL)shouldCheckPlayInBackground {
-    [self.playersContainer enumerateObjectsUsingBlock:^(APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
         if (shouldCheckPlayInBackground) {
             if (![obj viewModel].enableBackground) {
                 [[obj viewModel] pause];
@@ -114,13 +110,12 @@
         } else {
             [[obj viewModel] pause];
         }
-        
     }];
 }
 
 - (void)playAll:(BOOL)shouldKeepLastStatus {
-    [self.playersContainer enumerateObjectsUsingBlock:^(APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [[obj viewModel] disconnectSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self];
+    [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
+                [[obj viewModel] disconnectSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self];
         if (!shouldKeepLastStatus) {
             [[obj viewModel] play];
         }
@@ -129,53 +124,59 @@
 #pragma mark - Lazy Init
 
 
+
 #pragma mark - Setup View
 - (void)setupPlayerView {
     weakSelf(target);
-    APLiveURLModel *liveURL = [self.ddPlayerModel.liveURLs allValues][0];
-    APPlayerViewModel *playerViewModel = [[APPlayerViewModel alloc] init];
-    APPlayerView *playerView = [[APPlayerView alloc] init];
-    APVVMBindingContainer *container = [APVVMBindingContainer bindView:playerView withViewModel:playerViewModel];
-    
-    [playerView.controlView connectSignal:NS_SIGNAL_SELECTOR(didPressPlayPauseButton) forObserver:self slot:NS_SLOT_SELECTOR(onPressPlayPauseButtonWithView:viewModel:button:)];
-    [playerView.controlView connectSignal:NS_SIGNAL_SELECTOR(didPressExitPlayerButton) forObserver:self slot:NS_SLOT_SELECTOR(onPressExitPlayerButtonWithView:viewModel:button:)];
-    
-    
-    [self.playersContainer addObject:container];
-    if (liveURL.urlType == APLiveURLTypeYoutube) {
-        APYoutubeLive *youtubeLive = [[APYoutubeLive alloc] initWithLiveRoomURL:liveURL.liveURL];
-        liveURL.processor = youtubeLive;
-        [youtubeLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [playerViewModel setupPlayerWithPlayURLs:playURLs];
-                [playerView setupWithViewModel:playerViewModel];
-                [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
-            });
-        }];
-    } if (liveURL.urlType == APLiveURLTypeBiliBili) {
-        APBiliBiliLive *bilibili = [[APBiliBiliLive alloc] initWithLiveRoomURL:liveURL.liveURL];
-        liveURL.processor = bilibili;
-        [bilibili requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [playerViewModel setupPlayerWithPlayURLs:playURLs];
-                [playerView setupWithViewModel:playerViewModel];
-                [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
-            });
-        }];
+    if (self.ddPlayerModel.layoutModel.playerCount == 0) {
+        [self.ddPlayerModel.layoutModel setupWithPlayerCount:self.ddPlayerModel.liveURLs.count];
     }
-}
-
-- (void)addSubviews {
-    [self.playersContainer enumerateObjectsUsingBlock:^(APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.view addSubview:[obj view]];
+    [self.ddPlayerModel.liveURLs enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APLiveURLModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        APLiveURLModel *liveURL = obj;
+        APPlayerViewModel *playerViewModel = [[APPlayerViewModel alloc] init];
+        APPlayerView *playerView = [[APPlayerView alloc] init];
+        APVVMBindingContainer *container = [APVVMBindingContainer bindView:playerView withViewModel:playerViewModel];
+        
+        [playerView.controlView connectSignal:NS_SIGNAL_SELECTOR(didPressPlayPauseButton) forObserver:target slot:NS_SLOT_SELECTOR(onPressPlayPauseButtonWithView:viewModel:button:)];
+        [playerView.controlView connectSignal:NS_SIGNAL_SELECTOR(didPressExitPlayerButton) forObserver:target slot:NS_SLOT_SELECTOR(onPressExitPlayerButtonWithView:viewModel:button:)];
+        
+        
+        [target.playersContainer setObject:container forKey:key];
+        if (liveURL.urlType == APLiveURLTypeYoutube) {
+            APYoutubeLive *youtubeLive = [[APYoutubeLive alloc] initWithLiveRoomURL:liveURL.liveURL];
+            liveURL.processor = youtubeLive;
+            [youtubeLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [playerViewModel setupPlayerWithPlayURLs:playURLs];
+                    [playerView setupWithViewModel:playerViewModel];
+                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                });
+            }];
+        } if (liveURL.urlType == APLiveURLTypeBiliBili) {
+            APBiliBiliLive *bilibili = [[APBiliBiliLive alloc] initWithLiveRoomURL:liveURL.liveURL];
+            liveURL.processor = bilibili;
+            [bilibili requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [playerViewModel setupPlayerWithPlayURLs:playURLs];
+                    [playerView setupWithViewModel:playerViewModel];
+                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                });
+            }];
+        }
     }];
 }
 
-- (void)setupConstraints {
-    [self.playersContainer enumerateObjectsUsingBlock:^(APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [[obj view] mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
+- (void)addPlayerViews {
+    weakSelf(target);
+    [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
+        [target.view addSubview:[obj view]];
+    }];
+}
+
+- (void)layoutPlayerViews {
+    weakSelf(target);
+    [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
+        obj.view.frame = [target.ddPlayerModel.layoutModel playerFrameWithIndex:key.integerValue orientation:[target currentOrientation]];
     }];
 }
 
@@ -183,6 +184,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupPlayerView];
+    [self addPlayerViews];
+    [self bindData];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self layoutPlayerViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -211,5 +220,10 @@
                 break;
         }
     }
+}
+
+#pragma mark - Getter
+- (UIInterfaceOrientation)currentOrientation {
+    return [[UIApplication sharedApplication] statusBarOrientation];
 }
 @end

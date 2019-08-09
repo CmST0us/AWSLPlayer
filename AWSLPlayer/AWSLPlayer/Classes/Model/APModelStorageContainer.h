@@ -23,6 +23,7 @@ extern NSString * const APModelStorageDefaultLiveFolderKey;
 - (APLiveURLFolderModel *)defaultFolder;
 - (void)addLiveURL:(APLiveURLModel *)model inFolder:(APLiveURLFolderModel *)folderModel;
 
+- (void)addPlayer:(APDDPlayerModel *)aPlayer;
 @end
 
 NS_ASSUME_NONNULL_END
