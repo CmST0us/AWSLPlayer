@@ -10,9 +10,12 @@
 
 @interface APPlayerViewModel ()
 @property (nonatomic, assign) BOOL isPlaying;
+@property (nonatomic, assign) APPlayerViewModelStatus status;
 @end
 
 @implementation APPlayerViewModel
+
+#pragma mark - Signals & Slots
 
 NS_CLOSE_SIGNAL_WARN(playerStatusChange);
 NS_PROPERTY_SLOT(playerStatus) {
@@ -29,6 +32,13 @@ NS_PROPERTY_SLOT(rate) {
     [self emitSignal:NS_SIGNAL_SELECTOR(rateChange) withParams:@[newValue, oldValue, self]];
 }
 
+NS_CLOSE_SIGNAL_WARN(loadedTimeRangesChange);
+NS_PROPERTY_SLOT(loadedTimeRanges) {
+    
+}
+
+#pragma mark - Init
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -37,6 +47,16 @@ NS_PROPERTY_SLOT(rate) {
     }
     return self;
 }
+
+
+- (void)bindData {
+    // 绑定播放器状态变更
+    [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
+    [self.player listenKeypath:@"rate" pairWithSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(rate)];
+    [self.player.currentItem listenKeypath:@"loadedTimeRanges" pairWithSignal:NS_SIGNAL_SELECTOR(loadedTimeRangesChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(loadedTimeRanges)];
+}
+
+#pragma mark - Method
 
 - (void)setupPlayer {
     [self setupPlayerWithPlayURLs:self.playURLs];
@@ -57,12 +77,6 @@ NS_PROPERTY_SLOT(rate) {
     _isPlayerInit = YES;
     
     [self bindData];
-}
-
-- (void)bindData {
-    // 绑定播放器状态变更
-    [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
-    [self.player listenKeypath:@"rate" pairWithSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(rate)];
 }
 
 - (void)play {

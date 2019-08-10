@@ -12,6 +12,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, APPlayerViewModelStatus) {
+    APPlayerViewModelStatusUnknow = -1,
+    APPlayerViewModelStatusFaild,
+    APPlayerViewModelStatusReady,
+    APPlayerViewModelStatusPlaying,
+    APPlayerViewModelStatusPause,
+    APPlayerViewModelStatusStop,
+    APPlayerViewModelStatusLoading,
+};
+
 @class APLiveURLModel;
 @interface APPlayerViewModel : NSObject
 
@@ -22,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, readonly) BOOL isPlaying;
-
+@property (nonatomic, readonly) APPlayerViewModelStatus status;
 #pragma mark - Configuration
 @property (nonatomic, assign) BOOL enableBackground;
 
@@ -49,6 +59,12 @@ NS_SIGNAL(playerStatusChange);
 // @param: oldValue
 // @param: view model
 NS_SIGNAL(rateChange);
+
+// 播放器状态变化: NSNumber<APPlayerViewModelStatus>
+// @param: newValue
+// @param: oldValue
+// @param: view model
+NS_SIGNAL(playerStatusChange);
 @end
 
 NS_ASSUME_NONNULL_END
