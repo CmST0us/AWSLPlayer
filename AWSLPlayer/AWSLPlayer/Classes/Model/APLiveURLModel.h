@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class APPlatformLiveURLProcessor;
 typedef NS_ENUM(NSUInteger, APLiveURLType) {
     APLiveURLTypeRaw, // 未选择
     
@@ -27,7 +27,8 @@ typedef NS_ENUM(NSUInteger, APLiveURLType) {
 @property (nonatomic, assign) APLiveURLType urlType;
 
 // just hold liveURL processor
-@property (nonatomic, strong, nullable) id processor;
+@property (nonatomic, readonly) Class processorClass;
+@property (nonatomic, strong, nullable) APPlatformLiveURLProcessor *processor;
 @end
 
 NS_ASSUME_NONNULL_END

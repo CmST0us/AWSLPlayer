@@ -15,8 +15,7 @@
 #import "APLiveURLModel.h"
 #import "APDDPlayerLayoutModel.h"
 
-#import "APYoutubeLive.h"
-#import "APBiliBiliLive.h"
+#import "APPlatformLiveURLProcessor.h"
 
 #import "APPlayerViewModel.h"
 #import "APPlayerViewController.h"
@@ -145,20 +144,11 @@
         
         
         [target.playersContainer setObject:container forKey:key];
-        if (liveURL.urlType == APLiveURLTypeYoutube) {
-            APYoutubeLive *youtubeLive = [[APYoutubeLive alloc] initWithLiveRoomURL:liveURL.liveURL];
-            liveURL.processor = youtubeLive;
-            [youtubeLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [playerViewModel setupPlayerWithPlayURLs:playURLs];
-                    [playerView setupWithViewModel:playerViewModel];
-                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
-                });
-            }];
-        } if (liveURL.urlType == APLiveURLTypeBiliBili) {
-            APBiliBiliLive *bilibili = [[APBiliBiliLive alloc] initWithLiveRoomURL:liveURL.liveURL];
-            liveURL.processor = bilibili;
-            [bilibili requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+        Class processClass = liveURL.processorClass;
+        if (processClass != nil) {
+            APPlatformLiveURLProcessor *processor = [[processClass alloc] initWithLiveRoomURL:liveURL.liveURL];
+            liveURL.processor = processor;
+            [processor requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [playerViewModel setupPlayerWithPlayURLs:playURLs];
                     [playerView setupWithViewModel:playerViewModel];

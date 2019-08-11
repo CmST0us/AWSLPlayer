@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APRequestPlatformLivePlayURLProtocol.h"
+#import "APPlatformLiveURLProcessor.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APLineLive : NSObject<APRequestPlatformLivePlayURLProtocol>
+@interface APLineLive : APPlatformLiveURLProcessor
 @property (nonatomic, readonly) NSUInteger requestedChannelID;
 @property (nonatomic, readonly) NSUInteger requestedBroadcastID;
 

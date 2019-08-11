@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APYoutubeURLSession.h"
-#import "APRequestPlatformLivePlayURLProtocol.h"
+#import "APPlatformLiveURLProcessor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APYoutubeLive : NSObject<APRequestPlatformLivePlayURLProtocol>
+@interface APYoutubeLive : APPlatformLiveURLProcessor
 @property (nonatomic, readonly) NSURL *liveRoomURL;
 
 @property (nonatomic, readonly, nullable) NSDictionary<NSString *, NSURL *> *playURLs;

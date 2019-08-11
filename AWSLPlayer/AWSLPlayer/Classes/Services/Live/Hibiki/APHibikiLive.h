@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "APRequestPlatformLivePlayURLProtocol.h"
+#import "APPlatformLiveURLProcessor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APHibikiLive : NSObject<APRequestPlatformLivePlayURLProtocol>
+@interface APHibikiLive : APPlatformLiveURLProcessor
 
 @property (nonatomic, readonly) NSString *accessID;
 @property (nonatomic, readonly) NSInteger videoID;

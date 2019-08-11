@@ -26,6 +26,7 @@
 		4F25B48822DCD68D00F09FAC /* APLineLiveURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48722DCD68D00F09FAC /* APLineLiveURLSession.m */; };
 		4F28BA9522F691740084915D /* APVVMBindingContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28BA9422F691740084915D /* APVVMBindingContainer.m */; };
 		4F28BAA122F6B7DA0084915D /* APButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28BAA022F6B7DA0084915D /* APButton.m */; };
+		4F2C60FC23004E020031B89E /* APPlatformLiveURLProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C60FB23004E020031B89E /* APPlatformLiveURLProcessor.m */; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
 		4F5C333922DA4F1800D3FCA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5C333822DA4F1800D3FCA1 /* Assets.xcassets */; };
@@ -136,6 +137,8 @@
 		4F28BA9422F691740084915D /* APVVMBindingContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APVVMBindingContainer.m; sourceTree = "<group>"; };
 		4F28BA9F22F6B7DA0084915D /* APButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APButton.h; sourceTree = "<group>"; };
 		4F28BAA022F6B7DA0084915D /* APButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APButton.m; sourceTree = "<group>"; };
+		4F2C60FA23004E020031B89E /* APPlatformLiveURLProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPlatformLiveURLProcessor.h; sourceTree = "<group>"; };
+		4F2C60FB23004E020031B89E /* APPlatformLiveURLProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPlatformLiveURLProcessor.m; sourceTree = "<group>"; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C332F22DA4F1700D3FCA1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -318,6 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				4F25B48922DCD86700F09FAC /* APRequestPlatformLivePlayURLProtocol.h */,
+				4F2C60FA23004E020031B89E /* APPlatformLiveURLProcessor.h */,
+				4F2C60FB23004E020031B89E /* APPlatformLiveURLProcessor.m */,
 				4F989C9B22DE2E440092EE90 /* Hibiki */,
 				4F25B48A22DCDDE800F09FAC /* Line */,
 				4F25B48122DB8C5A00F09FAC /* Youtube */,
@@ -779,6 +784,7 @@
 				4F25B45B22DB061800F09FAC /* APURLSessionManager.m in Sources */,
 				4F83537F22F684C7000B5793 /* APPlayerDisplayView.m in Sources */,
 				4F989C9622DE1A8E0092EE90 /* APBiliBiliLive.m in Sources */,
+				4F2C60FC23004E020031B89E /* APPlatformLiveURLProcessor.m in Sources */,
 				4F989CC322E374BD0092EE90 /* APHomepageAddItemPopupView.m in Sources */,
 				4F989CD722E4394A0092EE90 /* APFilePathHelper.m in Sources */,
 				4F989CF522E8A80D0092EE90 /* APHomepageDataSource.m in Sources */,

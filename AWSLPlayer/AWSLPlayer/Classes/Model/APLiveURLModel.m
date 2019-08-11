@@ -37,4 +37,24 @@
     }
     return self;
 }
+
+- (Class)processorClass {
+    static NSDictionary *supportProcessorClass = nil;
+    if (supportProcessorClass == nil) {
+        NSDictionary *d = @{
+            @(APLiveURLTypeNicoNico): @"APNicoNicoLive",
+            @(APLiveURLTypeHibikiRadio): @"APHibikiLive",
+            @(APLiveURLTypeLineLive): @"APLineLive",
+            @(APLiveURLTypeBiliBili): @"APBiliBiliLive",
+            @(APLiveURLTypeYoutube): @"APYoutubeLive",
+        };
+        supportProcessorClass = d;
+    }
+    NSString *classString = supportProcessorClass[@(self.urlType)];
+    if (classString == nil || classString.length == 0) {
+        return nil;
+    }
+    return NSClassFromString(classString);
+}
+
 @end

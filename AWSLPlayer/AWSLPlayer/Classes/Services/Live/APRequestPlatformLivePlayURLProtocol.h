@@ -15,10 +15,18 @@ typedef void(^APRequestPlatformLivePlayURLBlock)(NSDictionary * _Nullable playUR
 
 @protocol APRequestPlatformLivePlayURLProtocol <NSObject>
 @required
+/// 初始化
+/// @param url 直播间URL
+- (nullable instancetype)initWithLiveRoomURL:(NSURL *)url;
 // 返回播放列表
 // K: 清晰度
 // V: 播放地址
 - (NSDictionary<NSString *, NSURL *> * _Nullable )playURLs;
+
+
+/// 请求播放地址
+/// @param block 回调
+- (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block;
 @optional
 NS_SIGNAL(playURLsDidChange);
 @end
