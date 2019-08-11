@@ -59,7 +59,7 @@
             v = [obj view];
         }
     }];
-    if ([newValue isEqualToNumber:@(AVPlayerStatusReadyToPlay)]) {
+    if ([newValue isEqualToNumber:@(APPlayerViewModelStatusReady)]) {
         [viewModel play];
     }
 }
@@ -67,10 +67,12 @@
 - (NS_SLOT)onPressPlayPauseButtonWithView:(APPlayerControlView *)controlView
                                 viewModel:(APPlayerViewModel *)viewModel
                                    button:(APButton *)button {
-    if (viewModel.isPlaying) {
+    if (viewModel.status == APPlayerViewModelStatusPlaying) {
         [viewModel pause];
-    } else {
+    } else if (viewModel.status == APPlayerViewModelStatusPause){
         [viewModel play];
+    } else if (viewModel.status == APPlayerViewModelStatusLoading) {
+        [viewModel playImmediately:YES];
     }
 }
 
@@ -105,7 +107,8 @@
             if (![obj viewModel].enableBackground) {
                 [[obj viewModel] pause];
             } else {
-                [[obj viewModel] connectSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self slot:NS_SLOT_SELECTOR(onEnterBackgroundPlayerRateChangeWithNewValue:oldValue:viewModel:)];
+                [[obj viewModel] connectSignal:NS_SIGNAL_SELECTOR(statusChange)
+                                   forObserver:self slot:NS_SLOT_SELECTOR(onEnterBackgroundPlayerRateChangeWithNewValue:oldValue:viewModel:)];
             }
         } else {
             [[obj viewModel] pause];
@@ -115,7 +118,7 @@
 
 - (void)playAll:(BOOL)shouldKeepLastStatus {
     [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
-                [[obj viewModel] disconnectSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self];
+                [[obj viewModel] disconnectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:self];
         if (!shouldKeepLastStatus) {
             [[obj viewModel] play];
         }
@@ -149,7 +152,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [playerViewModel setupPlayerWithPlayURLs:playURLs];
                     [playerView setupWithViewModel:playerViewModel];
-                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
                 });
             }];
         } if (liveURL.urlType == APLiveURLTypeBiliBili) {
@@ -159,7 +162,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [playerViewModel setupPlayerWithPlayURLs:playURLs];
                     [playerView setupWithViewModel:playerViewModel];
-                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
                 });
             }];
         }

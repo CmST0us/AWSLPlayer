@@ -9,7 +9,6 @@
 #import "APPlayerViewModel.h"
 
 @interface APPlayerViewModel ()
-@property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, assign) APPlayerViewModelStatus status;
 @end
 
@@ -19,22 +18,32 @@
 
 NS_CLOSE_SIGNAL_WARN(playerStatusChange);
 NS_PROPERTY_SLOT(playerStatus) {
-    [self emitSignal:NS_SIGNAL_SELECTOR(playerStatusChange) withParams:@[newValue, oldValue, self]];
-}
-
-NS_CLOSE_SIGNAL_WARN(rateChange);
-NS_PROPERTY_SLOT(rate) {
-    if ([newValue floatValue] > 0.001) {
-        self.isPlaying = YES;
-    } else {
-        self.isPlaying = NO;
+    APPlayerViewModelStatus lastStatus = self.status;
+    if ([newValue isEqualToNumber:@(AVPlayerItemStatusReadyToPlay)]) {
+        self.status = APPlayerViewModelStatusReady;
+    } else if ([newValue isEqualToNumber:@(AVPlayerItemStatusUnknown)]) {
+        self.status = APPlayerViewModelStatusUnknow;
+    } else if ([newValue isEqualToNumber:@(AVPlayerItemStatusFailed)]) {
+        self.status = APPlayerViewModelStatusFailed;
     }
-    [self emitSignal:NS_SIGNAL_SELECTOR(rateChange) withParams:@[newValue, oldValue, self]];
+    [self emitSignal:NS_SIGNAL_SELECTOR(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
 }
 
-NS_CLOSE_SIGNAL_WARN(loadedTimeRangesChange);
-NS_PROPERTY_SLOT(loadedTimeRanges) {
+NS_CLOSE_SIGNAL_WARN(timeControlStatusChange);
+NS_CLOSE_SIGNAL_WARN(statusChange)
+NS_PROPERTY_SLOT(status) {
+    APPlayerViewModelStatus lastStatus = self.status;
+    if ([newValue isKindOfClass:[NSNumber class]]) {
+        if ([newValue isEqualToNumber:@(AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate)]) {
+            self.status = APPlayerViewModelStatusLoading;
+        } else if ([newValue isEqualToNumber:@(AVPlayerTimeControlStatusPlaying)]) {
+            self.status = APPlayerViewModelStatusPlaying;
+        } else if ([newValue isEqualToNumber:@(AVPlayerTimeControlStatusPaused)]) {
+            self.status = APPlayerViewModelStatusPause;
+        }
+    }
     
+    [self emitSignal:NS_SIGNAL_SELECTOR(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
 }
 
 #pragma mark - Init
@@ -42,8 +51,8 @@ NS_PROPERTY_SLOT(loadedTimeRanges) {
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _isPlayerInit = NO;
         _enableBackground = YES;
+        _player = [[AVPlayer alloc] init];
     }
     return self;
 }
@@ -52,8 +61,7 @@ NS_PROPERTY_SLOT(loadedTimeRanges) {
 - (void)bindData {
     // 绑定播放器状态变更
     [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
-    [self.player listenKeypath:@"rate" pairWithSignal:NS_SIGNAL_SELECTOR(rateChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(rate)];
-    [self.player.currentItem listenKeypath:@"loadedTimeRanges" pairWithSignal:NS_SIGNAL_SELECTOR(loadedTimeRangesChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(loadedTimeRanges)];
+    [self.player listenKeypath:@"timeControlStatus" pairWithSignal:NS_SIGNAL_SELECTOR(timeControlStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(status)];
 }
 
 #pragma mark - Method
@@ -72,15 +80,24 @@ NS_PROPERTY_SLOT(loadedTimeRanges) {
     
     self.playURLs = playURLs;
     NSURL *defaultURL = [self.playURLs allValues][0];
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:defaultURL];
-    self.player = [AVPlayer playerWithPlayerItem:item];
-    _isPlayerInit = YES;
-    
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:defaultURL options:nil];
+    AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
+    item.preferredForwardBufferDuration = 3;
+    [self.player replaceCurrentItemWithPlayerItem:item];
+
     [self bindData];
 }
 
 - (void)play {
-    [self.player play];
+    [self playImmediately:NO];
+}
+
+- (void)playImmediately:(BOOL)flag {
+    if (flag) {
+        [self.player playImmediatelyAtRate:1];
+    } else {
+        [self.player play];
+    }
 }
 
 - (void)pause {
@@ -90,5 +107,6 @@ NS_PROPERTY_SLOT(loadedTimeRanges) {
 - (void)stop {
     [self.player pause];
 }
+
 
 @end

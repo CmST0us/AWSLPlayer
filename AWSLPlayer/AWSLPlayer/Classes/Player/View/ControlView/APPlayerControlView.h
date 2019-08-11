@@ -61,7 +61,6 @@ typedef NS_ENUM(NSUInteger, APPlayerControlViewType) {
 @class APPlayerViewModel;
 @interface APPlayerControlView : APView
 @property (nonatomic, readonly) APButton *playPauseButton;
-@property (nonatomic, assign) BOOL isPlaying;
 
 @property (nonatomic, readonly) APButton *exitPlayerButton;
 

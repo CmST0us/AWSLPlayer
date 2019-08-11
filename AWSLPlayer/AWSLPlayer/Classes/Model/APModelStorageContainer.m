@@ -117,15 +117,15 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
     
     APLiveURLModel *liveURL3 = [[APLiveURLModel alloc] init];
     liveURL3.urlType = APLiveURLTypeBiliBili;
-    liveURL3.name = @"leimu";
+    liveURL3.name = kAPModelStorageDefaultLiveURLName;
     liveURL3.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL3.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/2235771"];
+    liveURL3.liveURL = [NSURL URLWithString:kAPModelStorageDefaultLiveURL];
     
     APLiveURLModel *liveURL4 = [[APLiveURLModel alloc] init];
     liveURL4.urlType = APLiveURLTypeBiliBili;
-    liveURL4.name = @"seyou";
+    liveURL4.name = @"空间站";
     liveURL4.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL4.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/2235771"];
+    liveURL4.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/14047?spm_id_from=333.334.b_62696c695f6c697665.9"];
     
     APLiveURLFolderModel *defaultFolder = [[APLiveURLFolderModel alloc] init];
     defaultFolder.name = NSLocalizedString(@"ap_default", nil);

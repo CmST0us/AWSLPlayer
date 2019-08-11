@@ -25,9 +25,16 @@ NS_CLOSE_SIGNAL_WARN(didPressPlayPauseButton);
 NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
 
 #pragma mark - Property Slot
-NS_CLOSE_SIGNAL_WARN(isPlayingChange);
-NS_PROPERTY_SLOT(isPlaying) {
-    self.isPlaying = [newValue boolValue];
+NS_CLOSE_SIGNAL_WARN(statusChange);
+NS_PROPERTY_SLOT(status) {
+    if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPlaying)]) {
+        self.playPauseButton.backgroundColor = UIColorGreen;
+    } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
+        self.playPauseButton.backgroundColor = UIColorRed;
+    } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusLoading)] ||
+               [newValue isEqualToNumber:@(APPlayerViewModelStatusReady)]) {
+        self.playPauseButton.backgroundColor = UIColorYellow;
+    }
 }
 
 #pragma mark -
@@ -41,7 +48,7 @@ NS_PROPERTY_SLOT(isPlaying) {
 }
 
 - (void)bindData {
-    [self.viewModel listenKeypath:@"isPlaying" pairWithSignal:NS_SIGNAL_SELECTOR(isPlayingChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(isPlaying)];
+    [self.viewModel listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(status)];
 }
 
 - (APButton *)playPauseButton {
@@ -80,15 +87,6 @@ NS_PROPERTY_SLOT(isPlaying) {
 - (void)setupWithViewModel:(APPlayerViewModel *)model {
     self.viewModel = model;
     [self bindData];
-}
-
-- (void)setIsPlaying:(BOOL)isPlaying {
-    _isPlaying = isPlaying;
-    if (isPlaying) {
-        self.playPauseButton.backgroundColor = UIColorGreen;
-    } else {
-        self.playPauseButton.backgroundColor = UIColorRed;
-    }
 }
 
 - (void)didPressPlayPauseButton:(id)sender {

@@ -13,8 +13,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, APPlayerViewModelStatus) {
+    APPlayerViewModelStatusFailed = -2,
     APPlayerViewModelStatusUnknow = -1,
-    APPlayerViewModelStatusFaild,
     APPlayerViewModelStatusReady,
     APPlayerViewModelStatusPlaying,
     APPlayerViewModelStatusPause,
@@ -25,13 +25,10 @@ typedef NS_ENUM(NSInteger, APPlayerViewModelStatus) {
 @class APLiveURLModel;
 @interface APPlayerViewModel : NSObject
 
-@property (nonatomic, readonly) BOOL isPlayerInit;
-
 @property (nonatomic, strong) APLiveURLModel *liveURLModel;
 @property (nonatomic, strong) NSDictionary *playURLs;
 
 @property (nonatomic, strong) AVPlayer *player;
-@property (nonatomic, readonly) BOOL isPlaying;
 @property (nonatomic, readonly) APPlayerViewModelStatus status;
 #pragma mark - Configuration
 @property (nonatomic, assign) BOOL enableBackground;
@@ -41,30 +38,17 @@ typedef NS_ENUM(NSInteger, APPlayerViewModelStatus) {
 - (void)setupPlayerWithPlayURLs:(NSDictionary *)playURLs;
 
 - (void)play;
+- (void)playImmediately:(BOOL)flag;
 - (void)pause;
 - (void)stop;
 
 // 绑定数据，使用抛出信号
-
 #pragma mark - Signals
-// 播放器状态改变
-// Slot 参数: AVPlayerStatus
-// @param: newValue
-// @param: oldValue
-// @param: view model
-NS_SIGNAL(playerStatusChange);
-
-// 播放速度: NSNumber
-// @param: newValue
-// @param: oldValue
-// @param: view model
-NS_SIGNAL(rateChange);
-
 // 播放器状态变化: NSNumber<APPlayerViewModelStatus>
 // @param: newValue
 // @param: oldValue
 // @param: view model
-NS_SIGNAL(playerStatusChange);
+NS_SIGNAL(statusChange);
 @end
 
 NS_ASSUME_NONNULL_END
