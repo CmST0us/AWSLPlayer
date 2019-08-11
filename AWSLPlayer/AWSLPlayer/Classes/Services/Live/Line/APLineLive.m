@@ -16,6 +16,37 @@
 
 @implementation APLineLive
 
+- (instancetype)initWithLiveRoomURL:(NSURL *)url {
+    NSString *urlString = url.absoluteString;
+    if (urlString == nil || urlString.length == 0) return nil;
+    
+    NSString *regex = @"live.line.me\\/channels\\/(\\d+?)\\/broadcast\\/(\\d+)";
+    NSError *error = nil;
+    NSRegularExpression *reg = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
+    if (error != nil) return nil;
+    NSArray *match = [reg matchesInString:urlString options:NSMatchingReportCompletion range:NSMakeRange(0, urlString.length)];
+    if (match.count < 1) return nil;
+    
+    NSTextCheckingResult *channelsResult = match[0];
+    NSTextCheckingResult *broadcastResult = match[0];
+    
+    NSInteger channelID = 0;
+    NSInteger broadcastID = 0;
+    
+    NSRange matchRange = [channelsResult rangeAtIndex:1];
+    NSString *matchString = [urlString substringWithRange:matchRange];
+    
+    channelID = matchString.integerValue;
+    
+    matchRange = [broadcastResult rangeAtIndex:2];
+    matchString = [urlString substringWithRange:matchRange];
+    
+    broadcastID = matchString.integerValue;
+    
+    return [self initWithChannelID:channelID broadcastID:broadcastID];
+    
+}
+
 - (instancetype)initWithChannelID:(NSUInteger)channelID
                       broadcastID:(NSUInteger)broadcastID {
     self = [super init];
@@ -33,7 +64,7 @@
     return _session;
 }
 
-- (void)requestPlayURLsWithCompletions:(APRequestPlatformLivePlayURLBlock)block {
+- (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block {
     [self.session requestPlayURLsWithChannelID:self.requestedChannelID broadcast:self.requestedBroadcastID completion:block];
 }
 @end

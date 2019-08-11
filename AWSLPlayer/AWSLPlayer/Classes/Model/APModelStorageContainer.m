@@ -107,19 +107,19 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
     liveURL1.urlType = APLiveURLTypeBiliBili;
     liveURL1.name = @"daishu";
     liveURL1.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL1.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/14694782"];
+    liveURL1.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/45190"];
     
     APLiveURLModel *liveURL2 = [[APLiveURLModel alloc] init];
     liveURL2.urlType = APLiveURLTypeBiliBili;
     liveURL2.name = @"hoho";
     liveURL2.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL2.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/144"];
+    liveURL2.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/629869?visit_id=lsp2s55tr80"];
     
     APLiveURLModel *liveURL3 = [[APLiveURLModel alloc] init];
     liveURL3.urlType = APLiveURLTypeBiliBili;
     liveURL3.name = kAPModelStorageDefaultLiveURLName;
     liveURL3.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL3.liveURL = [NSURL URLWithString:kAPModelStorageDefaultLiveURL];
+    liveURL3.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/43001?visit_id=lsp2s55tr80"];
     
     APLiveURLModel *liveURL4 = [[APLiveURLModel alloc] init];
     liveURL4.urlType = APLiveURLTypeBiliBili;

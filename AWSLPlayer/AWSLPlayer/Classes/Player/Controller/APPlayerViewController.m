@@ -81,15 +81,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (NS_SLOT)onEnterBackgroundPlayerRateChangeWithNewValue:(NSNumber *)newValue
-                                                oldValue:(NSNumber *)oldValue
-                                               viewModel:(APPlayerViewModel *)viewModel {
-    if ([newValue floatValue] < 0.0001) {
+- (NS_SLOT)onEnterBackgroundPlayerStatusChangeWIthNewValue:(NSNumber *)newValue
+                                                  oldValue:(NSNumber *)oldValue
+                                                 viewModel:(APPlayerViewModel *)viewModel {
+    if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
         if (viewModel.enableBackground) {
             [viewModel play];
         }
     }
 }
+
 #pragma mark - Action
 - (void)onAppDidEnterBackground {
     [self pauseAll:YES];
@@ -107,7 +108,7 @@
                 [[obj viewModel] pause];
             } else {
                 [[obj viewModel] connectSignal:NS_SIGNAL_SELECTOR(statusChange)
-                                   forObserver:self slot:NS_SLOT_SELECTOR(onEnterBackgroundPlayerRateChangeWithNewValue:oldValue:viewModel:)];
+                                   forObserver:self slot:NS_SLOT_SELECTOR(onEnterBackgroundPlayerStatusChangeWIthNewValue:oldValue:viewModel:)];
             }
         } else {
             [[obj viewModel] pause];
@@ -147,14 +148,16 @@
         Class processClass = liveURL.processorClass;
         if (processClass != nil) {
             APPlatformLiveURLProcessor *processor = [[processClass alloc] initWithLiveRoomURL:liveURL.liveURL];
-            liveURL.processor = processor;
-            [processor requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [playerViewModel setupPlayerWithPlayURLs:playURLs];
-                    [playerView setupWithViewModel:playerViewModel];
-                    [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
-                });
-            }];
+            if (processor != nil) {
+                liveURL.processor = processor;
+                [processor requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [playerViewModel setupPlayerWithPlayURLs:playURLs];
+                        [playerView setupWithViewModel:playerViewModel];
+                        [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                    });
+                }];
+            }
         }
     }];
 }

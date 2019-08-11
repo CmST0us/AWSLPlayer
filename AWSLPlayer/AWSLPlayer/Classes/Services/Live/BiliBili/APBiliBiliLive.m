@@ -34,14 +34,17 @@
         return nil;
     }
     NSString *s = url.absoluteString;
-    NSString *regex = @"live.bilibili.com\\/\\d+";
-    NSRange range = [s rangeOfString:regex options:NSRegularExpressionSearch];
-    if (range.location == NSNotFound) {
-        return nil;
-    }
-    range.location += 18;
-    range.length -= 18;
-    NSString *roomID = [s substringWithRange:range];
+    NSString *regex = @"live.bilibili.com\\/(\\d+)";
+    NSError *error = nil;
+    NSRegularExpression *reg = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
+    if (error != nil) return nil;
+    
+    NSArray *match = [reg matchesInString:s options:NSMatchingReportCompletion range:NSMakeRange(0, s.length)];
+    
+    if (match.count < 1) return nil;
+    
+    NSTextCheckingResult *result = match[0];
+    NSString *roomID = [s substringWithRange:[result rangeAtIndex:1]];
     return [self initWithRoomID:[roomID integerValue]];
 }
 

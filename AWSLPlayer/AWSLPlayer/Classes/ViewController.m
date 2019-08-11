@@ -110,7 +110,7 @@ NS_PROPERTY_SLOT(bilibiliLive_PlayURLs) {
     }];
     
     self.lineLive = [[APLineLive alloc] initWithChannelID:3539389 broadcastID:11656845];
-    [self.lineLive requestPlayURLsWithCompletions:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+    [self.lineLive requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
         if (error == nil) {
             target.player3.playURL = [playURLs allValues][0];
             NSLog(@"Ready to play3");

@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithChannelID:(NSUInteger)channelID
                       broadcastID:(NSUInteger)broadcastID;
     
-- (void)requestPlayURLsWithCompletions:(APRequestPlatformLivePlayURLBlock)block;
+- (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block;
 @end
 
 NS_ASSUME_NONNULL_END
