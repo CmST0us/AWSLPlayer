@@ -37,3 +37,9 @@
 "ap_add_live_url_select_folder" = "Select Folder";
 
 "ap_add_live_url_folder_name" = "Name";
+
+"ap_add_dd_player_title" = "Add DDPlayer";
+"ap_add_dd_player_player_name" = "Name";
+"ap_add_dd_player_selected_live_url" = "Selected";
+"ap_add_dd_player_select_live_url_button_title" = "Select Live Room";
+"ap_add_dd_player_bigger_than_max_count" = "Bigger than max count";

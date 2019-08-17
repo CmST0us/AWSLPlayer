@@ -109,9 +109,9 @@ NS_USE_SIGNAL(didChangeLiveRoom);
                  urlHibikiRadioTypeData,
                  urlNicoNicoTypeData
                  ],
-             @[
-                 selectFolderData
-                 ]
+//             @[
+//                 selectFolderData
+//                 ]
              ];
 }
 
@@ -145,15 +145,9 @@ NS_USE_SIGNAL(didChangeLiveRoom);
     }];
     [selectionVC showWithAnimated:YES completion:nil];
 }
-- (void)textFieldDidChange:(QMUITextField *)textField {
-    if (textField == self.nameCell.inputTextField) {
-        self.liveRoom.name = textField.text;
-        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
-    } else if (textField == self.urlCell.inputTextField) {
-        self.liveRoom.liveURL = [NSURL URLWithString:textField.text];
-        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
-    }
-}
+
+
+
 - (void)didSelectYoutubeType:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeYoutube;
     [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
@@ -188,6 +182,16 @@ NS_USE_SIGNAL(didChangeLiveRoom);
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)textFieldDidChange:(QMUITextField *)textField {
+    if (textField == self.nameCell.inputTextField) {
+        self.liveRoom.name = textField.text;
+        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    } else if (textField == self.urlCell.inputTextField) {
+        self.liveRoom.liveURL = [NSURL URLWithString:textField.text];
+        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    }
 }
 
 

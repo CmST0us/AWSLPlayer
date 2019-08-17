@@ -11,11 +11,14 @@
 #import "APAddLiveURLViewController.h"
 #import "APNavigationController.h"
 #import "APPlayerViewController.h"
+#import "APAddDDPlayerViewController.h"
 
 #import "APHomepageAddItemPopupView.h"
 
 #import "APMacroHelper.h"
 #import "APHomepageDataSource.h"
+
+static NSString * const APHomepageViewControllerNormalCell = @"cell";
 
 @interface APHomepageViewController () <QMUITableViewDelegate>
 @property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
@@ -43,7 +46,7 @@
     self.popupView = [[APHomepageAddItemPopupView alloc] init];
     self.popupView.sourceBarItem = self.addItemBarButtonItem;
     
-    [self.tableView registerClass:[QMUITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[QMUITableViewCell class] forCellReuseIdentifier:APHomepageViewControllerNormalCell];
     [self bindSignal];
 }
 
@@ -73,6 +76,14 @@
 - (void)gotoAddLiveURLViewController {
     APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
     APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
+    nav.modalPresentationStyle = UIModalPresentationPageSheet;
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)gotoAddDDPlayerViewController {
+    APAddDDPlayerViewController *vc = [[APAddDDPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
+    nav.modalPresentationStyle = UIModalPresentationPageSheet;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -100,18 +111,10 @@
     return TableViewCellNormalHeight;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    QMUILabel *label = [[QMUILabel alloc] init];
-    label.text = [self.dataSource titleForSection:section];
-    label.textColor = UIColorGray;
-    label.contentEdgeInsets = UIEdgeInsetsMake(4, 8, 4, 0);
-    return label;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    QMUITableViewCell *cell = (QMUITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"cell"];
+    QMUITableViewCell *cell = (QMUITableViewCell *)[tableView dequeueReusableCellWithIdentifier:APHomepageViewControllerNormalCell];
     if (cell == nil) {
-        cell = [[QMUITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[QMUITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:APHomepageViewControllerNormalCell];
     }
     if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
         cell.textLabel.text = self.dataSource.liveURLs[indexPath.row].name;
@@ -121,6 +124,10 @@
         cell.textLabel.text = self.dataSource.players[indexPath.row].name;
     }
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.dataSource titleForSection:section];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -159,6 +166,8 @@
         [self gotoAddLiveURLViewController];
     } else if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURLFolder) {
         [self showAddURLFolderDialog];
+    } else if (itemType.unsignedIntegerValue == APHomepageAddItemTypeDDPlayer) {
+        [self gotoAddDDPlayerViewController];
     }
 }
 

@@ -36,7 +36,7 @@
     if (t == nil) {
         t = @[
               NSLocalizedString(@"ap_homepage_section_title_dd_player", nil),
-              NSLocalizedString(@"ap_homepage_section_title_live_url_folder", nil),
+//              NSLocalizedString(@"ap_homepage_section_title_live_url_folder", nil),
               NSLocalizedString(@"ap_homepage_section_title_live_url", nil)
               ];
     }

@@ -13,9 +13,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, APHomepageDataSourceSectionType) {
-    APHomepageDataSourceSectionTypeDDPlayer,
-    APHomepageDataSourceSectionTypeFolder,
-    APHomepageDataSourceSectionTypeLiveURL,
+    APHomepageDataSourceSectionTypeDDPlayer = 0,
+    APHomepageDataSourceSectionTypeFolder = -1,
+    APHomepageDataSourceSectionTypeLiveURL = 1,
 };
 
 @interface APHomepageDataSource : NSObject

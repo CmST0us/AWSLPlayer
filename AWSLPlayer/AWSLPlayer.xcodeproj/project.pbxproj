@@ -26,6 +26,8 @@
 		4F25B48822DCD68D00F09FAC /* APLineLiveURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48722DCD68D00F09FAC /* APLineLiveURLSession.m */; };
 		4F28BA9522F691740084915D /* APVVMBindingContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28BA9422F691740084915D /* APVVMBindingContainer.m */; };
 		4F28BAA122F6B7DA0084915D /* APButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28BAA022F6B7DA0084915D /* APButton.m */; };
+		4F2C4568230829F000304C26 /* APAddDDPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C4567230829F000304C26 /* APAddDDPlayerViewController.m */; };
+		4F2C456C23082A3100304C26 /* APAddDDPlayerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C456B23082A3100304C26 /* APAddDDPlayerDataSource.m */; };
 		4F2C60FC23004E020031B89E /* APPlatformLiveURLProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2C60FB23004E020031B89E /* APPlatformLiveURLProcessor.m */; };
 		4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333022DA4F1700D3FCA1 /* AppDelegate.m */; };
 		4F5C333422DA4F1700D3FCA1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C333322DA4F1700D3FCA1 /* ViewController.m */; };
@@ -137,6 +139,10 @@
 		4F28BA9422F691740084915D /* APVVMBindingContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APVVMBindingContainer.m; sourceTree = "<group>"; };
 		4F28BA9F22F6B7DA0084915D /* APButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APButton.h; sourceTree = "<group>"; };
 		4F28BAA022F6B7DA0084915D /* APButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APButton.m; sourceTree = "<group>"; };
+		4F2C4566230829F000304C26 /* APAddDDPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APAddDDPlayerViewController.h; sourceTree = "<group>"; };
+		4F2C4567230829F000304C26 /* APAddDDPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APAddDDPlayerViewController.m; sourceTree = "<group>"; };
+		4F2C456A23082A3100304C26 /* APAddDDPlayerDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APAddDDPlayerDataSource.h; sourceTree = "<group>"; };
+		4F2C456B23082A3100304C26 /* APAddDDPlayerDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APAddDDPlayerDataSource.m; sourceTree = "<group>"; };
 		4F2C60FA23004E020031B89E /* APPlatformLiveURLProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPlatformLiveURLProcessor.h; sourceTree = "<group>"; };
 		4F2C60FB23004E020031B89E /* APPlatformLiveURLProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPlatformLiveURLProcessor.m; sourceTree = "<group>"; };
 		4F5C332C22DA4F1700D3FCA1 /* AWSLPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSLPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -422,6 +428,22 @@
 			path = Line;
 			sourceTree = "<group>";
 		};
+		4F2C456923082A0100304C26 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4F2C456A23082A3100304C26 /* APAddDDPlayerDataSource.h */,
+				4F2C456B23082A3100304C26 /* APAddDDPlayerDataSource.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4F2C456D23082AE500304C26 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		4F5C332322DA4F1700D3FCA1 = {
 			isa = PBXGroup;
 			children = (
@@ -628,6 +650,10 @@
 		4F989CF222E8A5C70092EE90 /* AddDDPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				4F2C456D23082AE500304C26 /* View */,
+				4F2C456923082A0100304C26 /* ViewModel */,
+				4F2C4566230829F000304C26 /* APAddDDPlayerViewController.h */,
+				4F2C4567230829F000304C26 /* APAddDDPlayerViewController.m */,
 			);
 			path = AddDDPlayer;
 			sourceTree = "<group>";
@@ -766,6 +792,7 @@
 				4F989C9A22DE23A00092EE90 /* APHibikiURLSession.m in Sources */,
 				4F28BA9522F691740084915D /* APVVMBindingContainer.m in Sources */,
 				4F25B48022DB804100F09FAC /* APYoutubeURLSession.m in Sources */,
+				4F2C4568230829F000304C26 /* APAddDDPlayerViewController.m in Sources */,
 				4F989CF022E467300092EE90 /* APTextFieldInputTableViewCell.m in Sources */,
 				4F989C9422DE1A720092EE90 /* APYoutubeLive.m in Sources */,
 				4F989CE222E440BF0092EE90 /* APAddLiveURLViewDataSource.m in Sources */,
@@ -777,6 +804,7 @@
 				4F5C333122DA4F1700D3FCA1 /* AppDelegate.m in Sources */,
 				4F83538222F68511000B5793 /* APPlayerControlView.m in Sources */,
 				4F25B43222DA5D3100F09FAC /* APNavigationController.m in Sources */,
+				4F2C456C23082A3100304C26 /* APAddDDPlayerDataSource.m in Sources */,
 				4F989CB122E368340092EE90 /* APHomepageViewController.m in Sources */,
 				4F989CCC22E431820092EE90 /* APLiveURLFolderModel.m in Sources */,
 				4F989C9E22DE2E580092EE90 /* APHibikiLive.m in Sources */,

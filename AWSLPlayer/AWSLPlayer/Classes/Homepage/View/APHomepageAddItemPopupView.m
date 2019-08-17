@@ -59,15 +59,15 @@ NS_CLOSE_SIGNAL_WARN(didPressAddItem)
     static NSArray *selectors = nil;
     if (titles == nil || selectors == nil) {
         titles = @[
-                   NSLocalizedString(@"ap_homepage_add_button_title_live_url", @"直播间地址"),
-                   NSLocalizedString(@"ap_homepage_add_button_title_dd_player", @"DD 播放器"),
-                   NSLocalizedString(@"ap_homepage_add_button_title_live_url_folder", @"直播间收藏夹"),
+                    NSLocalizedString(@"ap_homepage_add_button_title_dd_player", @"DD 播放器"),
+                    NSLocalizedString(@"ap_homepage_add_button_title_live_url", @"直播间地址"),
+//                   NSLocalizedString(@"ap_homepage_add_button_title_live_url_folder", @"直播间收藏夹"),
                    ];
         
         selectors = @[
-                      NSStringFromSelector(@selector(addLiveURL:)),
                       NSStringFromSelector(@selector(addDDPlayer:)),
-                      NSStringFromSelector(@selector(addLiveURLFolder:)),
+                      NSStringFromSelector(@selector(addLiveURL:)),
+//                      NSStringFromSelector(@selector(addLiveURLFolder:)),
                       ];
     }
     QMUIOrderedDictionary *dict = [[QMUIOrderedDictionary alloc] init];
