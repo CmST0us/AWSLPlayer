@@ -58,7 +58,7 @@
             v = [obj view];
         }
     }];
-    if ([newValue isEqualToNumber:@(APPlayerViewModelStatusReady)]) {
+    if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemReady)]) {
         [viewModel play];
     }
 }

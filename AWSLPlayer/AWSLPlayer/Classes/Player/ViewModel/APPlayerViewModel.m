@@ -16,15 +16,28 @@
 
 #pragma mark - Signals & Slots
 
+NS_CLOSE_SIGNAL_WARN(itemStatusChange);
+NS_PROPERTY_SLOT(itemStatus) {
+    APPlayerViewModelStatus lastStatus = self.status;
+    if ([newValue isEqualToNumber:@(AVPlayerItemStatusFailed)]) {
+        self.status = APPlayerViewModelStatusItemFailed;
+    } else if ([newValue isEqualToNumber:@(AVPlayerItemStatusUnknown)]) {
+        self.status = APPlayerViewModelStatusItemUnknow;
+    } else if ([newValue isEqualToNumber:@(AVPlayerItemStatusReadyToPlay)]) {
+        self.status = APPlayerViewModelStatusItemReady;
+    }
+    [self emitSignal:NS_SIGNAL_SELECTOR(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
+}
+
 NS_CLOSE_SIGNAL_WARN(playerStatusChange);
 NS_PROPERTY_SLOT(playerStatus) {
     APPlayerViewModelStatus lastStatus = self.status;
-    if ([newValue isEqualToNumber:@(AVPlayerItemStatusReadyToPlay)]) {
-        self.status = APPlayerViewModelStatusReady;
-    } else if ([newValue isEqualToNumber:@(AVPlayerItemStatusUnknown)]) {
-        self.status = APPlayerViewModelStatusUnknow;
-    } else if ([newValue isEqualToNumber:@(AVPlayerItemStatusFailed)]) {
-        self.status = APPlayerViewModelStatusFailed;
+    if ([newValue isEqualToNumber:@(AVPlayerStatusReadyToPlay)]) {
+        self.status = APPlayerViewModelStatusPlayerReady;
+    } else if ([newValue isEqualToNumber:@(AVPlayerStatusUnknown)]) {
+        self.status = APPlayerViewModelStatusPlayerUnknow;
+    } else if ([newValue isEqualToNumber:@(AVPlayerStatusFailed)]) {
+        self.status = APPlayerViewModelStatusPlayerFailed;
     }
     [self emitSignal:NS_SIGNAL_SELECTOR(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
 }
@@ -62,6 +75,7 @@ NS_PROPERTY_SLOT(status) {
     // 绑定播放器状态变更
     [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
     [self.player listenKeypath:@"timeControlStatus" pairWithSignal:NS_SIGNAL_SELECTOR(timeControlStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(status)];
+    [self.player.currentItem listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(itemStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(itemStatus)];
 }
 
 #pragma mark - Method

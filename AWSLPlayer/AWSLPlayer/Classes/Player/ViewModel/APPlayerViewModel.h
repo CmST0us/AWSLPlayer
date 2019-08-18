@@ -13,13 +13,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, APPlayerViewModelStatus) {
-    APPlayerViewModelStatusFailed = -2,
-    APPlayerViewModelStatusUnknow = -1,
-    APPlayerViewModelStatusReady,
-    APPlayerViewModelStatusPlaying,
-    APPlayerViewModelStatusPause,
-    APPlayerViewModelStatusStop,
-    APPlayerViewModelStatusLoading,
+    APPlayerViewModelStatusItemUnknow = -4,
+    APPlayerViewModelStatusItemFailed = -3,
+    APPlayerViewModelStatusPlayerFailed = -2,
+    APPlayerViewModelStatusPlayerUnknow = -1,
+    APPlayerViewModelStatusPlayerReady = 0,
+    APPlayerViewModelStatusItemReady,   // 1
+    APPlayerViewModelStatusPlaying,     // 2
+    APPlayerViewModelStatusPause,       // 3
+    APPlayerViewModelStatusStop,        // 4
+    APPlayerViewModelStatusLoading,     // 5
 };
 
 @class APLiveURLModel;

@@ -32,8 +32,11 @@ NS_PROPERTY_SLOT(status) {
     } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
         self.playPauseButton.backgroundColor = UIColorRed;
     } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusLoading)] ||
-               [newValue isEqualToNumber:@(APPlayerViewModelStatusReady)]) {
+               [newValue isEqualToNumber:@(APPlayerViewModelStatusPlayerReady)]) {
         self.playPauseButton.backgroundColor = UIColorYellow;
+    } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemFailed)]) {
+        self.playPauseButton.backgroundColor = UIColorGray;
+        self.playPauseButton.enabled = NO;
     }
 }
 
