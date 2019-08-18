@@ -34,6 +34,10 @@
     [self bindSignals];
 }
 
+- (void)editModel:(APLiveURLModel *)model {
+    self.dataSource.liveRoom = model;
+}
+
 - (void)bindSignals {
     [self.dataSource connectSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) forObserver:self slot:NS_SLOT_SELECTOR(updateSaveBarButtonStatusWithCurrentInput)];
 }

@@ -20,10 +20,19 @@
 
 static NSString * const APHomepageViewControllerNormalCell = @"cell";
 
-@interface APHomepageViewController () <QMUITableViewDelegate>
-@property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
-@property (nonatomic, strong) APHomepageAddItemPopupView *popupView;
+typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
+    APHomepageViewControllerStatusNormal,
+    APHomepageViewControllerStatusEdit,
+};
 
+@interface APHomepageViewController () <QMUITableViewDelegate>
+@property (nonatomic, assign) APHomepageViewControllerStatus status;
+
+@property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *editBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *doneBarButtonItem;
+
+@property (nonatomic, strong) APHomepageAddItemPopupView *popupView;
 @property (nonatomic, strong) APHomepageDataSource *dataSource;
 @end
 
@@ -43,6 +52,12 @@ static NSString * const APHomepageViewControllerNormalCell = @"cell";
     self.addItemBarButtonItem = [UIBarButtonItem qmui_itemWithSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(navigationBarAddButtonAction:)];
     self.navigationItem.rightBarButtonItem = self.addItemBarButtonItem;
     
+    self.editBarButtonItem = [UIBarButtonItem qmui_itemWithSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(handleNavigationBarEditButtonAction:)];
+    
+    self.doneBarButtonItem = [UIBarButtonItem qmui_itemWithSystemItem:UIBarButtonSystemItemDone target:self action:@selector(handleNavigationBarDoneButtonAction:)];
+    
+    self.status = APHomepageViewControllerStatusNormal;
+    
     self.popupView = [[APHomepageAddItemPopupView alloc] init];
     self.popupView.sourceBarItem = self.addItemBarButtonItem;
     
@@ -52,6 +67,18 @@ static NSString * const APHomepageViewControllerNormalCell = @"cell";
 
 - (void)bindSignal {
     [self.popupView connectSignal:NS_SIGNAL_SELECTOR(didPressAddItem) forObserver:self slot:NS_SLOT_SELECTOR(popupViewDidPressAddItem:)];
+}
+
+- (void)setStatus:(APHomepageViewControllerStatus)status {
+    _status = status;
+    if (_status == APHomepageViewControllerStatusEdit) {
+        [self.navigationItem setLeftBarButtonItem:self.doneBarButtonItem animated:YES];
+        [self.tableView setEditing:NO animated:YES];
+        [self.tableView setEditing:YES animated:YES];
+    } else if (_status == APHomepageViewControllerStatusNormal) {
+        [self.navigationItem setLeftBarButtonItem:self.editBarButtonItem animated:YES];
+        [self.tableView setEditing:NO animated:YES];
+    }
 }
 
 - (void)viewDidLoad {
@@ -123,7 +150,28 @@ static NSString * const APHomepageViewControllerNormalCell = @"cell";
     } else if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
         cell.textLabel.text = self.dataSource.players[indexPath.row].name;
     }
+    
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
+        APDDPlayerModel *model = self.dataSource.players[indexPath.row];
+        APAddDDPlayerViewController *v = [[APAddDDPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [v editModel:model];
+        APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
+        nav.modalPresentationStyle = UIModalPresentationPageSheet;
+        [self presentViewController:nav animated:YES completion:nil];
+    } else if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
+        APLiveURLModel *selectLiveRoom = self.dataSource.liveURLs[indexPath.row];
+        APAddLiveURLViewController *v = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [v editModel:selectLiveRoom];
+        APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
+        nav.modalPresentationStyle = UIModalPresentationPageSheet;
+        [self presentViewController:nav animated:YES completion:nil];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -131,7 +179,7 @@ static NSString * const APHomepageViewControllerNormalCell = @"cell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
         APDDPlayerModel *ddPlayer = [[APDDPlayerModel alloc] init];
@@ -147,6 +195,8 @@ static NSString * const APHomepageViewControllerNormalCell = @"cell";
     }
 }
 
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.dataSource numberOfSections];
 }
@@ -155,9 +205,35 @@ static NSString * const APHomepageViewControllerNormalCell = @"cell";
     return [self.dataSource numberOfRowInSection:section];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle & UITableViewCellEditingStyleDelete) {
+        if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
+            
+        } else if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
+            
+        }
+    }
+}
+
 #pragma mark - Action
 - (void)navigationBarAddButtonAction:(id)sender {
     [self.popupView showWithAnimated:YES];
+}
+
+- (void)handleNavigationBarEditButtonAction:(id)sender {
+    self.status = APHomepageViewControllerStatusEdit;
+}
+
+- (void)handleNavigationBarDoneButtonAction:(id)sender {
+    self.status = APHomepageViewControllerStatusNormal;
 }
 
 #pragma mark - Slot

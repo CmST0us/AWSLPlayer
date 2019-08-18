@@ -49,6 +49,18 @@
 #pragma mark - Private
 
 #pragma mark - Method
+- (void)editModel:(APDDPlayerModel *)model {
+    self.ddPlayerModel = model;
+    NSMutableIndexSet *select = [[NSMutableIndexSet alloc] init];
+    [self.ddPlayerModel.liveURLs enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APLiveURLModel * _Nonnull obj, BOOL * _Nonnull stop) {
+        NSUInteger idx = [self.allLiveRoom indexOfObject:obj];
+        if (idx != NSNotFound) {
+            [select addIndex:idx];
+        }
+    }];
+    self.selectedIndex = select;
+}
+
 - (void)useLiveURLsWithIndexs:(NSIndexSet *)indexs {
     self.selectedIndex = indexs;
 }

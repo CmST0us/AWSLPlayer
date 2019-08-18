@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, APAddDDPlayerSection) {
 - (NSArray<APLiveURLModel *> *)allLiveRoom;
 - (NSArray<APLiveURLModel *> *)selectedLiveRoom;
 
+- (void)editModel:(APDDPlayerModel *)model;
 - (void)useLiveURLsWithIndexs:(NSIndexSet *)indexs;
 - (void)save;
 @end

@@ -88,6 +88,9 @@ static NSString *const APAddDDPlayerViewControllerSelectLiveRoomCellIdentifier =
 }
 
 #pragma mark - Method
+- (void)editModel:(APDDPlayerModel *)model {
+    [self.dataSource editModel:model];
+}
 
 #pragma mark - Slot
 
@@ -180,6 +183,7 @@ static NSString *const APAddDDPlayerViewControllerSelectLiveRoomCellIdentifier =
         }
         cell.inputTitleLabel.text = NSLocalizedString(@"ap_add_dd_player_player_name", nil);
         cell.inputTextField.delegate = self;
+        cell.inputText = self.dataSource.name;
         [cell.inputTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         self.inputNameTextField = cell.inputTextField;
         rawCell = cell;

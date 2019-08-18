@@ -44,6 +44,7 @@ NS_USE_SIGNAL(didChangeLiveRoom);
         APTextFieldInputTableViewCell *textInputCell = (APTextFieldInputTableViewCell *)cell;
         textInputCell.inputTitle = NSLocalizedString(@"ap_add_live_url_live_room_name", nil);
         textInputCell.inputTextField.delegate = target;
+        textInputCell.inputText = target.liveRoom.name;
         [textInputCell.inputTextField addTarget:target action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         target.nameCell = cell;
         
@@ -59,6 +60,7 @@ NS_USE_SIGNAL(didChangeLiveRoom);
         APTextFieldInputTableViewCell *textInputCell = (APTextFieldInputTableViewCell *)cell;
         textInputCell.inputTitle = NSLocalizedString(@"ap_add_live_url_live_room_url", nil);
         textInputCell.inputTextField.delegate = target;
+        textInputCell.inputText = target.liveRoom.liveURL.absoluteString;
         [textInputCell.inputTextField addTarget:target action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         target.urlCell = cell;
     };
