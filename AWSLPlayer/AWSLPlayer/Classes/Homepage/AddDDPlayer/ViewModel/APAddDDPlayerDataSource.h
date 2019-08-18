@@ -29,13 +29,15 @@ typedef NS_ENUM(NSUInteger, APAddDDPlayerSection) {
 @class APLiveURLModel;
 @interface APAddDDPlayerDataSource : NSObject
 @property (nonatomic, readonly) APDDPlayerModel *ddPlayerModel;
+@property (nonatomic, copy) NSString *modelKey;
+
 @property (nonatomic, readonly) NSIndexSet *selectedIndex;
 @property (nonatomic, readwrite) NSString *name;
 
 - (NSArray<APLiveURLModel *> *)allLiveRoom;
 - (NSArray<APLiveURLModel *> *)selectedLiveRoom;
 
-- (void)editModel:(APDDPlayerModel *)model;
+- (void)editModel:(APDDPlayerModel *)model withModelKey:(NSString *)modelKey;
 - (void)useLiveURLsWithIndexs:(NSIndexSet *)indexs;
 - (void)save;
 @end

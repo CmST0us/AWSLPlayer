@@ -6,6 +6,7 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
+#import "NSString+Unique.h"
 #import "APUserStorageHelper+Convinence.h"
 #import "APDDPlayerModel.h"
 #import "APDDPlayerLayoutModel.h"
@@ -29,6 +30,13 @@
     return _ddPlayerModel;
 }
 
+- (NSString *)modelKey {
+    if (_modelKey == nil || _modelKey.length == 0) {
+        _modelKey = [NSString uniqueString];
+    }
+    return _modelKey;
+}
+
 #pragma mark - Getter Setter
 - (NSString *)name {
     return self.ddPlayerModel.name;
@@ -49,8 +57,9 @@
 #pragma mark - Private
 
 #pragma mark - Method
-- (void)editModel:(APDDPlayerModel *)model {
+- (void)editModel:(APDDPlayerModel *)model withModelKey:(nonnull NSString *)modelKey {
     self.ddPlayerModel = model;
+    self.modelKey = modelKey;
     NSMutableIndexSet *select = [[NSMutableIndexSet alloc] init];
     [self.ddPlayerModel.liveURLs enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APLiveURLModel * _Nonnull obj, BOOL * _Nonnull stop) {
         NSUInteger idx = [self.allLiveRoom indexOfObject:obj];
@@ -72,7 +81,7 @@
     }];
     self.ddPlayerModel.liveURLs = liveRooms;
     [self.ddPlayerModel.layoutModel setupWithPlayerCount:liveRooms.count];
-    [[APUserStorageHelper modelStorageContainer] addPlayer:self.ddPlayerModel];
+    [[APUserStorageHelper modelStorageContainer] addPlayer:self.ddPlayerModel forKey:self.modelKey];
 }
 
 #pragma mark - Slot

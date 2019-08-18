@@ -34,8 +34,9 @@
     [self bindSignals];
 }
 
-- (void)editModel:(APLiveURLModel *)model {
+- (void)editModel:(APLiveURLModel *)model withModelKey:(nonnull NSString *)modelKey {
     self.dataSource.liveRoom = model;
+    self.dataSource.modelKey = modelKey;
 }
 
 - (void)bindSignals {
@@ -71,7 +72,7 @@
 }
 
 - (void)navigationBarSaveButtonAction:(id)sender {
-    [[APUserStorageHelper modelStorageContainer] addLiveURL:self.dataSource.liveRoom inFolder:self.dataSource.currentSelectFolderModel];
+    [[APUserStorageHelper modelStorageContainer] addLiveURL:self.dataSource.liveRoom forKey:self.dataSource.modelKey];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

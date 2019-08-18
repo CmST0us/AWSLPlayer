@@ -40,6 +40,7 @@
 		4F5C334B22DA520E00D3FCA1 /* NSObjectSignals.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334922DA520E00D3FCA1 /* NSObjectSignals.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F5C334D22DA52D300D3FCA1 /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334C22DA52D300D3FCA1 /* Masonry.framework */; };
 		4F5C334E22DA52D300D3FCA1 /* Masonry.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5C334C22DA52D300D3FCA1 /* Masonry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6873DA230930C2009EF550 /* NSString+Unique.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6873D9230930C2009EF550 /* NSString+Unique.m */; };
 		4F83537122F6800F000B5793 /* APPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F83537022F6800F000B5793 /* APPlayerView.m */; };
 		4F83537922F680AC000B5793 /* APPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F83537822F680AC000B5793 /* APPlayerViewController.m */; };
 		4F83537C22F680EC000B5793 /* APPlayerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F83537B22F680EC000B5793 /* APPlayerViewModel.m */; };
@@ -157,6 +158,8 @@
 		4F5C334522DA520C00D3FCA1 /* VideoCodecKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VideoCodecKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C334922DA520E00D3FCA1 /* NSObjectSignals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NSObjectSignals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5C334C22DA52D300D3FCA1 /* Masonry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Masonry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F6873D8230930C2009EF550 /* NSString+Unique.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Unique.h"; sourceTree = "<group>"; };
+		4F6873D9230930C2009EF550 /* NSString+Unique.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Unique.m"; sourceTree = "<group>"; };
 		4F7884F822F0A76F00557981 /* APUserStorageKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserStorageKey.h; sourceTree = "<group>"; };
 		4F7884F922F0ADF700557981 /* APUserDefaultKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APUserDefaultKey.h; sourceTree = "<group>"; };
 		4F83536F22F6800F000B5793 /* APPlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPlayerView.h; sourceTree = "<group>"; };
@@ -478,6 +481,15 @@
 			path = AWSLPlayer;
 			sourceTree = "<group>";
 		};
+		4F6873D723093069009EF550 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				4F6873D8230930C2009EF550 /* NSString+Unique.h */,
+				4F6873D9230930C2009EF550 /* NSString+Unique.m */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		4F83536E22F67F8A000B5793 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,6 +622,7 @@
 		4F989CD422E435AB0092EE90 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4F6873D723093069009EF550 /* Extension */,
 				4F88D39722F1F0A90019E082 /* Storage */,
 				4F989CD522E4394A0092EE90 /* APFilePathHelper.h */,
 				4F989CD622E4394A0092EE90 /* APFilePathHelper.m */,
@@ -775,6 +788,7 @@
 				4F83537122F6800F000B5793 /* APPlayerView.m in Sources */,
 				4F25B48822DCD68D00F09FAC /* APLineLiveURLSession.m in Sources */,
 				4F989CCF22E431F50092EE90 /* APDDPlayerModel.m in Sources */,
+				4F6873DA230930C2009EF550 /* NSString+Unique.m in Sources */,
 				4F989CAE22E368220092EE90 /* APTableViewController.m in Sources */,
 				4F989C9322DE1A6E0092EE90 /* APLineLive.m in Sources */,
 				4F25B47C22DB306500F09FAC /* APAVPlayerView.m in Sources */,

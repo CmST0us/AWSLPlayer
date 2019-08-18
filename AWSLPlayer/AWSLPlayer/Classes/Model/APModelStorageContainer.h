@@ -17,13 +17,15 @@ extern NSString * const APModelStorageDefaultLiveFolderKey;
 
 @interface APModelStorageContainer : NSObject <NSCoding, APUserStorageHasDefaultProtocol>
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APLiveURLModel *> *liveURLs;
-@property (nonatomic, readonly) NSMutableDictionary<NSString *, APLiveURLFolderModel *> *liveURLFolders;
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APDDPlayerModel *> *players;
 
 - (APLiveURLFolderModel *)defaultFolder;
-- (void)addLiveURL:(APLiveURLModel *)model inFolder:(APLiveURLFolderModel *)folderModel;
 
-- (void)addPlayer:(APDDPlayerModel *)aPlayer;
+- (void)addLiveURL:(APLiveURLModel *)model forKey:(NSString *)aKey;
+- (void)addPlayer:(APDDPlayerModel *)aPlayer forKey:(NSString *)aKey;
+
+- (void)removeLiveURLWithKey:(NSString *)aKey;
+- (void)removePlayerWithKey:(NSString *)aKey;
 @end
 
 NS_ASSUME_NONNULL_END

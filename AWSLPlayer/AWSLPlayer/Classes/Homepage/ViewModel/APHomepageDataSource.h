@@ -14,22 +14,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, APHomepageDataSourceSectionType) {
     APHomepageDataSourceSectionTypeDDPlayer = 0,
-    APHomepageDataSourceSectionTypeFolder = -1,
     APHomepageDataSourceSectionTypeLiveURL = 1,
 };
 
 @interface APHomepageDataSource : NSObject
 
-@property (nonatomic, readonly) NSArray<APLiveURLModel *> *liveURLs;
-@property (nonatomic, readonly) NSArray<APLiveURLFolderModel *> *liveURLFolders;
-@property (nonatomic, readonly) NSArray<APDDPlayerModel *> *players;
+@property (nonatomic, readonly) NSDictionary<NSString *, APLiveURLModel *> *liveURLs;
+@property (nonatomic, readonly) NSDictionary<NSString *, APDDPlayerModel *> *players;
 @property (nonatomic, weak) APModelStorageContainer *container;
 
 - (NSInteger)numberOfSections;
 - (NSInteger)numberOfRowInSection:(APHomepageDataSourceSectionType)section;
 - (NSString *)titleForSection:(APHomepageDataSourceSectionType)secion;
 
-- (void)addLiveURLFolders:(APLiveURLFolderModel *)urlFolders;
+- (void)removeLiveURLWithKey:(NSString *)aKey;
+- (void)removePlayerWithKey:(NSString *)aKey;
 @end
 
 NS_ASSUME_NONNULL_END

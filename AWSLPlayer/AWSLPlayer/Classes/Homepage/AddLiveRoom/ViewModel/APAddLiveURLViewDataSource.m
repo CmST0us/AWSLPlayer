@@ -6,6 +6,7 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
+#import "NSString+Unique.h"
 #import "APAddLiveURLViewDataSource.h"
 #import "APTextFieldInputTableViewCell.h"
 #import "APMacroHelper.h"
@@ -14,9 +15,6 @@
 @interface APAddLiveURLViewDataSource () <QMUITextFieldDelegate>
 @property (nonatomic, weak) APTextFieldInputTableViewCell *nameCell;
 @property (nonatomic, weak) APTextFieldInputTableViewCell *urlCell;
-
-@property (nonatomic, copy) NSArray *folders;
-@property (nonatomic, assign) NSUInteger currentSelectIndex;
 @end
 
 @implementation APAddLiveURLViewDataSource
@@ -24,13 +22,16 @@ NS_USE_SIGNAL(didChangeLiveRoom);
 
 - (void)didInitialize {
     [super didInitialize];
-    self.currentSelectFolderModel = [[APUserStorageHelper modelStorageContainer] defaultFolder];
     self.liveRoom = [[APLiveURLModel alloc] init];
     self.cellDataSections = [self cellData];
-    self.folders = [[APUserStorageHelper modelStorageContainer].liveURLFolders allValues];
-    self.currentSelectIndex = 0;
 }
 
+- (NSString *)modelKey {
+    if (_modelKey == nil || _modelKey.length == 0) {
+        _modelKey = [NSString uniqueString];
+    }
+    return _modelKey;
+}
 
 - (NSArray<NSArray<QMUIStaticTableViewCellData *> *> *)cellData {
     weakSelf(target);
@@ -95,10 +96,6 @@ NS_USE_SIGNAL(didChangeLiveRoom);
         cell.accessoryType = target.liveRoom.urlType == APLiveURLTypeHibikiRadio ? QMUIStaticTableViewCellAccessoryTypeCheckmark : QMUIStaticTableViewCellAccessoryTypeNone;
     };
     
-    QMUIStaticTableViewCellData *selectFolderData = [QMUIStaticTableViewCellData staticTableViewCellDataWithIdentifier:7 image:nil text:NSLocalizedString(@"ap_homepage_section_title_live_url_folder", nil) detailText:self.currentSelectFolderModel.name didSelectTarget:self didSelectAction:@selector(onPressSelectFolder:) accessoryType:QMUIStaticTableViewCellAccessoryTypeDisclosureIndicator];
-    selectFolderData.style = UITableViewCellStyleSubtitle;
-    selectFolderData.height = 44;
-    
     return @[
              @[
                  nameCellData,
@@ -111,45 +108,10 @@ NS_USE_SIGNAL(didChangeLiveRoom);
                  urlHibikiRadioTypeData,
                  urlNicoNicoTypeData
                  ],
-//             @[
-//                 selectFolderData
-//                 ]
              ];
 }
 
 #pragma mark - Action
-- (void)onPressSelectFolder:(QMUIStaticTableViewCellData *)data {
-    weakSelf(target);
-    QMUIDialogSelectionViewController *selectionVC = [[QMUIDialogSelectionViewController alloc] init];
-    selectionVC.title = NSLocalizedString(@"ap_add_live_url_select_folder", nil);
-    selectionVC.rowHeight = 44;
-    selectionVC.selectedItemIndex = self.currentSelectIndex;
-
-    NSArray<APLiveURLFolderModel *> *folderArray = self.folders;
-    
-    NSMutableArray *items = [NSMutableArray array];
-    [folderArray enumerateObjectsUsingBlock:^(APLiveURLFolderModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [items addObject:obj.name];
-    }];
-    selectionVC.items = items;
-    selectionVC.didSelectItemBlock = ^(__kindof QMUIDialogSelectionViewController * _Nonnull aDialogViewController, NSUInteger itemIndex) {
-        target.currentSelectFolderModel = folderArray[itemIndex];
-        target.currentSelectIndex = itemIndex;
-    };
-    [selectionVC addSubmitButtonWithText:NSLocalizedString(@"ap_submit", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
-        [aDialogViewController hideWithAnimated:YES completion:nil];
-        data.detailText = target.currentSelectFolderModel.name;
-        [target.tableView reloadData];
-    }];
-    [selectionVC addCancelButtonWithText:NSLocalizedString(@"ap_cancel", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
-        [aDialogViewController hideWithAnimated:YES completion:nil];
-        [target.tableView reloadData];
-    }];
-    [selectionVC showWithAnimated:YES completion:nil];
-}
-
-
-
 - (void)didSelectYoutubeType:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeYoutube;
     [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];

@@ -15,16 +15,12 @@
 
 @implementation APHomepageDataSource
 
-- (NSArray<APLiveURLModel *> *)liveURLs {
-    return [self.container.liveURLs allValues];
+- (NSDictionary<NSString *,APLiveURLModel *> *)liveURLs {
+    return self.container.liveURLs;
 }
 
-- (NSArray<APLiveURLFolderModel *> *)liveURLFolders {
-    return [self.container.liveURLFolders allValues];
-}
-
-- (NSArray<APDDPlayerModel *> *)players {
-    return [self.container.players allValues];
+- (NSDictionary<NSString *,APDDPlayerModel *> *)players {
+    return self.container.players;
 }
 
 - (APModelStorageContainer *)container {
@@ -36,7 +32,6 @@
     if (t == nil) {
         t = @[
               NSLocalizedString(@"ap_homepage_section_title_dd_player", nil),
-//              NSLocalizedString(@"ap_homepage_section_title_live_url_folder", nil),
               NSLocalizedString(@"ap_homepage_section_title_live_url", nil)
               ];
     }
@@ -50,8 +45,6 @@
 - (NSInteger)numberOfRowInSection:(APHomepageDataSourceSectionType)section {
     if (section == APHomepageDataSourceSectionTypeDDPlayer) {
         return self.container.players.count;
-    } else if (section == APHomepageDataSourceSectionTypeFolder) {
-        return self.container.liveURLFolders.count;
     } else if (section == APHomepageDataSourceSectionTypeLiveURL) {
         return self.container.liveURLs.count;
     }
@@ -63,8 +56,12 @@
     return [self titles][section];
 }
 
-- (void)addLiveURLFolders:(APLiveURLFolderModel *)urlFolders {
-    [self.container.liveURLFolders setObject:urlFolders forKey:urlFolders.name];
+- (void)removePlayerWithKey:(NSString *)aKey {
+    [[APUserStorageHelper modelStorageContainer] removePlayerWithKey:aKey];
+}
+
+- (void)removeLiveURLWithKey:(NSString *)aKey {
+    [[APUserStorageHelper modelStorageContainer] removeLiveURLWithKey:aKey];
 }
 
 @end

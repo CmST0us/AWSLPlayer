@@ -88,8 +88,8 @@ static NSString *const APAddDDPlayerViewControllerSelectLiveRoomCellIdentifier =
 }
 
 #pragma mark - Method
-- (void)editModel:(APDDPlayerModel *)model {
-    [self.dataSource editModel:model];
+- (void)editModel:(APDDPlayerModel *)model withModelKey:(nonnull NSString *)modelKey {
+    [self.dataSource editModel:model withModelKey:modelKey];
 }
 
 #pragma mark - Slot

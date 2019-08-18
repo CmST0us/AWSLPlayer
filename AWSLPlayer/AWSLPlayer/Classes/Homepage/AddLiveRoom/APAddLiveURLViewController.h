@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class APLiveURLModel;
 @interface APAddLiveURLViewController : APTableViewController
 
-- (void)editModel:(APLiveURLModel *)model;
+- (void)editModel:(APLiveURLModel *)model withModelKey:(NSString *)modelKey;
 
 @end
 

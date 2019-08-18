@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface APAddLiveURLViewDataSource : QMUIStaticTableViewCellDataSource
 @property (nonatomic, strong) APLiveURLModel *liveRoom;
-@property (nonatomic, strong) APLiveURLFolderModel *currentSelectFolderModel;
+@property (nonatomic, copy) NSString *modelKey;
 #pragma mark - Signals
 NS_SIGNAL(didChangeLiveRoom);
 

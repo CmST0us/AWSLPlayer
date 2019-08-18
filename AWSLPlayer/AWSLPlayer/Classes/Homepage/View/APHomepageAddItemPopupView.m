@@ -49,9 +49,6 @@ NS_CLOSE_SIGNAL_WARN(didPressAddItem)
     [self emitSignal:NS_SIGNAL_SELECTOR(didPressAddItem) withParams:@[@(APHomepageAddItemTypeDDPlayer)]];
 }
 
-- (void)addLiveURLFolder:(QMUIPopupMenuButtonItem *)item {
-    [self emitSignal:NS_SIGNAL_SELECTOR(didPressAddItem) withParams:@[@(APHomepageAddItemTypeLiveURLFolder)]];
-}
 
 #pragma mark - Data Source
 - (QMUIOrderedDictionary<NSString *, NSString *> *)itemsTitleAndAction {
@@ -61,13 +58,11 @@ NS_CLOSE_SIGNAL_WARN(didPressAddItem)
         titles = @[
                     NSLocalizedString(@"ap_homepage_add_button_title_dd_player", @"DD 播放器"),
                     NSLocalizedString(@"ap_homepage_add_button_title_live_url", @"直播间地址"),
-//                   NSLocalizedString(@"ap_homepage_add_button_title_live_url_folder", @"直播间收藏夹"),
                    ];
         
         selectors = @[
                       NSStringFromSelector(@selector(addDDPlayer:)),
                       NSStringFromSelector(@selector(addLiveURL:)),
-//                      NSStringFromSelector(@selector(addLiveURLFolder:)),
                       ];
     }
     QMUIOrderedDictionary *dict = [[QMUIOrderedDictionary alloc] init];

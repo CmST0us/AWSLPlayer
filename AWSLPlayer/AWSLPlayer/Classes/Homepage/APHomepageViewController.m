@@ -93,13 +93,6 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
     [self.tableView reloadData];
 }
 
-- (void)createNewLiveURLFolderWithName:(NSString *)name {
-    APLiveURLFolderModel *model = [[APLiveURLFolderModel alloc] init];
-    model.name = name;
-    [self.dataSource addLiveURLFolders:model];
-    [self reloadAllData];
-}
-
 - (void)gotoAddLiveURLViewController {
     APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
     APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
@@ -114,25 +107,6 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)showAddURLFolderDialog {
-    weakSelf(target);
-    QMUIDialogTextFieldViewController *addLiveURLFolderDiglog = [[QMUIDialogTextFieldViewController alloc] init];
-    addLiveURLFolderDiglog.title = NSLocalizedString(@"ap_add_live_url_folder_title", nil);
-    addLiveURLFolderDiglog.shouldManageTextFieldsReturnEventAutomatically = YES;
-    addLiveURLFolderDiglog.enablesSubmitButtonAutomatically = YES;
-    [addLiveURLFolderDiglog addTextFieldWithTitle:NSLocalizedString(@"ap_add_live_url_folder_name", nil) configurationHandler:nil];
-    [addLiveURLFolderDiglog addCancelButtonWithText:NSLocalizedString(@"ap_cancel", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
-        [aDialogViewController hideWithAnimated:YES completion:nil];
-    }];
-    [addLiveURLFolderDiglog addSubmitButtonWithText:NSLocalizedString(@"ap_submit", nil) block:^(__kindof QMUIDialogViewController * _Nonnull aDialogViewController) {
-        QMUIDialogTextFieldViewController *textDialog = (QMUIDialogTextFieldViewController *)aDialogViewController;
-        [target createNewLiveURLFolderWithName:textDialog.textFields[0].text];
-        [aDialogViewController hideWithAnimated:YES completion:nil];
-        [target reloadAllData];
-    }];
-    [addLiveURLFolderDiglog showWithAnimated:YES completion:nil];
-}
-
 #pragma mark - Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return TableViewCellNormalHeight;
@@ -144,11 +118,13 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
         cell = [[QMUITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:APHomepageViewControllerNormalCell];
     }
     if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
-        cell.textLabel.text = self.dataSource.liveURLs[indexPath.row].name;
-    } else if (indexPath.section == APHomepageDataSourceSectionTypeFolder) {
-        cell.textLabel.text = self.dataSource.liveURLFolders[indexPath.row].name;
+        NSString *modelKey = [self.dataSource.liveURLs allKeys][indexPath.row];
+        APLiveURLModel *model = self.dataSource.liveURLs[modelKey];
+        cell.textLabel.text = model.name;
     } else if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
-        cell.textLabel.text = self.dataSource.players[indexPath.row].name;
+        NSString *modelKey = [self.dataSource.players allKeys][indexPath.row];
+        APDDPlayerModel *model = self.dataSource.players[modelKey];
+        cell.textLabel.text = model.name;
     }
     
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
@@ -158,16 +134,18 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
-        APDDPlayerModel *model = self.dataSource.players[indexPath.row];
+        NSString *modelKey = [self.dataSource.players allKeys][indexPath.row];
+        APDDPlayerModel *model = self.dataSource.players[modelKey];
         APAddDDPlayerViewController *v = [[APAddDDPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        [v editModel:model];
+        [v editModel:model withModelKey:modelKey];
         APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
         nav.modalPresentationStyle = UIModalPresentationPageSheet;
         [self presentViewController:nav animated:YES completion:nil];
     } else if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
-        APLiveURLModel *selectLiveRoom = self.dataSource.liveURLs[indexPath.row];
+        NSString *modelKey = [self.dataSource.liveURLs allKeys][indexPath.row];
+        APLiveURLModel *model = self.dataSource.liveURLs[modelKey];
         APAddLiveURLViewController *v = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        [v editModel:selectLiveRoom];
+        [v editModel:model withModelKey:modelKey];
         APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
         nav.modalPresentationStyle = UIModalPresentationPageSheet;
         [self presentViewController:nav animated:YES completion:nil];
@@ -183,13 +161,18 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
     
     if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
         APDDPlayerModel *ddPlayer = [[APDDPlayerModel alloc] init];
+        NSString *modelKey = [self.dataSource.liveURLs allKeys][indexPath.row];
+        APLiveURLModel *model = self.dataSource.liveURLs[modelKey];
+        
         ddPlayer.liveURLs = @{
-            @(0): self.dataSource.liveURLs[indexPath.row]
+            @(0): model
         };
+        
         APPlayerViewController *vc = [[APPlayerViewController alloc] initWithDDPlayerModel:ddPlayer];
         [self presentViewController:vc animated:YES completion:nil];
     } else if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
-        APDDPlayerModel *model = self.dataSource.players[indexPath.row];
+        NSString *modelKey = [self.dataSource.players allKeys][indexPath.row];
+        APDDPlayerModel *model = self.dataSource.players[modelKey];
         APPlayerViewController *vc = [[APPlayerViewController alloc] initWithDDPlayerModel:model];
         [self presentViewController:vc animated:YES completion:nil];
     }
@@ -240,8 +223,6 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 - (NS_SLOT)popupViewDidPressAddItem:(NSNumber *)itemType {
     if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURL) {
         [self gotoAddLiveURLViewController];
-    } else if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURLFolder) {
-        [self showAddURLFolderDialog];
     } else if (itemType.unsignedIntegerValue == APHomepageAddItemTypeDDPlayer) {
         [self gotoAddDDPlayerViewController];
     }

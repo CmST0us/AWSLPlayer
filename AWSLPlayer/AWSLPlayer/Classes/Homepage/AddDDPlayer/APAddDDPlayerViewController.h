@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class APDDPlayerModel;
 @interface APAddDDPlayerViewController : APTableViewController
 
-- (void)editModel:(APDDPlayerModel *)model;
+- (void)editModel:(APDDPlayerModel *)model withModelKey:(NSString *)modelKey;
 
 @end
 

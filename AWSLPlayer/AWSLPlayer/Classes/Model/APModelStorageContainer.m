@@ -9,6 +9,7 @@
 #import "APLiveURLModel.h"
 #import "APLiveURLFolderModel.h"
 #import "APModelStorageContainer.h"
+#import "NSString+Unique.h"
 
 #define kAPModelStorageDefaultLiveURL @"https://www.youtube.com/watch?v=vrwSrCr9J4s"
 #define kAPModelStorageDefaultLiveURLName @"24時間"
@@ -68,38 +69,27 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
 
 #pragma mark - Live URL
 
-- (void)addLiveURL:(APLiveURLModel *)model inFolder:(APLiveURLFolderModel *)folderModel {
-    if ([folderModel.name isEqualToString:self.liveURLFolders[APModelStorageDefaultLiveFolderKey].name]) {
-        // Default Folder
-        model.folderName = APModelStorageDefaultLiveFolderKey;
-        [self.liveURLFolders[APModelStorageDefaultLiveFolderKey].liveURLs addObject:model];
-    } else {
-        model.folderName = folderModel.name;
-        APLiveURLFolderModel *targetFolder = [self.liveURLFolders objectForKey:folderModel.name];
-        if (targetFolder == nil) {
-            targetFolder = [[APLiveURLFolderModel alloc] init];
-            targetFolder.name = folderModel.name;
-            targetFolder.liveURLs = [[NSMutableArray alloc] init];
-            [self.liveURLFolders setObject:targetFolder forKey:targetFolder.name];
-        }
-        [targetFolder.liveURLs addObject:model];
-    }
-    [self.liveURLs setObject:model forKey:model.name];
+- (void)addLiveURL:(APLiveURLModel *)model forKey:(NSString *)aKey {
+    model.folderName = APModelStorageDefaultLiveFolderKey;
+    [self.liveURLs setObject:model forKey:aKey];
 }
 
+- (void)removeLiveURLWithKey:(NSString *)aKey {
+    [self.liveURLs removeObjectForKey:aKey];
+}
 
 #pragma mark - DD Player
-- (void)addPlayer:(APDDPlayerModel *)aPlayer {
+- (void)addPlayer:(APDDPlayerModel *)aPlayer forKey:(NSString *)aKey{
     if (aPlayer == nil) return;
-    NSString *playName = aPlayer.name;
-    [self.players setObject:aPlayer forKey:playName];
+
+    [self.players setObject:aPlayer forKey:aKey];
+}
+
+- (void)removePlayerWithKey:(NSString *)aKey {
+    [self.players removeObjectForKey:aKey];
 }
 
 #pragma mark - Default
-- (APLiveURLFolderModel *)defaultFolder {
-    return [self.liveURLFolders objectForKey:APModelStorageDefaultLiveFolderKey];
-}
-
 + (id)defaultValue {
     APModelStorageContainer *defaultConfig = [[APModelStorageContainer alloc] init];
     
