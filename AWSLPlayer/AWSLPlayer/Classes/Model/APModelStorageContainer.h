@@ -19,8 +19,6 @@ extern NSString * const APModelStorageDefaultLiveFolderKey;
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APLiveURLModel *> *liveURLs;
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, APDDPlayerModel *> *players;
 
-- (APLiveURLFolderModel *)defaultFolder;
-
 - (void)addLiveURL:(APLiveURLModel *)model forKey:(NSString *)aKey;
 - (void)addPlayer:(APDDPlayerModel *)aPlayer forKey:(NSString *)aKey;
 

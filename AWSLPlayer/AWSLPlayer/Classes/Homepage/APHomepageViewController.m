@@ -164,15 +164,16 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
         NSString *modelKey = [self.dataSource.liveURLs allKeys][indexPath.row];
         APLiveURLModel *model = self.dataSource.liveURLs[modelKey];
         
-        ddPlayer.liveURLs = @{
-            @(0): model
-        };
-        
+        [ddPlayer.liveURLs setObject:model forKey:@(0)];
         APPlayerViewController *vc = [[APPlayerViewController alloc] initWithDDPlayerModel:ddPlayer];
         [self presentViewController:vc animated:YES completion:nil];
     } else if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
         NSString *modelKey = [self.dataSource.players allKeys][indexPath.row];
         APDDPlayerModel *model = self.dataSource.players[modelKey];
+        if (model.liveURLs.objectEnumerator.allObjects.count == 0) {
+            [QMUITips showError:NSLocalizedString(@"ap_dd_player_no_live_room", nil)];
+            return;
+        }
         APPlayerViewController *vc = [[APPlayerViewController alloc] initWithDDPlayerModel:model];
         [self presentViewController:vc animated:YES completion:nil];
     }
@@ -199,9 +200,14 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle & UITableViewCellEditingStyleDelete) {
         if (indexPath.section == APHomepageDataSourceSectionTypeDDPlayer) {
+            NSString *modelKey = [self.dataSource.players allKeys][indexPath.row];
+            [self.dataSource removePlayerWithKey:modelKey];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
             
         } else if (indexPath.section == APHomepageDataSourceSectionTypeLiveURL) {
-            
+            NSString *modelKey = [self.dataSource.liveURLs allKeys][indexPath.row];
+            [self.dataSource removeLiveURLWithKey:modelKey];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         }
     }
 }

@@ -42,3 +42,5 @@
 "ap_add_dd_player_selected_live_url" = "已选择";
 "ap_add_dd_player_select_live_url_button_title" = "选择直播间";
 "ap_add_dd_player_bigger_than_max_count" = "超过选择上限";
+
+"ap_dd_player_no_live_room" = "没有直播间";

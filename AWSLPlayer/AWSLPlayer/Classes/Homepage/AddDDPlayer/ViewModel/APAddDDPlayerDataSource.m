@@ -61,10 +61,10 @@
     self.ddPlayerModel = model;
     self.modelKey = modelKey;
     NSMutableIndexSet *select = [[NSMutableIndexSet alloc] init];
-    [self.ddPlayerModel.liveURLs enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APLiveURLModel * _Nonnull obj, BOOL * _Nonnull stop) {
-        NSUInteger idx = [self.allLiveRoom indexOfObject:obj];
-        if (idx != NSNotFound) {
-            [select addIndex:idx];
+    [NSAllMapTableKeys(self.ddPlayerModel.liveURLs) enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSUInteger i = [self.allLiveRoom indexOfObject:obj];
+        if (i != NSNotFound) {
+            [select addIndex:i];
         }
     }];
     self.selectedIndex = select;
@@ -75,7 +75,7 @@
 }
 
 - (void)save {
-    NSMutableDictionary *liveRooms = [NSMutableDictionary dictionaryWithCapacity:self.selectedLiveRoom.count];
+    NSMapTable *liveRooms = [NSMapTable strongToWeakObjectsMapTable];
     [self.selectedLiveRoom enumerateObjectsUsingBlock:^(APLiveURLModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [liveRooms setObject:obj forKey:@(idx)];
     }];

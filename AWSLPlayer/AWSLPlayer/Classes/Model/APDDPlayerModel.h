@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 布局，默认四分屏
 @property (nonatomic, strong, nonnull) APDDPlayerLayoutModel *layoutModel;
 // 直播间地址，对应布局Index
-@property (nonatomic, strong, nonnull) NSDictionary<NSNumber *, APLiveURLModel *> *liveURLs;
+@property (nonatomic, strong, nonnull) NSMapTable<NSNumber *, APLiveURLModel *> *liveURLs;
 @end
 
 NS_ASSUME_NONNULL_END

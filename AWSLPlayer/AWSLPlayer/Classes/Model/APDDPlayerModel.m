@@ -40,9 +40,9 @@
     return _layoutModel;
 }
 
-- (NSDictionary<NSNumber *,APLiveURLModel *> *)liveURLs {
+- (NSMapTable<NSNumber *,APLiveURLModel *> *)liveURLs {
     if (_liveURLs == nil) {
-        _liveURLs = @{};
+        _liveURLs = [NSMapTable strongToWeakObjectsMapTable];
     }
     return _liveURLs;
 }

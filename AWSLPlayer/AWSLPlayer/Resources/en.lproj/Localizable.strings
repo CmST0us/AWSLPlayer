@@ -43,3 +43,5 @@
 "ap_add_dd_player_selected_live_url" = "Selected";
 "ap_add_dd_player_select_live_url_button_title" = "Select Live Room";
 "ap_add_dd_player_bigger_than_max_count" = "Bigger than max count";
+
+"ap_dd_player_no_live_room" = "No Live Room";

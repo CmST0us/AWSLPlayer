@@ -18,7 +18,6 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
 
 @interface APModelStorageContainer ()
 @property (nonatomic, strong) NSMutableDictionary<NSString *, APLiveURLModel *> *liveURLs;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, APLiveURLFolderModel *> *liveURLFolders;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, APDDPlayerModel *> *players;
 @end
 
@@ -27,7 +26,6 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
     self = [super init];
     if (self) {
         _liveURLs = [NSMutableDictionary dictionary];
-        _liveURLFolders = [NSMutableDictionary dictionary];
         _players = [NSMutableDictionary dictionary];
     }
     return self;
@@ -43,13 +41,6 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
             [_liveURLs addEntriesFromDictionary:dict];
         }
         
-        dict = [coder decodeObjectForKey:@"liveURLFolders"];
-        if (dict != nil &&
-            ([dict isKindOfClass:[NSDictionary class]] ||
-             [dict isKindOfClass:[NSMutableDictionary class]])) {
-            [_liveURLFolders addEntriesFromDictionary:dict];
-        }
-        
         dict = [coder decodeObjectForKey:@"players"];
         if (dict != nil &&
             ([dict isKindOfClass:[NSDictionary class]] ||
@@ -63,7 +54,6 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
 
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.liveURLs forKey:@"liveURLs"];
-    [coder encodeObject:self.liveURLFolders forKey:@"liveURLFolders"];
     [coder encodeObject:self.players forKey:@"players"];
 }
 
@@ -93,49 +83,19 @@ NSString * const APModelStorageDefaultLiveFolderKey = @"Default";
 + (id)defaultValue {
     APModelStorageContainer *defaultConfig = [[APModelStorageContainer alloc] init];
     
-    APLiveURLModel *liveURL1 = [[APLiveURLModel alloc] init];
-    liveURL1.urlType = APLiveURLTypeBiliBili;
-    liveURL1.name = @"daishu";
-    liveURL1.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL1.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/45190"];
-    
-    APLiveURLModel *liveURL2 = [[APLiveURLModel alloc] init];
-    liveURL2.urlType = APLiveURLTypeBiliBili;
-    liveURL2.name = @"hoho";
-    liveURL2.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL2.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/629869?visit_id=lsp2s55tr80"];
-    
-    APLiveURLModel *liveURL3 = [[APLiveURLModel alloc] init];
-    liveURL3.urlType = APLiveURLTypeBiliBili;
-    liveURL3.name = kAPModelStorageDefaultLiveURLName;
-    liveURL3.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL3.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/43001?visit_id=lsp2s55tr80"];
-    
-    APLiveURLModel *liveURL4 = [[APLiveURLModel alloc] init];
-    liveURL4.urlType = APLiveURLTypeBiliBili;
-    liveURL4.name = @"空间站";
-    liveURL4.folderName = APModelStorageDefaultLiveFolderKey;
-    liveURL4.liveURL = [NSURL URLWithString:@"https://live.bilibili.com/14047?spm_id_from=333.334.b_62696c695f6c697665.9"];
-    
-    APLiveURLFolderModel *defaultFolder = [[APLiveURLFolderModel alloc] init];
-    defaultFolder.name = NSLocalizedString(@"ap_default", nil);
-    defaultFolder.liveURLs = [NSMutableArray arrayWithArray:@[liveURL1, liveURL2, liveURL3, liveURL4]];
+    APLiveURLModel *liveURL = [[APLiveURLModel alloc] init];
+    liveURL.urlType = APLiveURLTypeYoutube;
+    liveURL.name = kAPModelStorageDefaultLiveURLName;
+    liveURL.folderName = APModelStorageDefaultLiveFolderKey;
+    liveURL.liveURL = [NSURL URLWithString:kAPModelStorageDefaultLiveURL];
     
     APDDPlayerModel *player = [[APDDPlayerModel alloc] init];
-    player.liveURLs = @{
-        @(0): liveURL1,
-        @(1): liveURL2,
-        @(2): liveURL3,
-        @(3): liveURL4
-    };
+    [player.liveURLs setObject:liveURL forKey:@(0)];
+    
     player.name = kAPModelStorageDefaultLiveURLName;
     
-    [defaultConfig.players setObject:player forKey:player.name];
-    [defaultConfig.liveURLs setObject:liveURL1 forKey:liveURL1.name];
-    [defaultConfig.liveURLs setObject:liveURL2 forKey:liveURL2.name];
-    [defaultConfig.liveURLs setObject:liveURL3 forKey:liveURL3.name];
-    [defaultConfig.liveURLs setObject:liveURL4 forKey:liveURL4.name];
-    [defaultConfig.liveURLFolders setObject:defaultFolder forKey:APModelStorageDefaultLiveFolderKey];
+    [defaultConfig.players setObject:player forKey:[NSString uniqueString]];
+    [defaultConfig.liveURLs setObject:liveURL forKey:[NSString uniqueString]];
     
     return defaultConfig;
 }

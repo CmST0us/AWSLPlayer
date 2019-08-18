@@ -134,8 +134,9 @@
     if (self.ddPlayerModel.layoutModel.playerCount == 0) {
         [self.ddPlayerModel.layoutModel setupWithPlayerCount:self.ddPlayerModel.liveURLs.count];
     }
-    [self.ddPlayerModel.liveURLs enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APLiveURLModel * _Nonnull obj, BOOL * _Nonnull stop) {
-        APLiveURLModel *liveURL = obj;
+    [NSAllMapTableKeys(self.ddPlayerModel.liveURLs) enumerateObjectsUsingBlock:^(id  _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        APLiveURLModel *liveURL = [target.ddPlayerModel.liveURLs objectForKey:key];
         APPlayerViewModel *playerViewModel = [[APPlayerViewModel alloc] init];
         APPlayerView *playerView = [[APPlayerView alloc] init];
         APVVMBindingContainer *container = [APVVMBindingContainer bindView:playerView withViewModel:playerViewModel];
