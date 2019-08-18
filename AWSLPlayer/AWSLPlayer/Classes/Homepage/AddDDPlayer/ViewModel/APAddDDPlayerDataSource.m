@@ -61,7 +61,7 @@
     self.ddPlayerModel = model;
     self.modelKey = modelKey;
     NSMutableIndexSet *select = [[NSMutableIndexSet alloc] init];
-    [NSAllMapTableKeys(self.ddPlayerModel.liveURLs) enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [NSAllMapTableValues(self.ddPlayerModel.liveURLs) enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSUInteger i = [self.allLiveRoom indexOfObject:obj];
         if (i != NSNotFound) {
             [select addIndex:i];
