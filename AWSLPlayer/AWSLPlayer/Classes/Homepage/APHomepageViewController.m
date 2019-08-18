@@ -95,6 +95,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 
 - (void)gotoAddLiveURLViewController {
     APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [vc connectSignal:NS_SIGNAL_SELECTOR(didAddLiveURL) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
     APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
     nav.modalPresentationStyle = UIModalPresentationPageSheet;
     [self presentViewController:nav animated:YES completion:nil];
@@ -103,6 +104,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 - (void)gotoAddDDPlayerViewController {
     APAddDDPlayerViewController *vc = [[APAddDDPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
     APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
+    [vc connectSignal:NS_SIGNAL_SELECTOR(didAddDDPlayer) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
     nav.modalPresentationStyle = UIModalPresentationPageSheet;
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -137,6 +139,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
         NSString *modelKey = [self.dataSource.players allKeys][indexPath.row];
         APDDPlayerModel *model = self.dataSource.players[modelKey];
         APAddDDPlayerViewController *v = [[APAddDDPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [v connectSignal:NS_SIGNAL_SELECTOR(didAddDDPlayer) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
         [v editModel:model withModelKey:modelKey];
         APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
         nav.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -145,6 +148,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
         NSString *modelKey = [self.dataSource.liveURLs allKeys][indexPath.row];
         APLiveURLModel *model = self.dataSource.liveURLs[modelKey];
         APAddLiveURLViewController *v = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [v connectSignal:NS_SIGNAL_SELECTOR(didAddLiveURL) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
         [v editModel:model withModelKey:modelKey];
         APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
         nav.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -232,6 +236,10 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
     } else if (itemType.unsignedIntegerValue == APHomepageAddItemTypeDDPlayer) {
         [self gotoAddDDPlayerViewController];
     }
+}
+
+- (NS_SLOT)refreshData {
+    [self.tableView reloadData];
 }
 
 @end

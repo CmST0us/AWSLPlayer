@@ -16,6 +16,7 @@
 @end
 
 @implementation APAddLiveURLViewController
+NS_CLOSE_SIGNAL_WARN(didAddLiveURL)
 
 - (void)didInitializeWithStyle:(UITableViewStyle)style {
     [super didInitializeWithStyle:style];
@@ -73,6 +74,7 @@
 
 - (void)navigationBarSaveButtonAction:(id)sender {
     [[APUserStorageHelper modelStorageContainer] addLiveURL:self.dataSource.liveRoom forKey:self.dataSource.modelKey];
+    [self emitSignal:NS_SIGNAL_SELECTOR(didAddLiveURL) withParams:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
