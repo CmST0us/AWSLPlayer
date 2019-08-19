@@ -60,6 +60,13 @@
     }];
     if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemReady)]) {
         [viewModel play];
+    } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemFailed)]) {
+        __weak typeof(viewModel) weakViewModel = viewModel;
+        [viewModel.liveURLModel.processor requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
+            if (error == nil) {
+                [weakViewModel setupPlayerWithPlayURLs:playURLs];
+            }
+        }];
     }
 }
 
@@ -138,6 +145,7 @@
         
         APLiveURLModel *liveURL = [target.ddPlayerModel.liveURLs objectForKey:key];
         APPlayerViewModel *playerViewModel = [[APPlayerViewModel alloc] init];
+        playerViewModel.liveURLModel = liveURL;
         APPlayerView *playerView = [[APPlayerView alloc] init];
         APVVMBindingContainer *container = [APVVMBindingContainer bindView:playerView withViewModel:playerViewModel];
         
@@ -153,9 +161,11 @@
                 liveURL.processor = processor;
                 [processor requestPlayURLWithCompletion:^(NSDictionary * _Nullable playURLs, NSError * _Nullable error) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [playerViewModel setupPlayerWithPlayURLs:playURLs];
-                        [playerView setupWithViewModel:playerViewModel];
-                        [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                        if (error == nil) {
+                            [playerViewModel setupPlayerWithPlayURLs:playURLs];
+                            [playerView setupWithViewModel:playerViewModel];
+                            [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                        }
                     });
                 }];
             }

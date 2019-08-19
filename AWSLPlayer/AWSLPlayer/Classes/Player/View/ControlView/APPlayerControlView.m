@@ -27,17 +27,20 @@ NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
 #pragma mark - Property Slot
 NS_CLOSE_SIGNAL_WARN(statusChange);
 NS_PROPERTY_SLOT(status) {
-    if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPlaying)]) {
-        self.playPauseButton.backgroundColor = UIColorGreen;
-    } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
-        self.playPauseButton.backgroundColor = UIColorRed;
-    } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusLoading)] ||
-               [newValue isEqualToNumber:@(APPlayerViewModelStatusPlayerReady)]) {
-        self.playPauseButton.backgroundColor = UIColorYellow;
-    } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemFailed)]) {
-        self.playPauseButton.backgroundColor = UIColorGray;
-        self.playPauseButton.enabled = NO;
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.playPauseButton.enabled = YES;
+        if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPlaying)]) {
+            self.playPauseButton.backgroundColor = UIColorGreen;
+        } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
+            self.playPauseButton.backgroundColor = UIColorRed;
+        } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusLoading)] ||
+                   [newValue isEqualToNumber:@(APPlayerViewModelStatusPlayerReady)]) {
+            self.playPauseButton.backgroundColor = UIColorYellow;
+        } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemFailed)]) {
+            self.playPauseButton.backgroundColor = UIColorGray;
+            self.playPauseButton.enabled = NO;
+        }
+    });
 }
 
 #pragma mark -
