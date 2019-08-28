@@ -18,7 +18,6 @@
 @end
 
 @implementation APAddLiveURLViewDataSource
-NS_USE_SIGNAL(didChangeLiveRoom);
 
 - (void)didInitialize {
     [super didInitialize];
@@ -114,31 +113,31 @@ NS_USE_SIGNAL(didChangeLiveRoom);
 #pragma mark - Action
 - (void)didSelectYoutubeType:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeYoutube;
-    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    [self emitSignal:@signalSelector(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectBiliBili:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeBiliBili;
-    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    [self emitSignal:@signalSelector(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectNicoNico:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeNicoNico;
-    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    [self emitSignal:@signalSelector(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectLineLive:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeLineLive;
-    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    [self emitSignal:@signalSelector(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
 - (void)didSelectHibikiRadio:(QMUIStaticTableViewCellData *)cellData {
     self.liveRoom.urlType = APLiveURLTypeHibikiRadio;
-    [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+    [self emitSignal:@signalSelector(didChangeLiveRoom) withParams:nil];
     [self.tableView reloadData];
 }
 
@@ -151,10 +150,10 @@ NS_USE_SIGNAL(didChangeLiveRoom);
 - (void)textFieldDidChange:(QMUITextField *)textField {
     if (textField == self.nameCell.inputTextField) {
         self.liveRoom.name = textField.text;
-        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+        [self emitSignal:@signalSelector(didChangeLiveRoom) withParams:nil];
     } else if (textField == self.urlCell.inputTextField) {
         self.liveRoom.liveURL = [NSURL URLWithString:textField.text];
-        [self emitSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) withParams:nil];
+        [self emitSignal:@signalSelector(didChangeLiveRoom) withParams:nil];
     }
 }
 

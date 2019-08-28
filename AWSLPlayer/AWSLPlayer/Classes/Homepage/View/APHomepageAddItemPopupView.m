@@ -10,7 +10,6 @@
 #import "APMacroHelper.h"
 
 @implementation APHomepageAddItemPopupView
-NS_CLOSE_SIGNAL_WARN(didPressAddItem)
 
 - (void)didInitialize {
     [super didInitialize];
@@ -42,11 +41,11 @@ NS_CLOSE_SIGNAL_WARN(didPressAddItem)
 
 #pragma mark - Action
 - (void)addLiveURL:(QMUIPopupMenuButtonItem *)item {
-    [self emitSignal:NS_SIGNAL_SELECTOR(didPressAddItem) withParams:@[@(APHomepageAddItemTypeLiveURL)]];
+    [self emitSignal:@signalSelector(didPressAddItem) withParams:@[@(APHomepageAddItemTypeLiveURL)]];
 }
 
 - (void)addDDPlayer:(QMUIPopupMenuButtonItem *)item {
-    [self emitSignal:NS_SIGNAL_SELECTOR(didPressAddItem) withParams:@[@(APHomepageAddItemTypeDDPlayer)]];
+    [self emitSignal:@signalSelector(didPressAddItem) withParams:@[@(APHomepageAddItemTypeDDPlayer)]];
 }
 
 

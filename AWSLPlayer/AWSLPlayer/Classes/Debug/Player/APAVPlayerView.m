@@ -9,6 +9,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <QMUIKit/QMUIKit.h>
 #import <Masonry/Masonry.h>
+#import <KVOController/KVOController.h>
 #import "APAVPlayerView.h"
 
 @interface APAVPlayerView ()
@@ -26,12 +27,6 @@
 @end
 
 @implementation APAVPlayerView
-NS_CLOSE_SIGNAL_WARN(playerStatusChange);
-
-NS_PROPERTY_SLOT(playerStatus) {
-    NSLog(@"new status %@", newValue);
-    [self emitSignal:NS_SIGNAL_SELECTOR(playerStatusChange) withParams:@[newValue, oldValue]];
-}
 
 - (void)didInitialize {
     [super didInitialize];
@@ -75,9 +70,15 @@ NS_PROPERTY_SLOT(playerStatus) {
 }
 
 - (AVPlayer *)player {
+    __weak typeof(self) weakSelf = self;
     if (_player == nil) {
         _player = [[AVPlayer alloc] initWithPlayerItem:self.assetItem];
-        [_player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
+        [_player addKVOObserver:self
+                     forKeyPath:FBKVOKeyPath(_player.status)
+                          block:^(id  _Nullable oldValue, id  _Nullable newValue) {
+            NSLog(@"new status %@", newValue);
+            [weakSelf emitSignal:@signalSelector(playerStatusChange) withParams:@[newValue, oldValue]];
+        }];
     }
     return _player;
 }

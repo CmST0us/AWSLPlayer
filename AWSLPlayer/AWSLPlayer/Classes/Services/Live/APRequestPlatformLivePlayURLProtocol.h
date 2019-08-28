@@ -27,8 +27,6 @@ typedef void(^APRequestPlatformLivePlayURLBlock)(NSDictionary * _Nullable playUR
 /// 请求播放地址
 /// @param block 回调
 - (void)requestPlayURLWithCompletion:(APRequestPlatformLivePlayURLBlock)block;
-@optional
-NS_SIGNAL(playURLsDidChange);
 @end
 
 NS_ASSUME_NONNULL_END

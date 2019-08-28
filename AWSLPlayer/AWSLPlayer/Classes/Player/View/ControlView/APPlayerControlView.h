@@ -6,7 +6,7 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
-#import <NSObjectSignals/NSObject+SignalsSlots.h>
+#import <NSObjectSignals/NSObjectSignals.h>
 #import "APView.h"
 /*
 
@@ -59,7 +59,23 @@ typedef NS_ENUM(NSUInteger, APPlayerControlViewType) {
 
 @class APButton;
 @class APPlayerViewModel;
-@interface APPlayerControlView : APView
+
+@signals APPlayerControlViewSignals
+@optional
+// 当播放暂停按钮按下时
+// @param: view 当前view
+// @param: view model 当前视图的view model
+// @param: button 触摸的button
+- (void)didPressPlayPauseButton;
+
+// 按下退出播放器按钮时
+// @param: view 当前view
+// @param: view model 当前视图的view model
+// @param: button 触摸的button
+- (void)didPressExitPlayerButton;
+@end
+
+@interface APPlayerControlView : APView<APPlayerControlViewSignals>
 @property (nonatomic, readonly) APButton *playPauseButton;
 
 @property (nonatomic, readonly) APButton *exitPlayerButton;
@@ -68,18 +84,6 @@ typedef NS_ENUM(NSUInteger, APPlayerControlViewType) {
 
 - (void)setupWithViewModel:(APPlayerViewModel *)model;
 
-#pragma mark - Signals
-// 当播放暂停按钮按下时
-// @param: view 当前view
-// @param: view model 当前视图的view model
-// @param: button 触摸的button
-NS_SIGNAL(didPressPlayPauseButton);
-
-// 按下退出播放器按钮时
-// @param: view 当前view
-// @param: view model 当前视图的view model
-// @param: button 触摸的button
-NS_SIGNAL(didPressExitPlayerButton);
 @end
 
 @interface APPlayerControlView (MiniState)

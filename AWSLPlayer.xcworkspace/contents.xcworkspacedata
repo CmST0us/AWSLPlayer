@@ -14,9 +14,12 @@
       location = "group:Vendor/VideoCodecKit/VideoCodecKit/VideoCodecKit.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Vendor/jetfire/Jetfire.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Vendor/NSObjectSignals/NSObjectSignals/NSObjectSignals.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Vendor/jetfire/Jetfire.xcodeproj">
+      location = "group:Vendor/KVOController/FBKVOController.xcodeproj">
    </FileRef>
 </Workspace>

@@ -5,7 +5,8 @@
 //  Created by CmST0us on 2019/7/14.
 //  Copyright © 2019 eric3u. All rights reserved.
 //
-#import <NSObjectSignals/NSObject+SignalsSlots.h>
+#import <NSObjectSignals/NSObjectSignals.h>
+#import <KVOController/KVOController.h>
 #import <Masonry/Masonry.h>
 #import "ViewController.h"
 #import "APAVPlayerView.h"
@@ -15,7 +16,12 @@
 #import "APLineLive.h"
 #import "APHibikiLive.h"
 
-@interface ViewController ()
+@slots ViewControllerSlots
+@required
+
+@end
+
+@interface ViewController ()<ViewControllerSlots>
 @property (nonatomic, strong) APAVPlayerView *player;
 @property (nonatomic, strong) APBiliBiliLive *bilibiliLive;
 
@@ -74,18 +80,20 @@
 }
 
 - (void)bindData {
-    [self.bilibiliLive listenKeypath:@"playURLs" pairWithSignal:NS_SIGNAL_SELECTOR(playURLsDidChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(bilibiliLive_PlayURLs)];
-    [self.player connectSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_SLOT_SELECTOR(onBiliBiliPlayerStatusChange)];
-}
-
-NS_PROPERTY_SLOT(bilibiliLive_PlayURLs) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.player.userInteractionEnabled = newValue == nil ? NO : YES;
-    });
-}
-
-- (NS_SLOT)onBiliBiliPlayerStatusChange {
-    NSLog(@"bilibili player status change");
+    __weak typeof(self) weakSelf = self;
+    [self.bilibiliLive addKVOObserver:self
+                           forKeyPath:FBKVOKeyPath([self bilibiliLive].playURLs)
+                                block:^(id  _Nullable oldValue, id  _Nullable newValue) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.player.userInteractionEnabled = newValue == nil ? NO : YES;
+        });
+    }];
+    
+    [self.player connectSignal:@signalSelector(playerStatusChange)
+                   forObserver:self
+                     blockSlot:^(NSArray * _Nonnull param) {
+        NSLog(@"bilibili player status change");
+    }];
 }
 
 - (void)viewDidLoad {

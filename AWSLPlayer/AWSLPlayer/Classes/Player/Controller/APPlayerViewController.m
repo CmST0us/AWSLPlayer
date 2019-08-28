@@ -22,7 +22,22 @@
 #import "APPlayerView.h"
 #import "APPlayerControlView.h"
 
-@interface APPlayerViewController ()
+@slots APPlayerViewControllerSlots
+@required
+- (void)onPlayerStatusChangeWithNewValue:(NSNumber *)newValue
+                                oldValue:(NSNumber *)oldValue
+                               viewModel:(APPlayerViewModel *)viewModel;
+
+- (void)onPressPlayPauseButtonWithView:(APPlayerControlView *)controlView
+                             viewModel:(APPlayerViewModel *)viewModel
+                                button:(APButton *)button;
+
+- (void)onEnterBackgroundPlayerStatusChangeWIthNewValue:(NSNumber *)newValue
+                                               oldValue:(NSNumber *)oldValue
+                                              viewModel:(APPlayerViewModel *)viewModel;
+@end
+
+@interface APPlayerViewController () <APPlayerViewControllerSlots>
 @property (nonatomic, strong) APDDPlayerModel *ddPlayerModel;
 @property (nonatomic, strong) NSMutableDictionary<NSNumber *, APVVMBindingContainer<APPlayerView *, APPlayerViewModel *> *> *playersContainer;
 @end
@@ -49,9 +64,9 @@
 
 #pragma mark - Slot
 
-- (NS_SLOT)onPlayerStatusChangeWithNewValue:(NSNumber *)newValue
+- (void)onPlayerStatusChangeWithNewValue:(NSNumber *)newValue
                                    oldValue:(NSNumber *)oldValue
-                                  viewModel:(APPlayerViewModel *)viewModel{
+                                  viewModel:(APPlayerViewModel *)viewModel {
     __block APPlayerView *v = nil;
     [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
         if ([obj viewModel] == viewModel) {
@@ -70,7 +85,7 @@
     }
 }
 
-- (NS_SLOT)onPressPlayPauseButtonWithView:(APPlayerControlView *)controlView
+- (void)onPressPlayPauseButtonWithView:(APPlayerControlView *)controlView
                                 viewModel:(APPlayerViewModel *)viewModel
                                    button:(APButton *)button {
     if (viewModel.status == APPlayerViewModelStatusPlaying) {
@@ -82,13 +97,13 @@
     }
 }
 
-- (NS_SLOT)onPressExitPlayerButtonWithView:(APPlayerControlView *)view
+- (void)onPressExitPlayerButtonWithView:(APPlayerControlView *)view
                                  viewModel:(APPlayerViewModel *)viewModel
                                     button:(APButton *)button {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (NS_SLOT)onEnterBackgroundPlayerStatusChangeWIthNewValue:(NSNumber *)newValue
+- (void)onEnterBackgroundPlayerStatusChangeWIthNewValue:(NSNumber *)newValue
                                                   oldValue:(NSNumber *)oldValue
                                                  viewModel:(APPlayerViewModel *)viewModel {
     if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
@@ -114,8 +129,8 @@
             if (![obj viewModel].enableBackground) {
                 [[obj viewModel] pause];
             } else {
-                [[obj viewModel] connectSignal:NS_SIGNAL_SELECTOR(statusChange)
-                                   forObserver:self slot:NS_SLOT_SELECTOR(onEnterBackgroundPlayerStatusChangeWIthNewValue:oldValue:viewModel:)];
+                [[obj viewModel] connectSignal:@signalSelector(statusChange)
+                                   forObserver:self slot:@slotSelector(onEnterBackgroundPlayerStatusChangeWIthNewValue:oldValue:viewModel:)];
             }
         } else {
             [[obj viewModel] pause];
@@ -125,7 +140,7 @@
 
 - (void)playAll:(BOOL)shouldKeepLastStatus {
     [self.playersContainer enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, APVVMBindingContainer<APPlayerView *,APPlayerViewModel *> * _Nonnull obj, BOOL * _Nonnull stop) {
-                [[obj viewModel] disconnectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:self];
+                [[obj viewModel] disconnectSignal:@signalSelector(statusChange) forObserver:self];
         if (!shouldKeepLastStatus) {
             [[obj viewModel] play];
         }
@@ -149,8 +164,8 @@
         APPlayerView *playerView = [[APPlayerView alloc] init];
         APVVMBindingContainer *container = [APVVMBindingContainer bindView:playerView withViewModel:playerViewModel];
         
-        [playerView.controlView connectSignal:NS_SIGNAL_SELECTOR(didPressPlayPauseButton) forObserver:target slot:NS_SLOT_SELECTOR(onPressPlayPauseButtonWithView:viewModel:button:)];
-        [playerView.controlView connectSignal:NS_SIGNAL_SELECTOR(didPressExitPlayerButton) forObserver:target slot:NS_SLOT_SELECTOR(onPressExitPlayerButtonWithView:viewModel:button:)];
+        [playerView.controlView connectSignal:@signalSelector(didPressPlayPauseButton) forObserver:target slot:@slotSelector(onPressPlayPauseButtonWithView:viewModel:button:)];
+        [playerView.controlView connectSignal:@signalSelector(didPressExitPlayerButton) forObserver:target slot:@slotSelector(onPressExitPlayerButtonWithView:viewModel:button:)];
         
         
         [target.playersContainer setObject:container forKey:key];
@@ -164,7 +179,7 @@
                         if (error == nil) {
                             [playerViewModel setupPlayerWithPlayURLs:playURLs];
                             [playerView setupWithViewModel:playerViewModel];
-                            [playerViewModel connectSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:target slot:NS_SLOT_SELECTOR(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
+                            [playerViewModel connectSignal:@signalSelector(statusChange) forObserver:target slot:@slotSelector(onPlayerStatusChangeWithNewValue:oldValue:viewModel:)];
                         }
                     });
                 }];

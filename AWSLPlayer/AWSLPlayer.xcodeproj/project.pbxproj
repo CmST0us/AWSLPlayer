@@ -47,6 +47,8 @@
 		4F83537F22F684C7000B5793 /* APPlayerDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F83537E22F684C7000B5793 /* APPlayerDisplayView.m */; };
 		4F83538222F68511000B5793 /* APPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F83538122F68511000B5793 /* APPlayerControlView.m */; };
 		4F88D39D22F1F1070019E082 /* APUserStorageHelper+Convinence.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F88D39C22F1F1070019E082 /* APUserStorageHelper+Convinence.m */; };
+		4F9725A02316E49400272F45 /* KVOController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F97259F2316E49400272F45 /* KVOController.framework */; };
+		4F9725A12316E49400272F45 /* KVOController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F97259F2316E49400272F45 /* KVOController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F989C9322DE1A6E0092EE90 /* APLineLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48C22DCDDFA00F09FAC /* APLineLive.m */; };
 		4F989C9422DE1A720092EE90 /* APYoutubeLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B48322DB8C6800F09FAC /* APYoutubeLive.m */; };
 		4F989C9622DE1A8E0092EE90 /* APBiliBiliLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25B45022DB02BD00F09FAC /* APBiliBiliLive.m */; };
@@ -92,6 +94,7 @@
 				4F5C334B22DA520E00D3FCA1 /* NSObjectSignals.framework in Embed Frameworks */,
 				4F25B43522DA5DDF00F09FAC /* QMUIKit.framework in Embed Frameworks */,
 				4F5C334722DA520C00D3FCA1 /* VideoCodecKit.framework in Embed Frameworks */,
+				4F9725A12316E49400272F45 /* KVOController.framework in Embed Frameworks */,
 				4F5C334E22DA52D300D3FCA1 /* Masonry.framework in Embed Frameworks */,
 				4F25B44C22DA663900F09FAC /* Jetfire.framework in Embed Frameworks */,
 			);
@@ -174,6 +177,7 @@
 		4F83538122F68511000B5793 /* APPlayerControlView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPlayerControlView.m; sourceTree = "<group>"; };
 		4F88D39B22F1F1070019E082 /* APUserStorageHelper+Convinence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "APUserStorageHelper+Convinence.h"; sourceTree = "<group>"; };
 		4F88D39C22F1F1070019E082 /* APUserStorageHelper+Convinence.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "APUserStorageHelper+Convinence.m"; sourceTree = "<group>"; };
+		4F97259F2316E49400272F45 /* KVOController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KVOController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F989C9822DE23A00092EE90 /* APHibikiURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHibikiURLSession.h; sourceTree = "<group>"; };
 		4F989C9922DE23A00092EE90 /* APHibikiURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APHibikiURLSession.m; sourceTree = "<group>"; };
 		4F989C9C22DE2E580092EE90 /* APHibikiLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHibikiLive.h; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 				4F5C334A22DA520E00D3FCA1 /* NSObjectSignals.framework in Frameworks */,
 				4F25B43422DA5DDF00F09FAC /* QMUIKit.framework in Frameworks */,
 				4F5C334622DA520C00D3FCA1 /* VideoCodecKit.framework in Frameworks */,
+				4F9725A02316E49400272F45 /* KVOController.framework in Frameworks */,
 				4F5C334D22DA52D300D3FCA1 /* Masonry.framework in Frameworks */,
 				4F25B44B22DA663900F09FAC /* Jetfire.framework in Frameworks */,
 			);
@@ -458,6 +463,7 @@
 				4F5C332E22DA4F1700D3FCA1 /* AWSLPlayer */,
 				4F25B46D22DB1BF700F09FAC /* AWSLPlayerTests */,
 				4F5C332D22DA4F1700D3FCA1 /* Products */,
+				4F97259E2316E49400272F45 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -531,6 +537,14 @@
 				4F989CD922E439580092EE90 /* APUserDefaultHelper.m */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		4F97259E2316E49400272F45 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F97259F2316E49400272F45 /* KVOController.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4F989C9722DE238E0092EE90 /* Hibiki */ = {

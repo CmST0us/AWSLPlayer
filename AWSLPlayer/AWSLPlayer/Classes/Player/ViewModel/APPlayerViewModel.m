@@ -7,6 +7,7 @@
 //
 
 #import "APPlayerViewModel.h"
+#import <KVOController/KVOController.h>
 
 @interface APPlayerViewModel ()
 @property (nonatomic, assign) APPlayerViewModelStatus status;
@@ -14,10 +15,9 @@
 
 @implementation APPlayerViewModel
 
-#pragma mark - Signals & Slots
-
-NS_CLOSE_SIGNAL_WARN(itemStatusChange);
-NS_PROPERTY_SLOT(itemStatus) {
+#pragma mark - Handler
+- (void)handleItemStatusChangeWithOldValue:(id)oldValue
+                                  newValue:(id)newValue {
     APPlayerViewModelStatus lastStatus = self.status;
     if ([newValue isEqualToNumber:@(AVPlayerItemStatusFailed)]) {
         self.status = APPlayerViewModelStatusItemFailed;
@@ -26,11 +26,11 @@ NS_PROPERTY_SLOT(itemStatus) {
     } else if ([newValue isEqualToNumber:@(AVPlayerItemStatusReadyToPlay)]) {
         self.status = APPlayerViewModelStatusItemReady;
     }
-    [self emitSignal:NS_SIGNAL_SELECTOR(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
+    [self emitSignal:@signalSelector(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
 }
 
-NS_CLOSE_SIGNAL_WARN(playerStatusChange);
-NS_PROPERTY_SLOT(playerStatus) {
+- (void)handlePlayerStatusChangeWithOldValue:(id)oldValue
+                                    newValue:(id)newValue {
     APPlayerViewModelStatus lastStatus = self.status;
     if ([newValue isEqualToNumber:@(AVPlayerStatusReadyToPlay)]) {
         self.status = APPlayerViewModelStatusPlayerReady;
@@ -39,12 +39,11 @@ NS_PROPERTY_SLOT(playerStatus) {
     } else if ([newValue isEqualToNumber:@(AVPlayerStatusFailed)]) {
         self.status = APPlayerViewModelStatusPlayerFailed;
     }
-    [self emitSignal:NS_SIGNAL_SELECTOR(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
+    [self emitSignal:@signalSelector(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
 }
 
-NS_CLOSE_SIGNAL_WARN(timeControlStatusChange);
-NS_CLOSE_SIGNAL_WARN(statusChange)
-NS_PROPERTY_SLOT(status) {
+- (void)handleStatusChangeWithOldValue:(id)oldValue
+                              newValue:(id)newValue {
     APPlayerViewModelStatus lastStatus = self.status;
     if ([newValue isKindOfClass:[NSNumber class]]) {
         if ([newValue isEqualToNumber:@(AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate)]) {
@@ -56,7 +55,7 @@ NS_PROPERTY_SLOT(status) {
         }
     }
     
-    [self emitSignal:NS_SIGNAL_SELECTOR(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
+    [self emitSignal:@signalSelector(statusChange) withParams:@[@(self.status), @(lastStatus), self]];
 }
 
 #pragma mark - Init
@@ -73,9 +72,16 @@ NS_PROPERTY_SLOT(status) {
 
 - (void)bindData {
     // 绑定播放器状态变更
-    [self.player listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(playerStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(playerStatus)];
-    [self.player listenKeypath:@"timeControlStatus" pairWithSignal:NS_SIGNAL_SELECTOR(timeControlStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(status)];
-    [self.player.currentItem listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(itemStatusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(itemStatus)];
+    [self.player addKVOObserver:self
+                     forKeyPath:FBKVOKeyPath([self player].status)
+                         action:@selector(handlePlayerStatusChangeWithOldValue:newValue:)];
+    
+    [self.player addKVOObserver:self
+                     forKeyPath:FBKVOKeyPath([self player].timeControlStatus) action:@selector(handleStatusChangeWithOldValue:newValue:)];
+    
+    [self.player.currentItem addKVOObserver:self
+                     forKeyPath:FBKVOKeyPath([self player].status)
+                         action:@selector(handleItemStatusChangeWithOldValue:newValue:)];
 }
 
 #pragma mark - Method

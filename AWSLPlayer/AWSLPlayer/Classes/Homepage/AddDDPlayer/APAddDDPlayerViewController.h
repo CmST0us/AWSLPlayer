@@ -12,12 +12,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class APDDPlayerModel;
-@interface APAddDDPlayerViewController : APTableViewController
+
+@signals APAddDDPlayerViewControllerSignals
+@optional
+/// 保存时触发，无参数
+- (void)didAddDDPlayer;
+@end
+
+@interface APAddDDPlayerViewController : APTableViewController<APAddDDPlayerViewControllerSignals>
 
 - (void)editModel:(APDDPlayerModel *)model withModelKey:(NSString *)modelKey;
-
-/// 保存时触发，无参数
-NS_SIGNAL(didAddDDPlayer);
 
 @end
 

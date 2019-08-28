@@ -8,6 +8,7 @@
 
 #import <QMUIKit/QMUIKit.h>
 #import <Masonry/Masonry.h>
+#import <KVOController/KVOController.h>
 #import "APButton.h"
 
 #import "APPlayerViewModel.h"
@@ -21,27 +22,6 @@
 @end
 
 @implementation APPlayerControlView
-NS_CLOSE_SIGNAL_WARN(didPressPlayPauseButton);
-NS_CLOSE_SIGNAL_WARN(didPressExitPlayerButton);
-
-#pragma mark - Property Slot
-NS_CLOSE_SIGNAL_WARN(statusChange);
-NS_PROPERTY_SLOT(status) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.playPauseButton.enabled = YES;
-        if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPlaying)]) {
-            self.playPauseButton.backgroundColor = UIColorGreen;
-        } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
-            self.playPauseButton.backgroundColor = UIColorRed;
-        } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusLoading)] ||
-                   [newValue isEqualToNumber:@(APPlayerViewModelStatusPlayerReady)]) {
-            self.playPauseButton.backgroundColor = UIColorYellow;
-        } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemFailed)]) {
-            self.playPauseButton.backgroundColor = UIColorGray;
-            self.playPauseButton.enabled = NO;
-        }
-    });
-}
 
 #pragma mark -
 - (void)didInitialize {
@@ -54,7 +34,25 @@ NS_PROPERTY_SLOT(status) {
 }
 
 - (void)bindData {
-    [self.viewModel listenKeypath:@"status" pairWithSignal:NS_SIGNAL_SELECTOR(statusChange) forObserver:self slot:NS_PROPERTY_SLOT_SELECTOR(status)];
+    __weak typeof(self) weakSelf = self;
+    [self.viewModel addKVOObserver:self
+                        forKeyPath:FBKVOKeyPath([weakSelf viewModel].status)
+                             block:^(id  _Nullable oldValue, id  _Nullable newValue) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.playPauseButton.enabled = YES;
+            if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPlaying)]) {
+                weakSelf.playPauseButton.backgroundColor = UIColorGreen;
+            } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusPause)]) {
+                weakSelf.playPauseButton.backgroundColor = UIColorRed;
+            } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusLoading)] ||
+                       [newValue isEqualToNumber:@(APPlayerViewModelStatusPlayerReady)]) {
+                weakSelf.playPauseButton.backgroundColor = UIColorYellow;
+            } else if ([newValue isEqualToNumber:@(APPlayerViewModelStatusItemFailed)]) {
+                weakSelf.playPauseButton.backgroundColor = UIColorGray;
+                weakSelf.playPauseButton.enabled = NO;
+            }
+        });
+    }];
 }
 
 - (APButton *)playPauseButton {
@@ -97,11 +95,11 @@ NS_PROPERTY_SLOT(status) {
 
 - (void)didPressPlayPauseButton:(id)sender {
     if (self.viewModel == nil) return;
-    [self emitSignal:NS_SIGNAL_SELECTOR(didPressPlayPauseButton) withParams:@[self, self.viewModel, sender]];
+    [self emitSignal:@signalSelector(didPressPlayPauseButton) withParams:@[self, self.viewModel, sender]];
 }
 
 - (void)didPressExitPlayerButton:(id)sender {
-    [self emitSignal:NS_SIGNAL_SELECTOR(didPressExitPlayerButton) withParams:@[self, self.viewModel ? : [NSNull null], sender]];
+    [self emitSignal:@signalSelector(didPressExitPlayerButton) withParams:@[self, self.viewModel ? : [NSNull null], sender]];
 }
 
 @end

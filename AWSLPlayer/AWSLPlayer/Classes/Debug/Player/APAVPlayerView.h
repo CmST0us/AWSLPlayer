@@ -6,15 +6,18 @@
 //  Copyright © 2019 eric3u. All rights reserved.
 //
 
-#import <NSObjectSignals/NSObject+SignalsSlots.h>
+#import <NSObjectSignals/NSObjectSignals.h>
 #import "APView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APAVPlayerView : APView
-@property (nonatomic, copy) NSURL *playURL;
+@signals APAVPlayerViewSignals
+@optional
+- (void)playerStatusChange;
+@end
 
-NS_SIGNAL(playerStatusChange);
+@interface APAVPlayerView : APView<APAVPlayerViewSignals>
+@property (nonatomic, copy) NSURL *playURL;
 
 @end
 

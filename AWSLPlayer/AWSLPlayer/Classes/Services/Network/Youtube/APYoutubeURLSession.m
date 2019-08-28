@@ -54,7 +54,6 @@ const NSString *APYoutubeLiveRoomRequestURL = @"https://www.youtube.com/watch?v=
         block(nil, [NSError errorWithAPURLSessionError:APURLSessionErrorBadURL userInfo:nil]);
         return;
     }
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:liveRoomURL];
     [self.hiddenWebView loadRequest:[NSURLRequest requestWithURL:liveRoomURL]];
 }
 

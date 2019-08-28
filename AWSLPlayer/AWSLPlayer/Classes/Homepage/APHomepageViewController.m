@@ -25,7 +25,15 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
     APHomepageViewControllerStatusEdit,
 };
 
-@interface APHomepageViewController () <QMUITableViewDelegate>
+@slots APHomepageViewControllerSlots
+@required
+- (void)popupViewDidPressAddItem:(NSNumber *)itemType;
+- (void)refreshData;
+@end
+
+@interface APHomepageViewController () <QMUITableViewDelegate,
+APHomepageViewControllerSlots>
+
 @property (nonatomic, assign) APHomepageViewControllerStatus status;
 
 @property (nonatomic, strong) UIBarButtonItem *addItemBarButtonItem;
@@ -66,7 +74,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 }
 
 - (void)bindSignal {
-    [self.popupView connectSignal:NS_SIGNAL_SELECTOR(didPressAddItem) forObserver:self slot:NS_SLOT_SELECTOR(popupViewDidPressAddItem:)];
+    [self.popupView connectSignal:@signalSelector(didPressAddItem) forObserver:self slot:@slotSelector(popupViewDidPressAddItem:)];
 }
 
 - (void)setStatus:(APHomepageViewControllerStatus)status {
@@ -95,7 +103,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 
 - (void)gotoAddLiveURLViewController {
     APAddLiveURLViewController *vc = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [vc connectSignal:NS_SIGNAL_SELECTOR(didAddLiveURL) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
+    [vc connectSignal:@signalSelector(didAddLiveURL) forObserver:self slot:@slotSelector(refreshData)];
     APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
     nav.modalPresentationStyle = UIModalPresentationPageSheet;
     [self presentViewController:nav animated:YES completion:nil];
@@ -104,7 +112,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 - (void)gotoAddDDPlayerViewController {
     APAddDDPlayerViewController *vc = [[APAddDDPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
     APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:vc];
-    [vc connectSignal:NS_SIGNAL_SELECTOR(didAddDDPlayer) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
+    [vc connectSignal:@signalSelector(didAddDDPlayer) forObserver:self slot:@slotSelector(refreshData)];
     nav.modalPresentationStyle = UIModalPresentationPageSheet;
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -139,7 +147,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
         NSString *modelKey = [self.dataSource.players allKeys][indexPath.row];
         APDDPlayerModel *model = self.dataSource.players[modelKey];
         APAddDDPlayerViewController *v = [[APAddDDPlayerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        [v connectSignal:NS_SIGNAL_SELECTOR(didAddDDPlayer) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
+        [v connectSignal:@signalSelector(didAddDDPlayer) forObserver:self slot:@slotSelector(refreshData)];
         [v editModel:model withModelKey:modelKey];
         APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
         nav.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -148,7 +156,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
         NSString *modelKey = [self.dataSource.liveURLs allKeys][indexPath.row];
         APLiveURLModel *model = self.dataSource.liveURLs[modelKey];
         APAddLiveURLViewController *v = [[APAddLiveURLViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        [v connectSignal:NS_SIGNAL_SELECTOR(didAddLiveURL) forObserver:self slot:NS_SLOT_SELECTOR(refreshData)];
+        [v connectSignal:@signalSelector(didAddLiveURL) forObserver:self slot:@slotSelector(refreshData)];
         [v editModel:model withModelKey:modelKey];
         APNavigationController *nav = [[APNavigationController alloc] initWithRootViewController:v];
         nav.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -230,7 +238,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
 }
 
 #pragma mark - Slot
-- (NS_SLOT)popupViewDidPressAddItem:(NSNumber *)itemType {
+- (void)popupViewDidPressAddItem:(NSNumber *)itemType {
     if (itemType.unsignedIntegerValue == APHomepageAddItemTypeLiveURL) {
         [self gotoAddLiveURLViewController];
     } else if (itemType.unsignedIntegerValue == APHomepageAddItemTypeDDPlayer) {
@@ -238,7 +246,7 @@ typedef NS_ENUM(NSUInteger, APHomepageViewControllerStatus) {
     }
 }
 
-- (NS_SLOT)refreshData {
+- (void)refreshData {
     [self.tableView reloadData];
 }
 

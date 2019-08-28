@@ -27,7 +27,6 @@ static NSString *const APAddDDPlayerViewControllerSelectLiveRoomCellIdentifier =
 @end
 
 @implementation APAddDDPlayerViewController
-NS_CLOSE_SIGNAL_WARN(didAddDDPlayer);
 
 #pragma mark - Init
 - (void)didInitialize {
@@ -152,7 +151,7 @@ NS_CLOSE_SIGNAL_WARN(didAddDDPlayer);
 
 - (void)handleNavigationBarSaveButtonAction:(id)sender {
     [self.dataSource save];
-    [self emitSignal:NS_SIGNAL_SELECTOR(didAddDDPlayer) withParams:nil];
+    [self emitSignal:@signalSelector(didAddDDPlayer) withParams:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

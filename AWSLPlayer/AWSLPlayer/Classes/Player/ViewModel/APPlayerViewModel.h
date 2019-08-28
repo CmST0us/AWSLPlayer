@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#import <NSObjectSignals/NSObject+SignalsSlots.h>
+#import <NSObjectSignals/NSObjectSignals.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +26,18 @@ typedef NS_ENUM(NSInteger, APPlayerViewModelStatus) {
 };
 
 @class APLiveURLModel;
-@interface APPlayerViewModel : NSObject
+
+@signals APPlayerViewModelSignals
+@optional
+// 绑定数据，使用抛出信号
+// 播放器状态变化: NSNumber<APPlayerViewModelStatus>
+// @param: newValue
+// @param: oldValue
+// @param: view model
+- (void)statusChange;
+@end
+
+@interface APPlayerViewModel : NSObject<APPlayerViewModelSignals>
 
 @property (nonatomic, strong) APLiveURLModel *liveURLModel;
 @property (nonatomic, strong) NSDictionary *playURLs;
@@ -44,14 +55,6 @@ typedef NS_ENUM(NSInteger, APPlayerViewModelStatus) {
 - (void)playImmediately:(BOOL)flag;
 - (void)pause;
 - (void)stop;
-
-// 绑定数据，使用抛出信号
-#pragma mark - Signals
-// 播放器状态变化: NSNumber<APPlayerViewModelStatus>
-// @param: newValue
-// @param: oldValue
-// @param: view model
-NS_SIGNAL(statusChange);
 @end
 
 NS_ASSUME_NONNULL_END

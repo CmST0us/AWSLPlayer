@@ -10,13 +10,17 @@
 #import "APAddLiveURLViewController.h"
 #import "APUserStorageHelper+Convinence.h"
 
-@interface APAddLiveURLViewController ()
+@slots APAddLiveURLViewControllerSlots
+@required
+- (void)updateSaveBarButtonStatusWithCurrentInput;
+@end
+
+@interface APAddLiveURLViewController () <APAddLiveURLViewControllerSlots>
 @property (nonatomic, strong) APAddLiveURLViewDataSource *dataSource;
 @property (nonatomic, strong) UIBarButtonItem *saveBarButton;
 @end
 
 @implementation APAddLiveURLViewController
-NS_CLOSE_SIGNAL_WARN(didAddLiveURL)
 
 - (void)didInitializeWithStyle:(UITableViewStyle)style {
     [super didInitializeWithStyle:style];
@@ -41,7 +45,7 @@ NS_CLOSE_SIGNAL_WARN(didAddLiveURL)
 }
 
 - (void)bindSignals {
-    [self.dataSource connectSignal:NS_SIGNAL_SELECTOR(didChangeLiveRoom) forObserver:self slot:NS_SLOT_SELECTOR(updateSaveBarButtonStatusWithCurrentInput)];
+    [self.dataSource connectSignal:@signalSelector(didChangeLiveRoom) forObserver:self slot:@slotSelector(updateSaveBarButtonStatusWithCurrentInput)];
 }
 
 - (BOOL)isInputVaild {
@@ -59,7 +63,7 @@ NS_CLOSE_SIGNAL_WARN(didAddLiveURL)
 }
 
 #pragma mark - Slots
-- (NS_SLOT)updateSaveBarButtonStatusWithCurrentInput {
+- (void)updateSaveBarButtonStatusWithCurrentInput {
     if ([self isInputVaild]) {
         self.saveBarButton.enabled = YES;
     } else {
@@ -74,7 +78,7 @@ NS_CLOSE_SIGNAL_WARN(didAddLiveURL)
 
 - (void)navigationBarSaveButtonAction:(id)sender {
     [[APUserStorageHelper modelStorageContainer] addLiveURL:self.dataSource.liveRoom forKey:self.dataSource.modelKey];
-    [self emitSignal:NS_SIGNAL_SELECTOR(didAddLiveURL) withParams:nil];
+    [self emitSignal:@signalSelector(didAddLiveURL) withParams:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

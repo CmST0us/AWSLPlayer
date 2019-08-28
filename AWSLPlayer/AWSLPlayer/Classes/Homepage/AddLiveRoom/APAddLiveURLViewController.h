@@ -13,12 +13,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class APLiveURLModel;
-@interface APAddLiveURLViewController : APTableViewController
+
+@signals APAddLiveURLViewControllerSignals
+@optional
+/// 完成添加直播间，无参数
+- (void)didAddLiveURL;
+@end
+
+@interface APAddLiveURLViewController : APTableViewController<APAddLiveURLViewControllerSignals>
 
 - (void)editModel:(APLiveURLModel *)model withModelKey:(NSString *)modelKey;
-
-/// 完成添加直播间，无参数
-NS_SIGNAL(didAddLiveURL);
 @end
 
 NS_ASSUME_NONNULL_END

@@ -7,7 +7,7 @@
 //
 
 #import <QMUIKit/QMUIKit.h>
-#import <NSObjectSignals/NSObject+SignalsSlots.h>
+#import <NSObjectSignals/NSObjectSignals.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,10 +16,13 @@ typedef NS_ENUM(NSUInteger, APHomepageAddItemType) {
     APHomepageAddItemTypeLiveURL,
 };
 
-@interface APHomepageAddItemPopupView : QMUIPopupMenuView
-
+@signals APHomepageAddItemPopupViewSignals
+@optional
 // 按下菜单某一项时触发，槽参数为@(APHomepageAddItemType)
-NS_SIGNAL(didPressAddItem);
+- (void)didPressAddItem;
+@end
+
+@interface APHomepageAddItemPopupView : QMUIPopupMenuView<APHomepageAddItemPopupViewSignals>
 
 @end
 
